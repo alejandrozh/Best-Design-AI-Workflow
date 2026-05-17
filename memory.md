@@ -31,6 +31,16 @@ Aquí almaceno decisiones, contexto y aprendizajes para que las próximas sesion
 - **Estilos embebidos** en `index.html` para no romper las sub-páginas (`discovery.html`, `prototyping.html`) que siguen usando `styles.css` con la paleta cream original. Cuando rehagamos las sub-páginas, decidiremos si unificar.
 - Deep-linking soportado: `#phase=prototyping` abre la fase correspondiente al cargar.
 
+### Iteración 5 (16 may 2026 · misma sesión)
+- **Nueva sección "La capa de fundación"** añadida entre el workflow y el curator. NO es una sexta fase, son 5 patrones transversales que las grandes (Google, Meta, Atlassian, Stripe a escala, Adobe, Microsoft, Spotify, Netflix...) practican como infraestructura por debajo del proceso de diseño. Decisión consensuada con Alex.
+- Los 5 patrones: Knowledge graph del producto · DS como contrato · Agentes en lugar de comandos · Telemetría continua como research · Modelos internos. Mismo formato visual que los patrones de Ideación (card numerada, 3 filas: Por qué importa / Cómo lo aplican / Cómo replicarlo).
+- Audiencia explícita: tech leads, design ops, principals — no diseñadores junior. Pensado como "saber que existe" para equipos &lt;20 personas, "implementarlo" para &gt;100.
+- Visualmente diferenciada del workflow con una franja superior de gradiente (accent → pulse → ink) para indicar que es otra capa de información.
+- Reorganizado también el panel de **Ideación** previamente (iteración entre #5 e ésta): contexto cross-company + 4 patrones compartidos + playbook de 2 días. Se reemplazaron las dos practice cards empresa-por-empresa.
+
+### Regla operativa (16 may 2026)
+**No hacer git push automáticamente.** Alex prefiere controlar cuándo se actualiza GitHub para minimizar el consumo de tokens y revisar los cambios antes de que sean públicos. Solo lanzar git add/commit/push cuando Alex lo pida explícitamente ("sube esto", "actualízalo en git", etc.). Trabajar siempre en local; el push es manual y a su ritmo.
+
 ### Iteración 4 (16 may 2026 · misma sesión)
 - **`styles.css` reescrito** desde cero con los mismos design tokens del `index.html` (Fraunces serif, paleta `#fafaf7` / `#b8492f`, mismos radios y sombras). Las sub-páginas (`discovery.html`, `prototyping.html`) ahora son visualmente idénticas al tool. Clases legacy mantenidas (no toqué el HTML de las sub-páginas más de lo necesario): `.phase-hero`, `.before-after`, `.company`, `.stack-grid`, `.tutorial`, `.callout-warning`, `.callout-danger`, `.aside`, etc. — todas restiladas a la nueva estética.
 - **Topbar de sub-páginas actualizado:** quitada la nav rota (`#fases`, `#vivo`, `#metodo` ya no existen en el nuevo `index.html`), reemplazada por un único link "← Volver al workflow". `.brand-dot` ahora se renderiza como `.brand-mark` (círculo negro con la "B" blanca) vía pseudo-elemento.

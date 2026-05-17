@@ -94,18 +94,25 @@
       color: var(--ink);
     }
     .brand-mark {
-      width: 22px;
-      height: 22px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: var(--ink);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-family: var(--font-serif);
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 1;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 64%;
+      height: 64%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      -webkit-mask: url('logo.png') center / contain no-repeat;
+      mask: url('logo.png') center / contain no-repeat;
     }
     .topbar-meta {
       display: flex;
@@ -286,10 +293,15 @@
       position: absolute;
       bottom: 16px;
       right: 16px;
-      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
       color: var(--muted-2);
       transition: transform 0.18s ease, color 0.18s ease;
     }
+    .phase-chevron svg { display: block; }
     .phase-btn[aria-expanded="true"] .phase-chevron {
       transform: rotate(180deg);
       color: var(--accent);
@@ -618,6 +630,132 @@
       border-color: var(--pulse);
     }
 
+    /* Pattern card (didactic, cross-company patterns) */
+    .pattern {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 26px;
+      margin-top: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .pattern + .pattern { margin-top: 12px; }
+    .pattern-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pattern-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+    .pattern-name {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 19px;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .pattern-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .pattern-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      align-items: baseline;
+    }
+    .pattern-label {
+      font-family: var(--font-sans);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+    .pattern-row p {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    .pattern-row p strong { font-weight: 500; color: var(--ink); }
+    .pattern-row p em { font-style: italic; }
+    @media (max-width: 700px) {
+      .pattern-row { grid-template-columns: 1fr; gap: 4px; }
+    }
+
+    /* Playbook timeline (a session, step by step) */
+    .playbook {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 12px;
+      border-left: 2px solid var(--border-strong);
+      padding-left: 22px;
+      position: relative;
+    }
+    .playbook-step {
+      position: relative;
+      padding: 10px 0 18px;
+    }
+    .playbook-step::before {
+      content: "";
+      position: absolute;
+      left: -29px;
+      top: 16px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+    }
+    .playbook-when {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .playbook-what {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--ink);
+      margin-bottom: 6px;
+      letter-spacing: -0.005em;
+    }
+    .playbook-detail {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .playbook-detail strong { font-weight: 500; color: var(--ink); }
+
     /* Checklist block */
     .checklist {
       list-style: none;
@@ -683,6 +821,107 @@
     .status-pill.draft {
       background: rgba(180, 130, 30, 0.1);
       color: #8a6017;
+    }
+
+    /* ============================================
+       Foundation layer (enterprise transversal patterns)
+       ============================================ */
+    .foundation {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      margin-top: 32px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .foundation::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--pulse) 50%, var(--ink) 100%);
+      opacity: 0.7;
+    }
+    .foundation-intro {
+      margin-bottom: 32px;
+      max-width: 800px;
+    }
+    .foundation-intro .eyebrow { margin-bottom: 14px; }
+    .foundation-intro h2 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(28px, 3.4vw, 38px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .foundation-intro h2 em {
+      font-style: italic;
+      font-weight: 300;
+    }
+    .foundation-intro p {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .foundation-intro p + p { margin-top: 12px; }
+    .foundation-intro p strong { font-weight: 500; color: var(--ink); }
+    .foundation-intro p em { font-style: italic; }
+    .foundation-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .foundation-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      background: var(--ink);
+      color: #fff;
+      border: 1px solid var(--ink);
+      border-radius: 100px;
+      padding: 13px 22px;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .foundation-toggle:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+    .foundation-toggle .chevron {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    .foundation-toggle .chevron svg { display: block; }
+    .foundation-toggle[aria-expanded="true"] .chevron {
+      transform: rotate(180deg);
+    }
+    .foundation-patterns {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: foundationSlide 0.3s ease;
+    }
+    .foundation-patterns[hidden] { display: none; }
+    @keyframes foundationSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* ============================================
@@ -889,7 +1128,7 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a href="index.html" class="brand">
-        <span class="brand-mark">B</span>
+        <span class="brand-mark" aria-hidden="true"></span>
         Best AI Design Workflow
       </a>
       <div class="topbar-meta">
@@ -925,7 +1164,7 @@
             <span class="phase-index">Fase 01</span>
             <span class="phase-name">Discovery</span>
             <span class="phase-hint">De señal a insight con cita.</span>
-            <span class="phase-chevron">⌄</span>
+            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
           </button>
         </li>
         <li class="phase">
@@ -933,7 +1172,7 @@
             <span class="phase-index">Fase 02</span>
             <span class="phase-name">Ideation</span>
             <span class="phase-hint">Veinte variantes en una tarde.</span>
-            <span class="phase-chevron">⌄</span>
+            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
           </button>
         </li>
         <li class="phase">
@@ -941,7 +1180,7 @@
             <span class="phase-index">Fase 03</span>
             <span class="phase-name">Prototyping</span>
             <span class="phase-hint">De Figma a código, en minutos.</span>
-            <span class="phase-chevron">⌄</span>
+            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
           </button>
         </li>
         <li class="phase">
@@ -949,7 +1188,7 @@
             <span class="phase-index">Fase 04</span>
             <span class="phase-name">Handoff</span>
             <span class="phase-hint">La spec se genera sola.</span>
-            <span class="phase-chevron">⌄</span>
+            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
           </button>
         </li>
         <li class="phase">
@@ -957,7 +1196,7 @@
             <span class="phase-index">Fase 05</span>
             <span class="phase-name">Validation</span>
             <span class="phase-hint">Fricciones antes de usuarios reales.</span>
-            <span class="phase-chevron">⌄</span>
+            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
           </button>
         </li>
       </ol>
@@ -1069,62 +1308,193 @@ Formato de salida: JSON con
         <div class="panel-head">
           <div class="panel-eyebrow">Fase 02 — Ideation</div>
           <h2>Veinte variantes de layout en una tarde, <em>todas dentro del design system</em>.</h2>
-          <p>El cambio no es tener "ideas creativas" generadas por IA — eso es ruido. El cambio es ampliar el espacio de solución antes de cerrarlo. Decidir entre veinte variantes reales, no entre dos que cabían en tu cabeza.</p>
+          <p>La fase más "craft" del proceso. El cambio de 2026 no es tener <em>ideas creativas</em> generadas por IA — eso es ruido. Es ampliar el espacio de solución de forma sistemática <strong>antes</strong> de cerrarlo. Decidir entre veinte variantes reales generadas en horas, no entre dos que cabían en tu cabeza después de una semana.</p>
           <div class="phase-meta">
-            <span class="meta-tag"><strong>Setup</strong> 2 h (primer brief estructurado)</span>
-            <span class="meta-tag"><strong>Por iteración</strong> 20–40 min de generación + 30 min de descarte</span>
+            <span class="meta-tag"><strong>Setup</strong> 2 h (brief + criterios escritos)</span>
+            <span class="meta-tag"><strong>Por iteración</strong> 20–40 min generar + 1 h descartar</span>
             <span class="meta-tag"><strong>Output típico</strong> 20 variantes → presentas 2</span>
           </div>
         </div>
 
         <div class="panel-body">
 
-          <div class="panel-block">
-            <span class="block-label">Cómo lo hacen los top</span>
+          <div class="panel-block full">
+            <span class="block-label">El cambio de oficio</span>
+            <p class="block-text">La IA en ideación no piensa por ti — explora donde le dices que explore. Esa es la diferencia entre los equipos que la usan bien (Notion, Stripe, Airbnb, Linear, Vercel, Shopify, Anthropic) y los que generan slop bonito: <strong>los primeros invierten más tiempo en acotar el problema que en generar variantes</strong>. La generación es barata; el descarte con criterios y el brief estrecho son la palanca real.</p>
+            <p class="block-text">Lo que comparten esos equipos es un <em>método</em>, no una herramienta. Cambia el generador (Figma Make Designs, v0, Galileo, Subframe, Lovable...) pero los patrones que rodean al generador son los mismos. Esos patrones son lo importante — si tu equipo los adopta, el generador concreto pasa a ser una decisión de mercado, no de método.</p>
+          </div>
 
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/figma/1c1c1c" alt="" onerror="this.style.display='none'">Figma AI · Make Designs</span>
-                <span class="practice-tag tag-patron">Patrón común</span>
-                <span class="practice-source">Equipos enterprise</span>
+          <div class="panel-block full">
+            <span class="block-label">Los 4 patrones que comparten los equipos top</span>
+
+            <div class="pattern">
+              <div class="pattern-head">
+                <span class="pattern-num">01</span>
+                <span class="pattern-name">El brief estrecho</span>
               </div>
-              <p class="practice-body">Generación de variantes <strong>dentro del archivo de Figma</strong>, conectada al Design System del equipo. La IA propone composiciones a partir de un brief escrito y componentes ya existentes — no inventa colores ni espaciados. En la práctica: una página del archivo dedicada (<code>Exploration · {feature}</code>), brief en un sticky a la izquierda, y un grid 4×5 que se llena con variantes auto-nombradas. <strong>Regla del equipo: no se edita una variante mientras se generan las demás.</strong> Editar entre generaciones contamina el siguiente prompt y reduce diversidad.</p>
+              <div class="pattern-body">
+                <div class="pattern-row">
+                  <span class="pattern-label">Por qué importa</span>
+                  <p>La calidad de las 20 variantes está acotada por la calidad del brief. Un brief de <em>"una pantalla de checkout bonita"</em> devuelve sopa. Un brief con usuario, job-to-be-done, restricciones explícitas y lo que NO debe cambiar acota el espacio antes de que la IA empiece a explorar. <strong>La IA es buena buscando en un espacio definido; mala definiendo el espacio.</strong></p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo lo aplican</span>
+                  <p>En <strong>Figma teams</strong> y <strong>Anthropic</strong> el brief vive en un sticky a la izquierda del archivo o como markdown en el repo del proyecto. <strong>Stripe</strong> lo formaliza: Protodash tiene un formulario obligatorio de 4 campos antes de poder generar. <strong>Airbnb</strong>, históricamente disciplinada con briefing desde la era DLS, mantiene la misma estructura para sus exploraciones con IA — una página de Notion linkada al frame, no se permite generar sin ese enlace.</p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo replicarlo</span>
+                  <p>Adopta una plantilla obligatoria con <strong>4 campos</strong>: Usuario · JTBD · Restricciones · Lo que NO debe cambiar. Si el brief tiene más de 5 líneas, recórtalo. Si tiene menos de 3, no estás listo para generar. La plantilla vive en el archivo de Figma o en el repo, no en un Google Doc aparte.</p>
+                </div>
+              </div>
             </div>
 
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/vercel/1c1c1c" alt="" onerror="this.style.display='none'">v0 / Galileo / Subframe</span>
-                <span class="practice-tag tag-patron">Patrón común</span>
-                <span class="practice-source">Equipos producto-tech</span>
+            <div class="pattern">
+              <div class="pattern-head">
+                <span class="pattern-num">02</span>
+                <span class="pattern-name">El Design System como sandbox</span>
               </div>
-              <p class="practice-body">Generadores que producen <strong>código + diseño a la vez</strong>. Útiles cuando lo que se evalúa es comportamiento (animación, estado vacío, error, latencia con datos reales), no estética. La salida ya es navegable: cada variante vive en una URL distinta y se comparten enlaces. <strong>Cuándo elegir uno u otro:</strong> v0 si el equipo ya está en React/Tailwind; Galileo si necesitas exportar a Figma para refinar; Subframe si quieres mantener el resultado dentro del DS de tu app real.</p>
+              <div class="pattern-body">
+                <div class="pattern-row">
+                  <span class="pattern-label">Por qué importa</span>
+                  <p>Las variantes solo tienen valor si la IA <strong>selecciona de tu librería</strong>, no si inventa. Un layout interesante con colores inventados no es accionable: es ruido que no se puede llevar a producción sin un rediseño. Cuando el DS actúa como sandbox, cada variante es una recombinación de cosas que ya existen — eso es lo que las hace útiles para discutir.</p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo lo aplican</span>
+                  <p><strong>Stripe</strong> (Protodash) y <strong>Linear</strong> conectan su generador exclusivamente al DS oficial: si la IA propone algo fuera del sistema, lo rechaza antes de mostrarlo. <strong>Vercel</strong> con v0 sobre su propio DS, <strong>Shopify</strong> con Polaris, <strong>Notion</strong> con tokens importados en su Playground — el principio es el mismo: los tokens en Variables, la IA limitada a esa paleta.</p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo replicarlo</span>
+                  <p>Antes de generar nada, verifica que tu DS vive en <strong>Figma Variables</strong> (o el equivalente de tu stack). Si no lo está, ese es el primer trabajo del semestre — más importante que adoptar cualquier herramienta de IA. Sin esa base, la ideación con IA fabrica resultados bonitos que no se pueden implementar.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pattern">
+              <div class="pattern-head">
+                <span class="pattern-num">03</span>
+                <span class="pattern-name">La doble generación: estructura primero, visual después</span>
+              </div>
+              <div class="pattern-body">
+                <div class="pattern-row">
+                  <span class="pattern-label">Por qué importa</span>
+                  <p>Estructura y tratamiento visual son <strong>problemas distintos</strong>. Mezclarlos en un solo prompt produce variantes "bonitas pero iguales" — la IA converge en patrones visuales seguros cuando no le separas los concerns. Generar primero estructura (jerarquía, secuencia, densidad) y después tratamiento (tipografía, color, peso visual) da resultados más diversos y discutibles.</p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo lo aplican</span>
+                  <p><strong>Airbnb</strong> ha mantenido esta separación desde la era pre-IA: <em>mood board → estructura → tratamiento</em>. Han adaptado el flujo manteniendo las tres etapas. <strong>Figma teams</strong> lo aplican implícitamente con Make Designs: primera ronda para layout con componentes neutros, segunda con énfasis visual. <strong>Anthropic</strong> lo formaliza con dos comandos distintos: uno para estructura, otro para tratamiento, ejecutados en sesiones separadas.</p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo replicarlo</span>
+                  <p>Dos rondas, dos prompts, dos criterios de descarte. Primero estructura sobre componentes neutros del DS; cuando una estructura está aprobada por el equipo, segunda ronda <strong>solo de tratamiento visual</strong> sobre esa estructura. <em>No las mezcles ni siquiera "para ahorrar tiempo"</em> — el ahorro es ilusorio porque el output converge.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pattern">
+              <div class="pattern-head">
+                <span class="pattern-num">04</span>
+                <span class="pattern-name">El descarte ritualizado</span>
+              </div>
+              <div class="pattern-body">
+                <div class="pattern-row">
+                  <span class="pattern-label">Por qué importa</span>
+                  <p>Generar 20 es fácil. <strong>Descartar 18 con criterios escritos</strong> es la palanca real. Sin criterios previos, el descarte se convierte en preferencia personal y la decisión es indefendible cuando alguien la cuestiona en una review. <em>La calidad de tu ideación se mide en lo que descartas, no en lo que generas.</em></p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo lo aplican</span>
+                  <p><strong>Stripe</strong> usa una tabla de scoring obligatoria antes de cualquier ronda: filas con criterios (jerarquía, accesibilidad, fit con DS, novedad útil), columnas con las variantes. <strong>Linear</strong> bloquea calendar específico para "variant review" como ritual semanal con 2-3 personas. <strong>Notion</strong> documenta el descarte en el PR — qué variantes se descartaron y por qué — para que la decisión sea trazable meses después.</p>
+                </div>
+                <div class="pattern-row">
+                  <span class="pattern-label">Cómo replicarlo</span>
+                  <p>Escribe los criterios <strong>antes</strong> de generar. Bloquea 1 hora separada para descartar (no entre tareas). Convoca a 1-2 personas más para el descarte: <em>divergente es solo, convergente es de equipo</em>. Documenta qué descartaste y por qué — esa documentación vale más que las variantes elegidas dentro de seis meses.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-block full">
+            <span class="block-label">Una sesión de ideación de principio a fin · 2 días</span>
+            <p class="block-text">El ritual que practican (con pequeñas variantes) Notion, Stripe, Linear y Airbnb. Reemplaza la semana entera de "exploración" del modelo pre-IA.</p>
+
+            <div class="playbook">
+              <div class="playbook-step">
+                <div class="playbook-when">Día 1 · mañana · 90 min</div>
+                <div class="playbook-what">Brief + criterios escritos</div>
+                <div class="playbook-detail">Rellenas la plantilla de 4 campos. Defines los <strong>criterios de descarte</strong> (jerarquía, accesibilidad, fit con DS, novedad útil — los que sirvan a este flujo). Sin estos dos artefactos escritos, no continúas. Si dudas, conviértelo en <em>"hoy no genero"</em> y vuelves a empezar mañana.</div>
+              </div>
+              <div class="playbook-step">
+                <div class="playbook-when">Día 1 · tarde · 2–3 h</div>
+                <div class="playbook-what">Ronda 1 — Estructura</div>
+                <div class="playbook-detail">Generas 20 variantes <strong>solo de estructura</strong> sobre componentes neutros del DS. <em>No editas entre tiradas.</em> Cierras Figma cuando termines.</div>
+              </div>
+              <div class="playbook-step">
+                <div class="playbook-when">Día 2 · mañana · 1 h</div>
+                <div class="playbook-what">Descarte 1 con equipo</div>
+                <div class="playbook-detail">Con 2 personas más, scoring contra los criterios. <strong>Quedan 2 estructuras.</strong> Documentas qué descartaste y por qué (1-2 líneas por variante, basta).</div>
+              </div>
+              <div class="playbook-step">
+                <div class="playbook-when">Día 2 · tarde · 2 h</div>
+                <div class="playbook-what">Ronda 2 — Tratamiento visual</div>
+                <div class="playbook-detail">Sobre las 2 estructuras aprobadas, generas 10-15 variantes de tratamiento (tipografía, color, peso visual, microcopy). Mismo principio: no editas, no mezclas.</div>
+              </div>
+              <div class="playbook-step">
+                <div class="playbook-when">Día 3 · mañana · 30 min</div>
+                <div class="playbook-what">Descarte 2 y entrega</div>
+                <div class="playbook-detail">Scoring final con el mismo equipo. <strong>Quedan 2 propuestas completas</strong> (estructura + tratamiento). Las presentas a producto/ingeniería sobre opciones reales — la decisión es informada porque hay alternativas concretas y descartes documentados detrás.</div>
+              </div>
             </div>
           </div>
 
           <div class="panel-block">
             <span class="block-label">Stack mínimo</span>
             <ul class="stack-list">
-              <li class="stack-item"><span><strong>Brief escrito</strong> en 3–5 líneas — usuario, job-to-be-done, restricciones.</span></li>
-              <li class="stack-item"><span><strong>DS en Figma Variables</strong> — sin tokens limpios, la IA inventa.</span></li>
-              <li class="stack-item"><span><strong>Generador conectado al DS</strong> — Figma AI, v0 con DS propio, Galileo, Subframe.</span></li>
-              <li class="stack-item"><span><strong>Tabla de evaluación</strong> — criterios escritos antes de generar. Si no, todo te parece bien.</span></li>
+              <li class="stack-item"><span><strong>Plantilla de brief</strong> — 4 campos, vive en Figma o en el repo. Obligatoria.</span></li>
+              <li class="stack-item"><span><strong>DS en Figma Variables</strong> — los tokens accesibles para el generador. Sin esto, nada funciona.</span></li>
+              <li class="stack-item"><span><strong>Generador conectado al DS</strong> — Figma Make Designs, v0 con tu DS, Galileo, Subframe, Lovable. La elección depende de qué tipo de output prefieras (Figma vs. código).</span></li>
+              <li class="stack-item"><span><strong>Tabla de scoring</strong> — criterios escritos antes de generar. Si no, todo te parece bien.</span></li>
             </ul>
+          </div>
 
-            <span class="block-label" style="margin-top: 22px;">Checklist antes de empezar</span>
+          <div class="panel-block">
+            <span class="block-label">Checklist antes de empezar</span>
             <ul class="checklist">
-              <li><span>¿Brief en <strong>3–5 líneas</strong> (no un párrafo difuso)?</span></li>
+              <li><span>¿Brief en <strong>3–5 líneas</strong> con los 4 campos?</span></li>
               <li><span>¿DS en <strong>Figma Variables</strong> y accesible para la IA?</span></li>
-              <li><span>¿Criterios de evaluación <strong>escritos antes</strong> de generar?</span></li>
-              <li><span>¿Tienes <strong>1 hora bloqueada</strong> solo para descartar?</span></li>
+              <li><span>¿Criterios de descarte <strong>escritos antes</strong> de generar?</span></li>
+              <li><span>¿Tienes <strong>1–2 compañeros</strong> bloqueados para el descarte convergente?</span></li>
             </ul>
+          </div>
 
-            <span class="block-label" style="margin-top: 22px;">Empieza mañana</span>
-            <ol class="steps">
-              <li class="step"><span><strong>Escribe un brief estrecho</strong> — un único flujo, restricciones explícitas.</span></li>
-              <li class="step"><span><strong>Genera 20 variantes en una sesión</strong>. No edites entre ellas.</span></li>
-              <li class="step"><span><strong>Descarta 18</strong> con criterios escritos. Solo quedan las 2 que enseñas.</span></li>
-              <li class="step"><span><strong>Presenta sobre opciones</strong>, no sobre intuiciones.</span></li>
-            </ol>
+          <div class="panel-block full">
+            <div class="prompt-card">
+              <button class="prompt-copy" data-copy="ideation-prompt">Copiar</button>
+              <span class="prompt-label">Prompt clave · generación de variantes (ronda 1, estructura)</span>
+              <span class="prompt-title">Para pegarlo en Figma Make Designs, v0, Galileo o Subframe. Adapta los placeholders.</span>
+<pre id="ideation-prompt">Brief:
+- Usuario: {persona}
+- Job-to-be-done: {qué quiere conseguir en esta pantalla}
+- Restricciones: {tiempo, contexto, dispositivo, datos disponibles}
+- Lo que NO puede cambiar: {regulación, marca, integración, jerarquía de info}
+
+Tu trabajo: genera 20 variantes de ESTRUCTURA para este flujo.
+
+Restricciones de generación:
+- Solo componentes del Design System adjunto. No inventes.
+- Cada variante: nombre corto, descripción 1 línea, qué cambia
+  respecto a la variante 01 (que es la base conservadora).
+- Varía al menos uno de: jerarquía, densidad, agrupación, foco
+  visual, secuencia, número de pasos.
+- NO varíes en esta ronda: colores, tipografía, iconografía,
+  tratamiento visual. Eso es de la ronda 2.
+
+No me preguntes para refinar el brief. Genera las 20. Filtramos
+después con criterios escritos. Esta ronda es divergente.</pre>
+            </div>
+          </div>
+
+          <div class="panel-block full">
+            <span class="block-label">Cuándo NO usar IA en ideación</span>
+            <p class="block-text">Para <strong>exploración divergente muy temprana</strong> sigue funcionando mejor pizarra y Figma a mano. La IA acelera la conversión de ideas <em>ya formadas</em>, no las hace aparecer. Si todavía no sabes ni qué problema estás resolviendo, hazlo tú primero — luego pide variantes sobre lo que ya tiene forma. <em>La IA es el motor de exploración, no el motor de comprensión.</em></p>
           </div>
 
           <div class="panel-block full">
@@ -1484,6 +1854,133 @@ mis hipótesis. Las decisiones de producto las tomo yo después.</pre>
 
     </section>
 
+    <section class="foundation">
+      <div class="foundation-intro">
+        <div class="eyebrow">La capa de fundación</div>
+        <h2>Cómo se preparan las empresas grandes para aplicar el método <em>a escala</em>.</h2>
+        <p>Esto <strong>no es una sexta fase</strong>. Es la infraestructura que vive por debajo de las cinco — la capa semántica, governance, agentes y telemetría que hace que el método funcione a escala enterprise. Estos 5 patrones son <em>transversales</em>: afectan a Discovery, Ideation, Prototyping, Handoff y Validation a la vez.</p>
+        <p>Si tu equipo opera por debajo de 20 personas, esto es <em>contexto cultural</em> — entender qué existe y qué resuelve, sin implementarlo entero. Si pasas de 100, sin estos patrones el método empieza a romperse: los agentes se pierden, el DS deriva, el research se atrasa, la compliance frena.</p>
+        <div class="foundation-meta">
+          <span class="meta-tag"><strong>Audiencia</strong> tech leads, design ops, principals</span>
+          <span class="meta-tag"><strong>Replicabilidad</strong> parcial — copia el principio, no el setup</span>
+          <span class="meta-tag"><strong>Horizonte</strong> 12–36 meses, no un sprint</span>
+        </div>
+        <button class="foundation-toggle" id="foundation-toggle" aria-expanded="false" aria-controls="foundation-patterns">
+          <span class="toggle-label">Ver los 5 patrones de infraestructura</span>
+          <span class="chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+        </button>
+      </div>
+
+      <div class="foundation-patterns" id="foundation-patterns" hidden>
+
+      <div class="pattern">
+        <div class="pattern-head">
+          <span class="pattern-num">01</span>
+          <span class="pattern-name">Knowledge graph del producto</span>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <span class="pattern-label">Por qué importa</span>
+            <p>A 50 productos, 200 diseñadores y 10 años de decisiones, la información ya no cabe en Figma ni en Notion. Un knowledge graph hace consultable la <em>relación</em> entre cosas: qué componente vive en qué flujo, qué decisión vino de qué research, qué pantalla está sujeta a qué regulación. <strong>Sin esa capa, los agentes de IA tropiezan con el contexto cada vez que entran al producto</strong> — con ella, lo recuperan en milisegundos. Es la diferencia entre "la IA propone diseños" y "la IA propone diseños que entienden por qué existe lo que ya existe".</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo lo aplican</span>
+            <p><strong>Google</strong> lleva años con Material Design construido sobre datos estructurados: cada token y cada componente tienen metadata que el equipo de Material usa para auditar consistencia automáticamente. <strong>Meta</strong> tiene una plataforma interna que conecta DS, flujos y telemetría (poco documentada en abierto, pero referenciada en charlas). <strong>Stripe</strong> construyó la capa por debajo de Protodash precisamente para que el generador pueda responder <em>"¿qué patterns existen para checkout regulado en este país?"</em>. <strong>Adobe</strong> integra Sensei con Frame.io para grafos de contenido.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo replicarlo</span>
+            <p>No vas a construir Material en seis meses, y no hace falta. Pero puedes empezar pequeño: estructurar tu DS en Variables, <strong>etiquetar cada componente con metadata</strong> (flujo, regulación, estado), y mantener un README por flujo con sus decisiones de diseño linkadas a research. Lo importante no es la herramienta — es la <em>disciplina de etiquetado</em>. Cuando lo tengas, cualquier LLM puede operar sobre ese contexto.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-head">
+          <span class="pattern-num">02</span>
+          <span class="pattern-name">Design System como contrato, no como librería</span>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <span class="pattern-label">Por qué importa</span>
+            <p>A escala, un DS no es "una colección de componentes para inspirarte". Es un <strong>contrato versionado</strong> al que se acoplan decenas de equipos, productos B2B con clientes que necesitan overrides, e ingeniería que importa los tokens directamente al código. Tratarlo como librería suelta produce <em>drift</em> imparable; tratarlo como contrato produce consistencia auditable.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo lo aplican</span>
+            <p><strong>Atlassian</strong> publicó abiertamente su API de tokens — los tokens son consultables programáticamente, no solo visualmente. <strong>IBM Carbon</strong> y <strong>Microsoft Fluent</strong> operan con tokens versionados con SemVer y governance estricta (qué se rompe, qué no, qué cambia entre mayores). <strong>Salesforce Lightning</strong> tiene tenant overrides nativos: cada cliente B2B puede customizar dentro de un schema cerrado. Los cambios pasan por <em>RFC</em>, no por PR suelto.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo replicarlo</span>
+            <p>Versiona tus tokens con <strong>SemVer real</strong> (no "v2 versión bonita"). Documenta qué es breaking change y qué no. Si tienes clientes B2B con personalización, define un <em>schema cerrado</em> de overrides en lugar de "que pinten lo que quieran". Mete un proceso RFC ligero (un Notion bastará al principio) para cambios en el DS — quién propone, quién revisa, cuándo entra.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-head">
+          <span class="pattern-num">03</span>
+          <span class="pattern-name">Agentes, no comandos</span>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <span class="pattern-label">Por qué importa</span>
+            <p>Un diseñador prompteando es ya 2025. A escala, los flujos son demasiado largos para depender de la disponibilidad humana — un agente recibe un ticket en Linear, consulta el knowledge graph, propone diseño basado en patterns existentes, ejecuta tests, abre PR, asigna reviewer. <strong>El diseñador supervisa puntos críticos</strong> (criterios de aceptación, decisiones de producto, accesibilidad fina) en vez de operar la herramienta. Es lo mismo que pasó con el deploy: antes hacías clicks, ahora supervisas el pipeline.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo lo aplican</span>
+            <p><strong>Stripe</strong> está evolucionando Protodash hacia este modelo: el siguiente paso documentado es que <code>/figma</code> se invoque automáticamente desde un ticket de Linear con contexto. <strong>Vercel</strong> ya opera así para componentes simples vía v0 + GitHub Actions. <strong>Microsoft</strong> integra Copilot Agents dentro de Office para automatizar flujos enteros (incluido design ops). El patrón compartido: <em>definir checkpoints humanos explícitos</em>, no eliminar al humano sino moverlo.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo replicarlo</span>
+            <p>Empieza por <strong>un flujo bien definido</strong> (por ejemplo: "componente del DS pedido en un ticket → generación → PR"). Define los checkpoints humanos por escrito (qué revisa una persona, qué firma, cuándo se rechaza). Implementa con Linear/GitHub Actions + Claude Code o equivalente. Mide rondas de aclaración: si bajan, expandes el flujo. Si suben, lo recoges.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-head">
+          <span class="pattern-num">04</span>
+          <span class="pattern-name">Telemetría continua como research</span>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <span class="pattern-label">Por qué importa</span>
+            <p>A escala, la batch research (10 entrevistas trimestrales) deja de ser representativa. <strong>Tienes millones de sesiones por semana — esa es tu muestra real.</strong> Cuando los eventos en producción están bien instrumentados, la pregunta <em>"¿cómo usa la gente este flujo?"</em> se responde con una query, no con un proyecto de research de seis semanas. Las entrevistas siguen existiendo, pero para entender el <em>porqué</em>, no el <em>qué</em>.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo lo aplican</span>
+            <p><strong>Spotify</strong> y <strong>Netflix</strong> son los referentes públicos — su research team consulta dashboards de comportamiento como primer paso de cualquier exploración. <strong>Stripe</strong> combina telemetría de payments con LLMs para detectar patrones de abandono y proponer cambios. <strong>Booking</strong> opera en el extremo con A/B testing continuo (cientos de tests simultáneos). El común: <em>las preguntas se le hacen al sistema en lenguaje natural, no se programa un nuevo análisis cada vez</em>.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo replicarlo</span>
+            <p>Instrumenta bien los eventos clave (clicks, errores, tiempos por pantalla, abandonos) — usa lo que ya tengas (<strong>Amplitude, Mixpanel, PostHog</strong>). Construye 5-10 dashboards consultables. Conecta un LLM que pueda hacer queries sobre esos datos en lenguaje natural. No reemplaza entrevistas: complementa. Cuando tu equipo se acostumbre a <em>preguntar antes de asumir</em>, has ganado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-head">
+          <span class="pattern-num">05</span>
+          <span class="pattern-name">Modelos internos, no SaaS</span>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <span class="pattern-label">Por qué importa</span>
+            <p>A escala enterprise hay tres restricciones que rompen el uso de SaaS de IA: <strong>(1) compliance</strong> — datos de clientes no pueden salir del perímetro, <strong>(2) costes</strong> — millones de queries al mes con APIs externas son inviables, <strong>(3) calidad</strong> — un modelo afinado sobre tus patterns internos supera a un modelo generalista incluso si es más pequeño. Por eso las grandes operan sus propios modelos.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo lo aplican</span>
+            <p><strong>Google</strong> opera Gemini en su propio stack y hace fine-tuning con datos internos. <strong>Meta</strong> desarrolla Llama y lo usa internamente con contexto propio. <strong>Banca</strong> (JPMorgan, Goldman, BBVA) y <strong>salud</strong> (NHS, Mayo Clinic) operan modelos on-prem por obligación regulatoria. <strong>Apple</strong> prioriza modelos on-device. El patrón: <em>el SaaS sirve para empezar; el modelo propio sirve para escalar</em>.</p>
+          </div>
+          <div class="pattern-row">
+            <span class="pattern-label">Cómo replicarlo</span>
+            <p>Probablemente no necesitas un modelo propio todavía. Pero <strong>sí necesitas saber qué datos NO pueden salir de tu perímetro</strong>. Haz un audit ligero: qué información de cliente, qué información de producto, qué información regulada se mete en prompts de SaaS. Si la respuesta es "ninguna", sigue con Claude/ChatGPT. Si es "alguna", arquitecta para mover esos casos a un proveedor con acuerdo enterprise (Anthropic Enterprise, Azure OpenAI, AWS Bedrock) <em>antes</em> de que sea problema legal.</p>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
     <section class="curator">
       <div class="curator-inner">
         <div class="curator-info">
@@ -1583,6 +2080,23 @@ mis hipótesis. Las decisiones de producto las tomo yo después.</pre>
       const curatorBtn = document.getElementById('run-curator');
       const curatorHint = document.getElementById('curator-hint');
       const CURATOR_PROMPT = 'Lanza ahora la tarea programada best-ai-design-curator y rastrea fuentes nuevas (engineering blogs, blogs personales de diseñadores, podcasts como How I AI, charlas, repositorios) sobre workflows de diseño con IA. Devuelve los hallazgos como borrador en este chat para que los revise antes de incorporarlos a la herramienta.';
+
+      // ============================================
+      // Foundation layer toggle
+      // ============================================
+      const foundationToggle = document.getElementById('foundation-toggle');
+      const foundationPatterns = document.getElementById('foundation-patterns');
+      if (foundationToggle && foundationPatterns) {
+        foundationToggle.addEventListener('click', () => {
+          const isOpen = foundationToggle.getAttribute('aria-expanded') === 'true';
+          foundationToggle.setAttribute('aria-expanded', String(!isOpen));
+          foundationPatterns.hidden = isOpen;
+          const label = foundationToggle.querySelector('.toggle-label');
+          if (label) {
+            label.textContent = isOpen ? 'Ver los 5 patrones de infraestructura' : 'Ocultar los 5 patrones';
+          }
+        });
+      }
 
       // ============================================
       // Copy buttons for prompt cards
