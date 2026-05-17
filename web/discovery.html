@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovery con IA — Best AI Design Workflow</title>
+  <meta name="description" content="Cómo los equipos top sintetizan investigación con IA sin perder trazabilidad. Patrones, herramientas y mini-tutorial.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-dot"></span>
+        Best AI Design Workflow
+      </a>
+      <nav class="topbar-nav">
+        <a href="index.html">← Volver al workflow</a>
+      </nav>
+      <span class="topbar-meta"><span class="live-dot"></span>Fase 01 · revisada 16 may 2026</span>
+    </div>
+  </header>
+
+  <div class="phase-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Workflow</a><span class="breadcrumb-sep">/</span>
+        Discovery
+      </div>
+      <span class="phase-eyebrow">Fase 01 — Discovery</span>
+      <h1>De señal en bruto a insight con cita, sin perder tres días.</h1>
+      <p class="hero-sub">La fase donde la IA es menos espectacular pero más cuantificable. Sintetizar investigación a mano sigue siendo posible — solo deja de ser razonable cuando tienes la herramienta adecuada y unas reglas claras de uso.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">01 · Qué es esta fase</p>
+      <h2>El trabajo de convertir lo que la gente dice en algo accionable.</h2>
+      <p>Discovery es donde transformas señales no estructuradas — entrevistas, transcripciones de soporte, tickets, sesiones grabadas, reviews en stores — en insights con los que se puede tomar decisión. Históricamente ha sido la fase más lenta del proceso de diseño: leer, clusterizar, citar, contrastar. Días o semanas según el volumen.</p>
+      <p>El cambio de 2026 no es que la IA "haga research por ti". Es que la IA hace lo que era tedioso (transcribir, clusterizar, indexar, encontrar citas relevantes) y te deja a ti lo que no era tedioso (interpretar, conectar con producto, priorizar). El research sigue siendo trabajo humano. El secretariado del research ya no.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">02 · Qué resuelve la IA aquí</p>
+      <h2>El cuello de botella entre <em>tener datos</em> y <em>tener insights</em>.</h2>
+
+      <div class="before-after">
+        <div class="ba-card before">
+          <h4>Antes</h4>
+          <p>Diez entrevistas, una semana sintetizando. Notas dispersas en Miro, citas que pierdes el rastro de dónde venían, conclusiones que cuando alguien las cuestiona no puedes defender porque la fuente original quedó atrás. Y al cabo del trimestre, todo ese conocimiento desaparece.</p>
+        </div>
+        <div class="ba-card after">
+          <h4>Ahora</h4>
+          <p>Transcripción automática con diarización. Clusterización temática asistida por LLM. Cada insight propuesto enlaza a las citas literales que lo respaldan. Repositorio consultable en lenguaje natural: <em>"¿qué dijeron los usuarios mayores de 50 sobre el flujo de pago en el último trimestre?"</em> — y respuesta con citas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">03 · Cómo lo hacen los mejores</p>
+      <h2>Esta fase es más de <em>patrón</em> que de <em>protagonista</em>.</h2>
+
+      <p>Aviso editorial: Discovery tiene menos casos individuales publicados que Prototyping. Buena parte del trabajo de research vive detrás de NDAs y los equipos no lo cuentan en abierto. Lo que sí está documentado son los patrones de uso de las herramientas serias.</p>
+
+      <div class="company">
+        <div class="company-header">
+          <span class="company-name">Dovetail</span>
+          <span class="company-person">Plataforma de repositorio de investigación</span>
+          <span class="company-tag">Patrón</span>
+        </div>
+        <p>Dovetail introdujo capa de IA sobre su repositorio en 2024 y se ha convertido en el patrón de referencia para equipos enterprise. Su modelo no es "la IA escribe los insights": es <strong>la IA propone tags y clusters; el investigador valida</strong>. Cada insight propuesto se acompaña de las citas que lo justifican, con timestamps. Si el investigador no encuentra la cita o no le convence, el insight no entra.</p>
+        <p>Lo que conviene robar de su forma de hacerlo: la disciplina de <strong>insight sin cita no existe</strong>. Si la IA propone una afirmación que no se puede anclar en una transcripción concreta, se rechaza por defecto. Esto elimina el principal modo de fallo de la síntesis con LLM: la alucinación de patrones plausibles pero no respaldados.</p>
+      </div>
+
+      <div class="company">
+        <div class="company-header">
+          <span class="company-name">Claude + Projects</span>
+          <span class="company-person">Patrón replicado por equipos de research internos</span>
+          <span class="company-tag">DIY</span>
+        </div>
+        <p>Para equipos que no quieren atarse a una herramienta SaaS o que tienen requisitos de confidencialidad, el patrón es:</p>
+        <ul>
+          <li>Un proyecto de Claude dedicado a una iniciativa de research.</li>
+          <li>Todas las transcripciones cargadas como knowledge del proyecto.</li>
+          <li>Instrucciones del proyecto que exigen citar siempre con referencia al archivo de origen.</li>
+          <li>Consultas iterativas: del cluster temático grande al detalle, sin reformular cada vez el contexto.</li>
+        </ul>
+        <p>Es menos pulido que una herramienta dedicada pero igual de efectivo si la disciplina del "sin cita no hay insight" se mantiene.</p>
+      </div>
+
+      <h3>El patrón común</h3>
+      <p>Lo que comparten todos los workflows serios de Discovery con IA:</p>
+      <ul>
+        <li><strong>Trazabilidad obligatoria.</strong> Cada insight enlaza a las citas que lo respaldan. Sin excepción.</li>
+        <li><strong>La IA propone, el humano valida.</strong> El research sigue siendo decisión humana — la IA acelera la parte mecánica.</li>
+        <li><strong>Repositorio consultable.</strong> El valor no está en la síntesis de un proyecto: está en poder preguntarle al cuerpo entero de research del último año en lenguaje natural.</li>
+      </ul>
+
+      <aside class="aside">
+        <span class="aside-label">Trampa frecuente</span>
+        <p>Cuanto más cómoda es la herramienta, más fácil es saltarse la verificación. Si la IA te da un párrafo bien escrito con un insight sintético, el reflejo es aceptarlo. La disciplina aquí no es técnica, es cultural: <em>tu equipo tiene que verificar las citas como verificaría una fuente periodística</em>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">04 · Stack mínimo viable</p>
+      <h2>Cuatro piezas, dos rutas según madurez.</h2>
+
+      <div class="stack-grid">
+        <div class="stack-card">
+          <h4>Transcripción</h4>
+          <p>Otter.ai o Fathom para sesiones de research. Si tu organización ya tiene Zoom o Google Meet con transcripción nativa, suficiente para empezar. Lo importante es diarización (saber quién dijo qué) y timestamps.</p>
+        </div>
+
+        <div class="stack-card">
+          <h4>Síntesis</h4>
+          <p>Dovetail si tienes presupuesto y quieres una herramienta dedicada. Claude (con Projects) o Notion AI si prefieres construir sobre lo que ya usas. Las dos rutas funcionan si la disciplina de citas se respeta.</p>
+        </div>
+
+        <div class="stack-card">
+          <h4>Repositorio consultable</h4>
+          <p>Una vez los insights existen, tienen que poder buscarse en lenguaje natural meses después. Dovetail lo hace nativo. Si vas por la ruta DIY, un proyecto de Claude permanente con todos los reports cargados cumple la misma función.</p>
+        </div>
+
+        <div class="stack-card">
+          <h4>Protocolo de validación</h4>
+          <p>No es software, es un documento. Reglas explícitas para el equipo: cuándo se acepta un insight propuesto por IA, cuándo se rechaza, cuántas citas mínimas hace falta, cómo se notan las dudas. Sin esto, la herramienta vale menos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">05 · Empieza mañana</p>
+      <h2>Cinco pasos para tu próximo ciclo de research.</h2>
+
+      <div class="tutorial">
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Empieza por las próximas entrevistas, no por el archivo entero.</h4>
+            <p>El instinto es "voy a procesar todo el research del último año". Mal arranque. Empieza con las 5-10 próximas sesiones — para entender el flujo, calibrar la herramienta, y ajustar tu protocolo antes de escalar.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Decide la ruta antes de empezar: dedicada o DIY.</h4>
+            <p>Dovetail tiene coste fijo y curva corta. La ruta Claude tiene coste variable y más configuración. Si tu equipo ya tiene Notion + Claude, empieza DIY — los aprendizajes te ayudarán si luego pasas a una herramienta dedicada.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Escribe el protocolo de validación antes de procesar nada.</h4>
+            <p>Una página, en lenguaje claro: qué es un insight, cuántas citas necesita, qué tags se permiten, cómo se notan las dudas, qué se hace con observaciones de una sola fuente. Sin esto, en dos semanas todo el mundo aplica criterios distintos.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Procesa una sesión, revisa a fondo, ajusta.</h4>
+            <p>La primera transcripción procesada se revisa cita por cita. Detectarás patrones: la IA pierde matices culturales, confunde ironías, fusiona temas que tu equipo distingue. Esos hallazgos se vuelven instrucciones del proyecto o reglas para el equipo.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Mide el ahorro real, no el percibido.</h4>
+            <p>Una semana procesando 10 sesiones a mano vs. una semana con el nuevo workflow. Tiempo, número de insights, citas por insight, satisfacción del equipo. Sin medir, no puedes defender la herramienta ante quien firma el presupuesto.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">06 · Cuándo no aplica</p>
+      <h2>Para qué research sigue siendo mejor el método de toda la vida.</h2>
+
+      <div class="callout callout-warning">
+        <h4>Mantén el manual si…</h4>
+        <ul>
+          <li><strong>El research es muy etnográfico o cultural.</strong> La IA pierde matices que un humano captura — silencios, contexto físico, lenguaje corporal en vídeo. Si esto es central, la IA es complemento, no sustituto.</li>
+          <li><strong>El tamaño es muy pequeño.</strong> Para 3-4 entrevistas profundas, el overhead de configurar el workflow no compensa. Léelas tú.</li>
+          <li><strong>El research es sensible</strong> (salud mental, situaciones legales, datos personales fuertes). Los SaaS de IA siguen siendo terreno delicado para esto — habla con privacy antes.</li>
+          <li><strong>El equipo de research es senior y no tiene problemas de tiempo.</strong> Si todo va bien, no toques nada. Adopta IA cuando tengas un cuello de botella real, no por moda.</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-danger">
+        <h4>Errores que se repiten</h4>
+        <ul>
+          <li><strong>Aceptar insights sin verificar las citas.</strong> El error nº1. Si no tienes tiempo de verificar, no tienes tiempo de tener insights.</li>
+          <li><strong>Sustituir entrevistas reales por personas sintéticas.</strong> Útil para hipótesis previas, no para reemplazar voces reales. La fase 05 (Validation) tiene más sobre esto.</li>
+          <li><strong>Sobre-clusterizar.</strong> La IA propone más categorías de las que existen de verdad. Resista la tentación. Si todos los insights se agrupan en 3 temas, son 3 temas.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">07 · Profundiza</p>
+      <h2>Material relevante.</h2>
+      <ul>
+        <li><a href="https://dovetail.com/" target="_blank" rel="noopener">Dovetail</a> · Documentación de su capa de IA y ejemplos de uso.</li>
+        <li><a href="https://www.notion.so/help/ai" target="_blank" rel="noopener">Notion AI</a> · Para equipos que quieren mantener research y producto en la misma herramienta.</li>
+        <li><a href="https://otter.ai/" target="_blank" rel="noopener">Otter.ai</a> · Estándar de facto para transcripción con diarización.</li>
+        <li><a href="https://www.maze.co/" target="_blank" rel="noopener">Maze</a> · Su capa de AI Insights complementa el proceso para research más cuantitativo.</li>
+      </ul>
+      <p class="muted" style="margin-top: 32px;">Esta fase tiene menos material publicado que otras. Si conoces un equipo con un workflow de Discovery con IA en producción que merezca documentarse, el agente curador agradecerá la pista. Última revisión editorial: 11 may 2026.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container-wide">
+      <div>
+        <div class="footer-brand-line">
+          <span class="brand-dot"></span>
+          Best AI Design Workflow
+        </div>
+        <p>Una herramienta viva sobre el workflow de diseño con IA. Editorial humano sobre material recogido por un agente curador. Sin ruido.</p>
+        <div class="footer-status">Activo · revisado 16 may 2026 · próxima ronda 1 jun 2026</div>
+      </div>
+      <div>
+        <h5>Workflow</h5>
+        <ul>
+          <li><a href="index.html#phase=discovery">Discovery</a></li>
+          <li><a href="index.html#phase=ideation">Ideation</a></li>
+          <li><a href="index.html#phase=prototyping">Prototyping</a></li>
+          <li><a href="index.html#phase=handoff">Handoff</a></li>
+          <li><a href="index.html#phase=validation">Validation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Fuentes</h5>
+        <ul>
+          <li><a href="https://www.lennysnewsletter.com/" target="_blank" rel="noopener">Lenny's Newsletter</a></li>
+          <li><a href="https://www.chatprd.ai/how-i-ai" target="_blank" rel="noopener">How I AI · ChatPRD</a></li>
+          <li><a href="https://brianlovin.com/" target="_blank" rel="noopener">Brian Lovin</a></li>
+          <li><a href="https://www.figma.com/blog/" target="_blank" rel="noopener">Figma Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Repo</h5>
+        <ul>
+          <li><a href="https://github.com/alejandrozh/Best-Design-AI-Workflow" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="index.html">Volver al workflow</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

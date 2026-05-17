@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototyping con IA — Best AI Design Workflow</title>
+  <meta name="description" content="Cómo Notion y Stripe convierten Figma en prototipos funcionales con bucle de auto-corrección. Patrón, stack y receta.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-dot"></span>
+        Best AI Design Workflow
+      </a>
+      <nav class="topbar-nav">
+        <a href="index.html">← Volver al workflow</a>
+      </nav>
+      <span class="topbar-meta"><span class="live-dot"></span>Fase 03 · revisada 16 may 2026</span>
+    </div>
+  </header>
+
+  <div class="phase-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Workflow</a><span class="breadcrumb-sep">/</span>
+        Prototyping
+      </div>
+      <span class="phase-eyebrow">Fase 03 — Prototyping</span>
+      <h1>De Figma a prototipo funcional, en minutos.</h1>
+      <p class="hero-sub">La fase donde la IA está cambiando el oficio más rápido. Los mejores equipos del mundo ya no entregan clickables de Figma — entregan código navegable, en el mismo entorno donde acabará viviendo el producto.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">01 · Qué es esta fase</p>
+      <h2>El momento en que tu idea pasa de pantalla a producto.</h2>
+      <p>Prototyping es la fase en la que una idea o un wireframe se convierte en algo navegable, con el que un usuario (o tú) puede interactuar de verdad. Tradicionalmente, una secuencia de horas en Figma haciendo clickables — y al pasárselo a ingeniería, una semana de reinterpretaciones.</p>
+      <p>El cambio de mentalidad de 2026: el destino real del prototipo es <strong>un navegador, no una pantalla de Figma</strong>. Porque los productos con IA — chats, agentes, generación — no se entienden con un mockup estático. Hay que sentirlos, probarlos, ver cómo responden con datos reales y con la latencia real.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">02 · Qué resuelve la IA aquí</p>
+      <h2>El de pasarte dos días convirtiendo Figma en algo <em>que se pueda usar</em>.</h2>
+
+      <div class="before-after">
+        <div class="ba-card before">
+          <h4>Antes</h4>
+          <p>De uno a dos días convirtiendo un wireframe en un clickable de Figma. Estático, sin estados reales (¿qué pasa si hay error? ¿si tarda en cargar? ¿si la lista está vacía?), y al cruzar a ingeniería, reinterpretado media docena de veces hasta que se parece a lo que tenías en la cabeza.</p>
+        </div>
+        <div class="ba-card after">
+          <h4>Ahora</h4>
+          <p>Minutos. Un agente convierte el wireframe en un componente React funcional con todos los estados, datos realistas y compara visualmente el resultado con el diseño original — corrigiéndose solo si detecta diferencias. El prototipo vive ya en el mismo stack donde vivirá el producto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">03 · Cómo lo hacen los mejores</p>
+      <h2>Notion y Stripe ya tienen esto resuelto en producción.</h2>
+
+      <div class="company">
+        <div class="company-header">
+          <span class="company-name">Notion</span>
+          <span class="company-person">Brian Lovin, diseñador del equipo Notion AI</span>
+          <span class="company-tag">Prototype Playground</span>
+        </div>
+
+        <p>El equipo de Notion AI construyó un repositorio compartido al que llaman <strong>Prototype Playground</strong>. Una sola aplicación Next.js, una carpeta por diseñador, los tokens del design system de Notion ya integrados. Cuando un diseñador arranca un prototipo, automáticamente se siente Notion sin necesidad de afinar nada.</p>
+
+        <p>Encima de esa infraestructura, Brian Lovin creó un comando custom — <code>/figma</code> — que ejecuta cuatro cosas en cadena cuando le pegas un enlace de Figma:</p>
+
+        <ol>
+          <li><strong>Lee el diseño</strong> usando el MCP de Figma.</li>
+          <li><strong>Genera el código</strong> en Next.js y Tailwind, respetando los tokens del DS.</li>
+          <li><strong>Abre un navegador real</strong>, captura el resultado, y lo compara con el Figma original.</li>
+          <li><strong>Si detecta diferencias</strong>, las arregla, reintenta y vuelve a comparar. Hasta tres iteraciones sin cambios.</li>
+        </ol>
+
+        <blockquote>
+          No he escrito una sola línea de código de front-end en tres meses.
+          <cite>Brian Lovin · How I AI · febrero 2026</cite>
+        </blockquote>
+
+        <p>El 80% del prototipo terminado en segundos. El 20% restante — afinado fino, accesibilidad, edge cases — sigue siendo trabajo del diseñador. Lo realmente nuevo no es "Figma a código" (v0 y Anima ya lo hacían): es el <strong>bucle de auto-corrección</strong>. El agente ve su propio error y lo arregla sin intervención.</p>
+      </div>
+
+      <aside class="aside">
+        <span class="aside-label">MCP en una línea</span>
+        <p>Si lo has visto rondar y no lo ubicas: MCP es el protocolo que está convirtiéndose en el estándar para que un agente de IA hable con herramientas externas — Figma, GitHub, Slack, Chrome — sin programar la conexión a medida. Figma lanzó su MCP oficial en febrero de 2026. Cuando aquí se mencione <em>Figma MCP</em> o <em>Chrome DevTools MCP</em>, ese es el conector subyacente.</p>
+      </aside>
+
+      <div class="company">
+        <div class="company-header">
+          <span class="company-name">Stripe</span>
+          <span class="company-person">Owen Williams, Design Manager</span>
+          <span class="company-tag">Protodash</span>
+        </div>
+
+        <p>El equipo de Stripe construyó una herramienta interna llamada <strong>Protodash</strong>. Empezó como un set de reglas de Cursor y evolucionó a un estudio de prototipado completo conectado contra el design system de Stripe.</p>
+
+        <p>El término interno que usan para describir lo que quieren <em>evitar</em>: <strong>blurple slop</strong>. El aspecto genérico violeta-azulado de los prototipos hechos con IA cuando no están enraizados en un design system serio. Si tu prototipo parece sacado de v0 sin contexto, eres víctima del blurple slop. Si parece Stripe, has llegado a Protodash.</p>
+
+        <p>La diferencia con Notion no está en la idea — está en el ámbito. Protodash es más prescriptivo, integra revisión y deploy, y empuja al equipo entero hacia el mismo workflow en vez de dejar margen para variaciones individuales.</p>
+      </div>
+
+      <h3>El patrón común</h3>
+      <p>Lo que comparten Notion y Stripe — y lo que conviene adaptar a cualquier contexto:</p>
+      <ul>
+        <li><strong>Entorno compartido</strong>, no scripts sueltos en máquinas individuales. Una app, un repositorio, una carpeta por persona.</li>
+        <li><strong>Design system como fuente de verdad.</strong> La IA selecciona de tu biblioteca; no inventa colores ni espaciados. Sin tokens limpios en Figma Variables, este paso no funciona.</li>
+        <li><strong>Bucle de verificación.</strong> El agente contrasta su salida contra el diseño original. La palanca real está aquí, no en la generación inicial.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">04 · Stack mínimo viable</p>
+      <h2>Cuatro piezas. Solo una requiere setup técnico.</h2>
+
+      <div class="stack-grid">
+        <div class="stack-card">
+          <h4>Figma con Variables</h4>
+          <p>Los tokens del DS — colores, espaciados, tipografía — tienen que vivir en Variables. Sin esto, el MCP extrae basura. Prerrequisito no negociable.</p>
+        </div>
+
+        <div class="stack-card">
+          <h4>Claude Code <em>o</em> Cursor</h4>
+          <p>Un agente que vive en terminal o editor. Cualquiera funciona — modelos equivalentes por debajo. Elige uno y unifica al equipo entero.</p>
+        </div>
+
+        <div class="stack-card">
+          <h4>Figma MCP</h4>
+          <p>El conector entre Figma y el agente. Lo instala el tech lead una vez con un token de lectura del DS. Después, todo el mundo lo usa sin pensarlo.</p>
+        </div>
+
+        <div class="stack-card">
+          <h4>Playground compartido</h4>
+          <p>Una app Next.js con un repositorio único, una carpeta por diseñador y los tokens del DS integrados. Una mañana de trabajo. Convierte el truco individual en proceso de equipo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">05 · Empieza mañana</p>
+      <h2>Cinco pasos para la primera vez.</h2>
+      <p class="muted">Asumiendo que la infraestructura está montada. Si no, el primer paso real es ese — y es trabajo de tu tech lead, no tuyo.</p>
+
+      <div class="tutorial">
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Habla con tu tech lead.</h4>
+            <p>Para arrancar hace falta que alguien técnico monte la infraestructura: instalar el MCP de Figma, configurar el agente con permisos al DS, y crear el repositorio compartido. Una mañana. Si necesita receta, hay documentación pública del Prototype Playground de Notion.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Elige un componente pequeño para la primera prueba.</h4>
+            <p>No empieces por la home. Elige algo con varios estados — una <em>Card</em>, un input con validación, un dropdown, un toast. Donde puedas ver el valor del bucle de verificación en pequeño antes de jugártela en algo grande.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Cierra el diseño en Figma usando solo componentes del DS.</h4>
+            <p>El frame final no usa estilos sueltos — todo viene del design system. Ponlo en una página dedicada (<code>Ready for code</code>) para distinguirlo de los borradores. Si la IA extrae estilos inventados, el bucle se rompe.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Ejecuta <code>/figma</code> y lee el plan.</h4>
+            <p>El agente generará un plan antes de tocar nada: qué archivos va a crear, qué estados va a cubrir, qué librerías necesita. Léelo. Si algo no encaja, dilo ahora — corregir un plan cuesta segundos, corregir código generado cuesta minutos.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-step-num"></div>
+          <div>
+            <h4>Revisa la pull request — screenshot y accesibilidad, no código.</h4>
+            <p>El agente abre la PR con tu componente. Tu trabajo: confirmar visualmente que se parece al diseño (la IA ya lo comprobó, pero firma tú con tus ojos) y validar la accesibilidad (foco visible, contraste, navegación por teclado). El código en sí lo revisa ingeniería.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">06 · Cuándo no aplica</p>
+      <h2>Esto no sirve para todo. Que nadie te diga lo contrario.</h2>
+
+      <div class="callout callout-warning">
+        <h4>No uses este workflow si…</h4>
+        <ul>
+          <li><strong>Estás en exploración divergente muy temprana.</strong> Para eso sigue siendo mejor Figma a mano o pizarra. La IA acelera la conversión de ideas <em>ya formadas</em>, no las hace aparecer.</li>
+          <li><strong>Tu DS no está en Variables de Figma.</strong> Primero arregla eso. Sin tokens limpios, esto fabrica resultados inconsistentes que cuestan más tiempo del que ahorran.</li>
+          <li><strong>Compliance no permite que datos del producto pasen por un SaaS de IA.</strong> Habla con seguridad antes. Hay opciones enterprise con aislamiento, pero requieren contrato.</li>
+          <li><strong>Es un mockup desechable para una presentación corta.</strong> No compensa el setup. Para eso, un Figma rápido sigue siendo más eficiente.</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-danger">
+        <h4>Errores que se repiten al adoptarlo</h4>
+        <ul>
+          <li><strong>Regenerar entero cada vez.</strong> Iterar, no rehacer. Si el bucle detecta un fallo, se corrige <em>esa parte</em>.</li>
+          <li><strong>"El agente sabe mejor."</strong> Si la IA se aleja del DS por iniciativa propia, se rechaza. El DS es la fuente de verdad.</li>
+          <li><strong>Aprobar por estética.</strong> Si no pasa la verificación y la accesibilidad, no entra. Sin "esta vez sí".</li>
+          <li><strong>Lorem ipsum y datos falsos.</strong> Los mocks tienen que ser plausibles — nombres reales, fechas coherentes, importes que cuadren. Cambian las decisiones de layout.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p class="big-heading">07 · Profundiza</p>
+      <h2>Material original, en inglés todo.</h2>
+      <ul>
+        <li><a href="https://www.chatprd.ai/how-i-ai/how-notion-designs-with-ai-brian-lovins-prototype-playground-and-claude-code-workflows" target="_blank" rel="noopener">Cómo Notion diseña con IA — Brian Lovin (How I AI, feb 2026)</a></li>
+        <li><a href="https://www.chatprd.ai/how-i-ai/stripe-owen-williams-on-buildling-internal-prototyping-studio" target="_blank" rel="noopener">Cómo Stripe mató el blurple slop — Owen Williams (How I AI, may 2026)</a></li>
+        <li><a href="https://www.chatprd.ai/how-i-ai/workflows/build-an-ai-workflow-to-convert-figma-designs-to-code-with-a-self-correction-loop" target="_blank" rel="noopener">Guía técnica: el bucle de auto-corrección Figma→código (ChatPRD)</a></li>
+        <li><a href="https://www.lennysnewsletter.com/p/i-havent-written-a-single-line-of" target="_blank" rel="noopener">"I haven't written a line of front-end in 3 months" (Lenny's)</a></li>
+        <li><a href="https://brianlovin.com/" target="_blank" rel="noopener">brianlovin.com — fuente directa</a></li>
+      </ul>
+      <p class="muted" style="margin-top: 32px;">Esta página se actualiza cuando el agente curador encuentra material nuevo que cumple la barra. Última revisión editorial: 11 may 2026.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container-wide">
+      <div>
+        <div class="footer-brand-line">
+          <span class="brand-dot"></span>
+          Best AI Design Workflow
+        </div>
+        <p>Una herramienta viva sobre el workflow de diseño con IA. Editorial humano sobre material recogido por un agente curador. Sin ruido.</p>
+        <div class="footer-status">Activo · revisado 16 may 2026 · próxima ronda 1 jun 2026</div>
+      </div>
+      <div>
+        <h5>Workflow</h5>
+        <ul>
+          <li><a href="index.html#phase=discovery">Discovery</a></li>
+          <li><a href="index.html#phase=ideation">Ideation</a></li>
+          <li><a href="index.html#phase=prototyping">Prototyping</a></li>
+          <li><a href="index.html#phase=handoff">Handoff</a></li>
+          <li><a href="index.html#phase=validation">Validation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Fuentes</h5>
+        <ul>
+          <li><a href="https://www.lennysnewsletter.com/" target="_blank" rel="noopener">Lenny's Newsletter</a></li>
+          <li><a href="https://www.chatprd.ai/how-i-ai" target="_blank" rel="noopener">How I AI · ChatPRD</a></li>
+          <li><a href="https://brianlovin.com/" target="_blank" rel="noopener">Brian Lovin</a></li>
+          <li><a href="https://www.figma.com/blog/" target="_blank" rel="noopener">Figma Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Repo</h5>
+        <ul>
+          <li><a href="https://github.com/alejandrozh/Best-Design-AI-Workflow" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="index.html">Volver al workflow</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
