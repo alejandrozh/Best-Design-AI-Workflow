@@ -83,6 +83,13 @@ Aquí almaceno decisiones, contexto y aprendizajes para que las próximas sesion
 - **Próxima:** 1 jun 2026
 - **Status:** habilitada
 
+### Integración agente curador (18 may 2026)
+- **Agente Managed Agents creado:** `agent_018WY2x8bsCxN5HVgLtCiSqA`
+- **Arquitectura:** botón → Cloudflare Worker (`curator-worker/`) → API Managed Agents Anthropic
+- **Worker:** `curator-worker/index.js` + `wrangler.toml`. Variables: `ANTHROPIC_API_KEY` (secret), `AGENT_ID`, `ENVIRONMENT_ID`, `ALLOWED_ORIGIN`
+- **Estado:** código completo, pendiente de despliegue por Alex en Cloudflare + sustituir `CURATOR_WORKER_URL` en `web/index.html`
+- **Endpoint API:** `POST https://api.anthropic.com/v1/sessions` con header `anthropic-beta: managed-agents-2026-04-01`; luego `POST /v1/sessions/{id}/events` para el trigger
+
 ### Lo que NO está hecho aún
 - Sub-páginas para Ideation, Handoff, Validation (los enlaces en el index todavía dicen "lectura larga próximamente").
 - Unificación visual entre `index.html` (nueva paleta clara) y `discovery.html` / `prototyping.html` (paleta cream original en `styles.css`).

@@ -1,0 +1,32 @@
+name       = "best-design-curator-worker"
+main       = "index.js"
+compatibility_date = "2024-01-01"
+
+# ─── Despliegue ────────────────────────────────────────────────────────────
+#
+# 1. Instala Wrangler si no lo tienes:
+#       npm install -g wrangler
+#
+# 2. Autentícate:
+#       wrangler login
+#
+# 3. Configura las variables (la API key como secret para que no quede en disco):
+#       wrangler secret put ANTHROPIC_API_KEY
+#       wrangler vars put AGENT_ID          "agent_018WY2x8bsCxN5HVgLtCiSqA"
+#       wrangler vars put ENVIRONMENT_ID    "env_TU_ENVIRONMENT_ID_AQUI"
+#       wrangler vars put ALLOWED_ORIGIN    "https://alejandrozh.github.io"
+#
+# 4. Despliega:
+#       wrangler deploy
+#
+# Cloudflare te dará una URL del estilo:
+#   https://best-design-curator-worker.TU-SUBDOMINIO.workers.dev
+#
+# Copia esa URL y pégala como CURATOR_WORKER_URL en web/index.html.
+# ──────────────────────────────────────────────────────────────────────────
+
+[vars]
+# Sobreescribe estos valores con `wrangler vars put` (no pongas aquí la API key)
+AGENT_ID        = "agent_018WY2x8bsCxN5HVgLtCiSqA"
+ENVIRONMENT_ID  = "env_01WTAhnqzernXqwEMjfwbvbd"
+ALLOWED_ORIGIN  = "https://alejandrozh.github.io"

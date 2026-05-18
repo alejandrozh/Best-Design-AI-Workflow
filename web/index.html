@@ -2097,23 +2097,14 @@ mis hipótesis. Las decisiones de producto las tomo yo después.</pre>
       }
 
       // ============================================
-      // Curator trigger
+      // Curator trigger — llama al agente via worker
       // ============================================
+      // Tras desplegar el Cloudflare Worker (ver curator-worker/wrangler.toml),
+      // sustituye la URL de abajo por la que Cloudflare te asigne.
+      const CURATOR_WORKER_URL = 'https://best-design-curator-worker.zarza-design.workers.dev';
+
       const curatorBtn = document.getElementById('run-curator');
       const curatorHint = document.getElementById('curator-hint');
-      const CURATOR_PROMPT = `Eres un agente curador con persona de senior product designer. Tu misión: rastrear fuentes primarias (engineering blogs, blogs personales de diseñadores top, podcasts como How I AI, charlas de conferencia, repositorios abiertos) sobre workflows de diseño con IA en 2026, y devolver los hallazgos como borrador para revisión humana.
-
-Empresas y voces que seguir prioritariamente: Notion (Brian Lovin), Stripe (Owen Williams, Protodash), Airbnb, Linear, Vercel (v0), Shopify, Figma (Make Designs, Dev Mode + MCP), Anthropic, Spotify, Netflix.
-
-Para cada hallazgo devuelve:
-- Empresa / persona
-- Práctica concreta (un comando, un prompt, un stack, una métrica)
-- En qué fase encaja: Discovery, Ideation, Prototyping, Handoff, Validation, o capa de fundación (knowledge graph, DS como contrato, agentes, telemetría, modelos internos)
-- Fuente con link y fecha
-
-Barra de entrada: solo proceso documentado en formato primario, reutilizable, mapeable. Sin marketing, sin especulación, sin opiniones sin práctica documentada. Mínimo 3 hallazgos, máximo 8.
-
-Empieza ahora.`;
 
       // ============================================
       // Foundation layer toggle
@@ -2169,54 +2160,63 @@ Empieza ahora.`;
       if (curatorBtn) {
         const originalLabel = curatorBtn.textContent;
         const loadingMessages = [
-          'Conectando con Claude…',
-          'Cargando el prompt del curador…',
-          'Preparando el rastreo de las top tech…',
-          'Abriendo nueva pestaña…'
+          'Conectando con el agente…',
+          'Creando sesión de Managed Agents…',
+          'Disparando el barrido…',
+          'Casi listo…'
         ];
 
         curatorBtn.addEventListener('click', async () => {
-          // Copy as fallback in case the URL prefill no llega
-          try {
-            await navigator.clipboard.writeText(CURATOR_PROMPT);
-          } catch (e) {
-            const ta = document.createElement('textarea');
-            ta.value = CURATOR_PROMPT;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            try { document.execCommand('copy'); } catch (_) {}
-            document.body.removeChild(ta);
+          if (CURATOR_WORKER_URL === 'REEMPLAZA_CON_TU_WORKER_URL') {
+            curatorHint.innerHTML = '<strong>⚠ Configura CURATOR_WORKER_URL</strong> en index.html antes de usar este botón.';
+            return;
           }
 
-          // Loading state with rotating messages
           curatorBtn.classList.add('loading');
           curatorBtn.textContent = 'Lanzando al curador';
+          curatorBtn.disabled = true;
           let msgIdx = 0;
           curatorHint.innerHTML = '<strong>' + loadingMessages[msgIdx] + '</strong>';
           const rotate = setInterval(() => {
             msgIdx = (msgIdx + 1) % loadingMessages.length;
             curatorHint.innerHTML = '<strong>' + loadingMessages[msgIdx] + '</strong>';
-          }, 650);
+          }, 700);
 
-          // After the animation, open Claude.ai with the prompt prefilled
-          setTimeout(() => {
+          try {
+            const res = await fetch(CURATOR_WORKER_URL, { method: 'POST' });
+            const data = await res.json();
             clearInterval(rotate);
-
-            const url = 'https://claude.ai/new?q=' + encodeURIComponent(CURATOR_PROMPT);
-            window.open(url, '_blank', 'noopener,noreferrer');
-
             curatorBtn.classList.remove('loading');
-            curatorBtn.classList.add('opened');
-            curatorBtn.textContent = '✓ Claude abierto en nueva pestaña';
-            curatorHint.innerHTML = '<strong>Listo.</strong> En la nueva pestaña, pulsa <strong>Enviar</strong> para arrancar el barrido. Si el prompt no se rellenó solo, está copiado al portapapeles — pégalo.';
+            curatorBtn.disabled = false;
 
+            if (data.success) {
+              curatorBtn.classList.add('opened');
+              curatorBtn.textContent = '✓ Barrido iniciado';
+              curatorHint.innerHTML = `<strong>Sesión activa.</strong> ID: <code style="font-family:var(--font-mono);font-size:11px">${data.session_id}</code>`;
+              setTimeout(() => {
+                curatorBtn.classList.remove('opened');
+                curatorBtn.textContent = originalLabel;
+                curatorHint.innerHTML = '&nbsp;';
+              }, 12000);
+            } else {
+              curatorBtn.textContent = '✗ Error al lanzar';
+              curatorHint.innerHTML = `<strong style="color:var(--accent)">Error:</strong> ${data.error || 'respuesta inesperada del worker'}`;
+              setTimeout(() => {
+                curatorBtn.textContent = originalLabel;
+                curatorHint.innerHTML = '&nbsp;';
+              }, 6000);
+            }
+          } catch (err) {
+            clearInterval(rotate);
+            curatorBtn.classList.remove('loading');
+            curatorBtn.disabled = false;
+            curatorBtn.textContent = '✗ Error de red';
+            curatorHint.innerHTML = '<strong style="color:var(--accent)">No se pudo conectar.</strong> Comprueba que el worker está desplegado.';
             setTimeout(() => {
-              curatorBtn.classList.remove('opened');
               curatorBtn.textContent = originalLabel;
-            }, 8000);
-          }, 1900);
+              curatorHint.innerHTML = '&nbsp;';
+            }, 6000);
+          }
         });
       }
     })();
