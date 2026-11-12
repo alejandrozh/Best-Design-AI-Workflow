@@ -1,31 +1,49 @@
 # Best AI Design Workflow
 
-Una herramienta viva sobre el workflow de diseño con IA. Cinco fases del proceso, con las prácticas que están funcionando en Notion, Stripe, Uber, Airbnb, Anthropic y más.
+Una herramienta viva sobre el workflow de diseño con IA: cinco fases del proceso, con las prácticas que están funcionando en Notion, Stripe, Uber, Airbnb, Anthropic y más.
 
-Editorial humano sobre material recogido por un agente curador que rastrea fuentes primarias (engineering blogs, podcasts, charlas, repos abiertos). Lo que no funciona, no entra.
+Un agente curador rastrea fuentes primarias dos veces al mes y **propone** cambios. Nada se publica sin revisión humana.
 
-## Cómo verla
+## Cómo funciona
 
-Abre [`web/index.html`](web/index.html) en el navegador.
+```
+web/content.json   ← TODO el contenido (fases, prácticas, prompts, fuentes)
+web/index.html     ← la plantilla: diseño + código que pinta content.json
+```
 
-Si tienes GitHub Pages activado en este repo apuntando a `/web`, también funciona como sitio público.
+Como en un design system: el contenido y el diseño están separados. El agente solo edita `content.json`; el diseño no se toca.
+
+```
+Cloudflare Worker (1 y 15 de cada mes, o botón con clave)
+  → Agente curador (Claude Managed Agents) edita web/content.json en una rama curator/AAAA-MM-DD
+  → GitHub Action abre un Pull Request
+  → Alex revisa y pulsa Merge
+  → GitHub Pages publica la web actualizada
+```
 
 ## Estructura
 
 ```
 web/
-  index.html        # La herramienta — workflow con 5 fases en acordeón
-  styles.css        # Estilos compartidos de las páginas largas
-  discovery.html    # Lectura larga de Fase 01
-  prototyping.html  # Lectura larga de Fase 03
+  index.html                  plantilla de la herramienta
+  content.json                contenido
+  logo.png
+curator-worker/
+  index.js                    Worker: cron + botón protegido con clave
+  wrangler.toml               configuración del Worker
+  agent-system-prompt.md      instrucciones del agente (copiadas en la Console de Claude)
+.github/workflows/
+  curator-pr.yml              abre el PR cuando el agente sube su rama
+index.html                    redirige a web/ (para GitHub Pages)
+*.md (raíz)                   material de investigación original
 ```
 
-Material de investigación (markdown, fuente del contenido):
+## Ver en local
+
+`content.json` no se puede leer abriendo el HTML con doble clic. Usa la URL de GitHub Pages o, en local:
 
 ```
-01_master_workflow.md
-02_case_study_notion.md
-informe_flujos_ia_diseno_2026.md
+npx serve web
 ```
 
 ## Las cinco fases
@@ -36,15 +54,11 @@ informe_flujos_ia_diseno_2026.md
 4. **Handoff** — la spec se genera sola
 5. **Validation** — fricciones antes de usuarios reales
 
-Cada fase incluye prácticas reales con fuente nombrada, stack mínimo, checklist previa, prompt o comando copiable, y métricas de setup vs. runtime.
-
-## Curaduría
-
-Un agente curador con persona de senior product designer rastrea fuentes cada 1 y 15 del mes. Los hallazgos se publican como borrador para revisión humana antes de incorporarse a la herramienta. La barra de entrada: proceso documentado en formato primario, reutilizable, mapeable a una fase concreta. Sin marketing, sin especulación.
+Más la **capa de fundación**: cinco patrones de infraestructura que las grandes empresas aplican por debajo del proceso.
 
 ## Estado
 
-`v0.3 · 16 may 2026` · Discovery y Prototyping con contenido completo. Ideation, Handoff y Validation con contenido condensado, esperando la próxima ronda de curación.
+`v0.4 · 11 nov 2026` · contenido separado del diseño, subpáginas integradas en una sola página, curador que propone cambios por Pull Request.
 
 ---
 

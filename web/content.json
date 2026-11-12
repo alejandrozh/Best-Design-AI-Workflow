@@ -1,0 +1,1009 @@
+{
+  "meta": {
+    "version": "0.4",
+    "updated": "2026-11-11",
+    "last_run": null,
+    "schedule": "1 y 15 de cada mes"
+  },
+  "phases": [
+    {
+      "id": "discovery",
+      "name": "Discovery",
+      "hint": "De señal a insight con cita.",
+      "status": "ready",
+      "status_note": "contenido completo",
+      "title_html": "De señal en bruto a insight con cita, <em>sin perder tres días</em>.",
+      "intro_html": "La IA hace lo tedioso del research (transcribir, clusterizar, indexar) y deja al diseñador lo que no era tedioso (interpretar, conectar con producto, priorizar). El research sigue siendo trabajo humano. El secretariado del research, no.",
+      "meta": [
+        {
+          "k": "Setup",
+          "v": "2 días (protocolo + config)"
+        },
+        {
+          "k": "Por sesión",
+          "v": "~20 min de revisión humana"
+        },
+        {
+          "k": "Ahorro típico",
+          "v": "60–70% vs. síntesis manual"
+        }
+      ],
+      "blocks": [
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "practices",
+              "label": "Cómo lo hacen los top",
+              "items": [
+                {
+                  "team": "Dovetail",
+                  "logo": {
+                    "slug": "dovetail",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "patron",
+                  "source": "Repositorio enterprise",
+                  "html": "<strong>La IA propone tags y clusters; el investigador valida.</strong> Cada insight propuesto se acompaña de las citas que lo justifican, con timestamps. <em>Insight sin cita no existe.</em> En la práctica: el equipo carga las grabaciones, Dovetail genera tags sugeridos por sesión, y un investigador los acepta o rechaza en bloque antes de que entren al repo. La regla interna: <strong>un mínimo de 3 menciones por usuarios distintos para que un tema cuente como insight</strong>. Por debajo de eso es señal débil — se anota, no se publica."
+                },
+                {
+                  "team": "Claude + Projects",
+                  "logo": {
+                    "slug": "anthropic",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "diy",
+                  "source": "Equipos con NDAs",
+                  "html": "Un proyecto de Claude por iniciativa de research. Las transcripciones (con nombre de archivo que identifique al usuario: <code>U07_2026-05-12.md</code>) cargadas como knowledge. En las <strong>instrucciones del proyecto</strong> se escribe la regla dura: \"cualquier afirmación sin cita literal con fuente y minuto: rechaza, no la generes\". A partir de ahí, las consultas iterativas son consultas en lenguaje natural — <em>\"¿qué dijeron los usuarios &gt;50 sobre el flujo de pago este trimestre?\"</em> — y el modelo responde con citas."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Stack mínimo",
+              "style": "stack",
+              "items": [
+                "<strong>Transcripción</strong> — Otter.ai o Fathom. Diarización y timestamps no negociables.",
+                "<strong>Síntesis</strong> — Dovetail si hay presupuesto. Claude Projects o Notion AI si no.",
+                "<strong>Repositorio consultable</strong> — los insights tienen que poder buscarse en lenguaje natural meses después.",
+                "<strong>Protocolo de validación</strong> — un documento, no software. Reglas explícitas para el equipo."
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Checklist antes de empezar",
+              "style": "checklist",
+              "items": [
+                "¿Tienes <strong>consentimiento</strong> para procesar las transcripciones con IA?",
+                "¿Tu <strong>protocolo de validación</strong> está escrito y socializado?",
+                "¿Hay una <strong>persona responsable</strong> de validar (no opcional)?",
+                "¿Tienes <strong>taxonomía base de tags</strong> o vas a dejar que emerja?"
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Empieza mañana",
+              "style": "steps",
+              "items": [
+                "<strong>Empieza por las próximas 5–10 sesiones</strong>, no por el archivo entero.",
+                "<strong>Escribe el protocolo</strong> antes de procesar nada.",
+                "<strong>Revisa cita por cita</strong> en la primera transcripción. Los hallazgos se vuelven reglas.",
+                "<strong>Mide el ahorro real</strong> — tiempo, número de insights, citas por insight."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "prompt",
+              "label": "Prompt clave · síntesis con citas",
+              "title": "Para usar con Claude Projects o ChatGPT con las transcripciones cargadas",
+              "text": "Tengo {N} transcripciones de entrevistas a usuarios sobre {TEMA}. Cada archivo\nse llama U{ID}_{FECHA}.md y empieza con metadatos del participante.\n\nTu trabajo:\n1. Identifica 5–8 temas recurrentes. Cada tema necesita al menos 3 menciones\n   por usuarios distintos para entrar. Si solo aparece en 1–2, márcalo como\n   \"señal débil — investigar más\", no como insight.\n2. Para cada tema: descripción de 1 línea, n_menciones, y un array de citas\n   literales (texto exacto, archivo de origen, minuto aproximado).\n3. Cualquier afirmación sin cita literal: rechaza, no la generes.\n4. No conviertas en insight cosas que el participante dijo \"porque sí\":\n   distingue declaración de hecho vs. preferencia vs. anécdota.\n\nFormato de salida: JSON con\n  { tema, descripcion, n_menciones, citas: [{texto, fuente, minuto}] }"
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "Trampa frecuente",
+              "paragraphs": [
+                "Cuanto más cómoda es la herramienta, más fácil es saltarse la verificación. Si la IA te da un párrafo bien escrito con un insight sintético, el reflejo es aceptarlo. La disciplina aquí no es técnica, es cultural: <em>tu equipo tiene que verificar las citas como verificaría una fuente periodística</em>."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Cuándo no aplica",
+              "style": "stack",
+              "items": [
+                "<strong>Research muy etnográfico o cultural.</strong> La IA pierde silencios, contexto físico y lenguaje corporal. Ahí es complemento, no sustituto.",
+                "<strong>Tamaño muy pequeño.</strong> Para 3–4 entrevistas profundas el setup no compensa: léelas tú.",
+                "<strong>Research sensible</strong> (salud mental, temas legales, datos personales fuertes). Habla con privacy antes.",
+                "<strong>Equipo senior sin problemas de tiempo.</strong> Adopta IA cuando haya un cuello de botella real, no por moda."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Errores que se repiten",
+              "style": "stack",
+              "items": [
+                "<strong>Aceptar insights sin verificar las citas.</strong> Si no hay tiempo de verificar, no hay tiempo de tener insights.",
+                "<strong>Sustituir entrevistas por personas sintéticas.</strong> Útiles para hipótesis previas, no para reemplazar voces reales.",
+                "<strong>Sobre-clusterizar.</strong> La IA propone más categorías de las que existen. Si todo cae en 3 temas, son 3 temas."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "links",
+              "label": "Fuentes",
+              "items": [
+                {
+                  "title": "Dovetail · capa de IA del repositorio de research",
+                  "url": "https://dovetail.com/"
+                },
+                {
+                  "title": "Notion AI · research y producto en la misma herramienta",
+                  "url": "https://www.notion.so/help/ai"
+                },
+                {
+                  "title": "Otter.ai · transcripción con diarización",
+                  "url": "https://otter.ai/"
+                },
+                {
+                  "title": "Maze · AI Insights para research más cuantitativo",
+                  "url": "https://www.maze.co/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "updated": "2026-05-16"
+    },
+    {
+      "id": "ideation",
+      "name": "Ideation",
+      "hint": "Veinte variantes en una tarde.",
+      "status": "draft",
+      "status_note": "contenido condensado · se amplía en la próxima ronda del curador",
+      "title_html": "Veinte variantes de layout en una tarde, <em>todas dentro del design system</em>.",
+      "intro_html": "La fase más \"craft\" del proceso. El cambio de 2026 no es tener <em>ideas creativas</em> generadas por IA — eso es ruido. Es ampliar el espacio de solución de forma sistemática <strong>antes</strong> de cerrarlo. Decidir entre veinte variantes reales generadas en horas, no entre dos que cabían en tu cabeza después de una semana.",
+      "meta": [
+        {
+          "k": "Setup",
+          "v": "2 h (brief + criterios escritos)"
+        },
+        {
+          "k": "Por iteración",
+          "v": "20–40 min generar + 1 h descartar"
+        },
+        {
+          "k": "Output típico",
+          "v": "20 variantes → presentas 2"
+        }
+      ],
+      "blocks": [
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "El cambio de oficio",
+              "paragraphs": [
+                "La IA en ideación no piensa por ti — explora donde le dices que explore. Esa es la diferencia entre los equipos que la usan bien (Notion, Stripe, Airbnb, Linear, Vercel, Shopify, Anthropic) y los que generan slop bonito: <strong>los primeros invierten más tiempo en acotar el problema que en generar variantes</strong>. La generación es barata; el descarte con criterios y el brief estrecho son la palanca real.",
+                "Lo que comparten esos equipos es un <em>método</em>, no una herramienta. Cambia el generador (Figma Make Designs, v0, Galileo, Subframe, Lovable...) pero los patrones que rodean al generador son los mismos. Esos patrones son lo importante — si tu equipo los adopta, el generador concreto pasa a ser una decisión de mercado, no de método."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "patterns",
+              "label": "Los 4 patrones que comparten los equipos top",
+              "items": [
+                {
+                  "name": "El brief estrecho",
+                  "rows": [
+                    {
+                      "label": "Por qué importa",
+                      "html": "La calidad de las 20 variantes está acotada por la calidad del brief. Un brief de <em>\"una pantalla de checkout bonita\"</em> devuelve sopa. Un brief con usuario, job-to-be-done, restricciones explícitas y lo que NO debe cambiar acota el espacio antes de que la IA empiece a explorar. <strong>La IA es buena buscando en un espacio definido; mala definiendo el espacio.</strong>"
+                    },
+                    {
+                      "label": "Cómo lo aplican",
+                      "html": "En <strong>Figma teams</strong> y <strong>Anthropic</strong> el brief vive en un sticky a la izquierda del archivo o como markdown en el repo del proyecto. <strong>Stripe</strong> lo formaliza: Protodash tiene un formulario obligatorio de 4 campos antes de poder generar. <strong>Airbnb</strong>, históricamente disciplinada con briefing desde la era DLS, mantiene la misma estructura para sus exploraciones con IA — una página de Notion linkada al frame, no se permite generar sin ese enlace."
+                    },
+                    {
+                      "label": "Cómo replicarlo",
+                      "html": "Adopta una plantilla obligatoria con <strong>4 campos</strong>: Usuario · JTBD · Restricciones · Lo que NO debe cambiar. Si el brief tiene más de 5 líneas, recórtalo. Si tiene menos de 3, no estás listo para generar. La plantilla vive en el archivo de Figma o en el repo, no en un Google Doc aparte."
+                    }
+                  ]
+                },
+                {
+                  "name": "El Design System como sandbox",
+                  "rows": [
+                    {
+                      "label": "Por qué importa",
+                      "html": "Las variantes solo tienen valor si la IA <strong>selecciona de tu librería</strong>, no si inventa. Un layout interesante con colores inventados no es accionable: es ruido que no se puede llevar a producción sin un rediseño. Cuando el DS actúa como sandbox, cada variante es una recombinación de cosas que ya existen — eso es lo que las hace útiles para discutir."
+                    },
+                    {
+                      "label": "Cómo lo aplican",
+                      "html": "<strong>Stripe</strong> (Protodash) y <strong>Linear</strong> conectan su generador exclusivamente al DS oficial: si la IA propone algo fuera del sistema, lo rechaza antes de mostrarlo. <strong>Vercel</strong> con v0 sobre su propio DS, <strong>Shopify</strong> con Polaris, <strong>Notion</strong> con tokens importados en su Playground — el principio es el mismo: los tokens en Variables, la IA limitada a esa paleta."
+                    },
+                    {
+                      "label": "Cómo replicarlo",
+                      "html": "Antes de generar nada, verifica que tu DS vive en <strong>Figma Variables</strong> (o el equivalente de tu stack). Si no lo está, ese es el primer trabajo del semestre — más importante que adoptar cualquier herramienta de IA. Sin esa base, la ideación con IA fabrica resultados bonitos que no se pueden implementar."
+                    }
+                  ]
+                },
+                {
+                  "name": "La doble generación: estructura primero, visual después",
+                  "rows": [
+                    {
+                      "label": "Por qué importa",
+                      "html": "Estructura y tratamiento visual son <strong>problemas distintos</strong>. Mezclarlos en un solo prompt produce variantes \"bonitas pero iguales\" — la IA converge en patrones visuales seguros cuando no le separas los concerns. Generar primero estructura (jerarquía, secuencia, densidad) y después tratamiento (tipografía, color, peso visual) da resultados más diversos y discutibles."
+                    },
+                    {
+                      "label": "Cómo lo aplican",
+                      "html": "<strong>Airbnb</strong> ha mantenido esta separación desde la era pre-IA: <em>mood board → estructura → tratamiento</em>. Han adaptado el flujo manteniendo las tres etapas. <strong>Figma teams</strong> lo aplican implícitamente con Make Designs: primera ronda para layout con componentes neutros, segunda con énfasis visual. <strong>Anthropic</strong> lo formaliza con dos comandos distintos: uno para estructura, otro para tratamiento, ejecutados en sesiones separadas."
+                    },
+                    {
+                      "label": "Cómo replicarlo",
+                      "html": "Dos rondas, dos prompts, dos criterios de descarte. Primero estructura sobre componentes neutros del DS; cuando una estructura está aprobada por el equipo, segunda ronda <strong>solo de tratamiento visual</strong> sobre esa estructura. <em>No las mezcles ni siquiera \"para ahorrar tiempo\"</em> — el ahorro es ilusorio porque el output converge."
+                    }
+                  ]
+                },
+                {
+                  "name": "El descarte ritualizado",
+                  "rows": [
+                    {
+                      "label": "Por qué importa",
+                      "html": "Generar 20 es fácil. <strong>Descartar 18 con criterios escritos</strong> es la palanca real. Sin criterios previos, el descarte se convierte en preferencia personal y la decisión es indefendible cuando alguien la cuestiona en una review. <em>La calidad de tu ideación se mide en lo que descartas, no en lo que generas.</em>"
+                    },
+                    {
+                      "label": "Cómo lo aplican",
+                      "html": "<strong>Stripe</strong> usa una tabla de scoring obligatoria antes de cualquier ronda: filas con criterios (jerarquía, accesibilidad, fit con DS, novedad útil), columnas con las variantes. <strong>Linear</strong> bloquea calendar específico para \"variant review\" como ritual semanal con 2-3 personas. <strong>Notion</strong> documenta el descarte en el PR — qué variantes se descartaron y por qué — para que la decisión sea trazable meses después."
+                    },
+                    {
+                      "label": "Cómo replicarlo",
+                      "html": "Escribe los criterios <strong>antes</strong> de generar. Bloquea 1 hora separada para descartar (no entre tareas). Convoca a 1-2 personas más para el descarte: <em>divergente es solo, convergente es de equipo</em>. Documenta qué descartaste y por qué — esa documentación vale más que las variantes elegidas dentro de seis meses."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "Una sesión de ideación de principio a fin · 2 días",
+              "paragraphs": [
+                "El ritual que practican (con pequeñas variantes) Notion, Stripe, Linear y Airbnb. Reemplaza la semana entera de \"exploración\" del modelo pre-IA."
+              ]
+            },
+            {
+              "type": "playbook",
+              "items": [
+                {
+                  "when": "Día 1 · mañana · 90 min",
+                  "what": "Brief + criterios escritos",
+                  "html": "Rellenas la plantilla de 4 campos. Defines los <strong>criterios de descarte</strong> (jerarquía, accesibilidad, fit con DS, novedad útil — los que sirvan a este flujo). Sin estos dos artefactos escritos, no continúas. Si dudas, conviértelo en <em>\"hoy no genero\"</em> y vuelves a empezar mañana."
+                },
+                {
+                  "when": "Día 1 · tarde · 2–3 h",
+                  "what": "Ronda 1 — Estructura",
+                  "html": "Generas 20 variantes <strong>solo de estructura</strong> sobre componentes neutros del DS. <em>No editas entre tiradas.</em> Cierras Figma cuando termines."
+                },
+                {
+                  "when": "Día 2 · mañana · 1 h",
+                  "what": "Descarte 1 con equipo",
+                  "html": "Con 2 personas más, scoring contra los criterios. <strong>Quedan 2 estructuras.</strong> Documentas qué descartaste y por qué (1-2 líneas por variante, basta)."
+                },
+                {
+                  "when": "Día 2 · tarde · 2 h",
+                  "what": "Ronda 2 — Tratamiento visual",
+                  "html": "Sobre las 2 estructuras aprobadas, generas 10-15 variantes de tratamiento (tipografía, color, peso visual, microcopy). Mismo principio: no editas, no mezclas."
+                },
+                {
+                  "when": "Día 3 · mañana · 30 min",
+                  "what": "Descarte 2 y entrega",
+                  "html": "Scoring final con el mismo equipo. <strong>Quedan 2 propuestas completas</strong> (estructura + tratamiento). Las presentas a producto/ingeniería sobre opciones reales — la decisión es informada porque hay alternativas concretas y descartes documentados detrás."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Stack mínimo",
+              "style": "stack",
+              "items": [
+                "<strong>Plantilla de brief</strong> — 4 campos, vive en Figma o en el repo. Obligatoria.",
+                "<strong>DS en Figma Variables</strong> — los tokens accesibles para el generador. Sin esto, nada funciona.",
+                "<strong>Generador conectado al DS</strong> — Figma Make Designs, v0 con tu DS, Galileo, Subframe, Lovable. La elección depende de qué tipo de output prefieras (Figma vs. código).",
+                "<strong>Tabla de scoring</strong> — criterios escritos antes de generar. Si no, todo te parece bien."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Checklist antes de empezar",
+              "style": "checklist",
+              "items": [
+                "¿Brief en <strong>3–5 líneas</strong> con los 4 campos?",
+                "¿DS en <strong>Figma Variables</strong> y accesible para la IA?",
+                "¿Criterios de descarte <strong>escritos antes</strong> de generar?",
+                "¿Tienes <strong>1–2 compañeros</strong> bloqueados para el descarte convergente?"
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "prompt",
+              "label": "Prompt clave · generación de variantes (ronda 1, estructura)",
+              "title": "Para pegarlo en Figma Make Designs, v0, Galileo o Subframe. Adapta los placeholders.",
+              "text": "Brief:\n- Usuario: {persona}\n- Job-to-be-done: {qué quiere conseguir en esta pantalla}\n- Restricciones: {tiempo, contexto, dispositivo, datos disponibles}\n- Lo que NO puede cambiar: {regulación, marca, integración, jerarquía de info}\n\nTu trabajo: genera 20 variantes de ESTRUCTURA para este flujo.\n\nRestricciones de generación:\n- Solo componentes del Design System adjunto. No inventes.\n- Cada variante: nombre corto, descripción 1 línea, qué cambia\n  respecto a la variante 01 (que es la base conservadora).\n- Varía al menos uno de: jerarquía, densidad, agrupación, foco\n  visual, secuencia, número de pasos.\n- NO varíes en esta ronda: colores, tipografía, iconografía,\n  tratamiento visual. Eso es de la ronda 2.\n\nNo me preguntes para refinar el brief. Genera las 20. Filtramos\ndespués con criterios escritos. Esta ronda es divergente."
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "Cuándo NO usar IA en ideación",
+              "paragraphs": [
+                "Para <strong>exploración divergente muy temprana</strong> sigue funcionando mejor pizarra y Figma a mano. La IA acelera la conversión de ideas <em>ya formadas</em>, no las hace aparecer. Si todavía no sabes ni qué problema estás resolviendo, hazlo tú primero — luego pide variantes sobre lo que ya tiene forma. <em>La IA es el motor de exploración, no el motor de comprensión.</em>"
+              ]
+            }
+          ]
+        }
+      ],
+      "updated": "2026-05-16"
+    },
+    {
+      "id": "prototyping",
+      "name": "Prototyping",
+      "hint": "De Figma a código, en minutos.",
+      "status": "ready",
+      "status_note": "contenido completo",
+      "title_html": "De Figma a prototipo funcional, <em>en minutos</em>.",
+      "intro_html": "La fase donde la IA está cambiando el oficio más rápido. Los mejores equipos ya no entregan clickables de Figma — entregan código navegable, en el mismo entorno donde acabará viviendo el producto.",
+      "meta": [
+        {
+          "k": "Setup inicial",
+          "v": "1 mañana (tech lead, una vez)"
+        },
+        {
+          "k": "Por componente",
+          "v": "5–30 min máquina · ~5 min revisión humana"
+        },
+        {
+          "k": "Ahorro típico",
+          "v": "80% del trabajo de front-end mecánico"
+        }
+      ],
+      "blocks": [
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "practices",
+              "label": "Cómo lo hacen los top",
+              "items": [
+                {
+                  "team": "Notion",
+                  "logo": {
+                    "slug": "notion",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "caso",
+                  "source": "Brian Lovin · How I AI · feb 2026",
+                  "html": "El <strong>Prototype Playground</strong>: una app Next.js compartida, carpeta por diseñador (<code>/prototypes/{nombre}/</code>), tokens del DS importados en <code>/lib/tokens</code>. El comando custom <strong>/figma</strong> ejecuta en cadena: (1) lee el frame con Figma MCP, (2) genera componentes Next.js + Tailwind usando solo los tokens, (3) abre Chrome real vía DevTools MCP y captura screenshot, (4) compara con el Figma original y autocorrige hasta 3 iteraciones sin cambios significativos. <em>\"No he escrito una línea de front-end en tres meses.\"</em> Lo nuevo no es Figma→código (v0 ya lo hacía): es <strong>el bucle de auto-corrección</strong>."
+                },
+                {
+                  "team": "Stripe",
+                  "logo": {
+                    "slug": "stripe",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "caso",
+                  "source": "Owen Williams · How I AI · may 2026",
+                  "html": "<strong>Protodash</strong>: estudio interno de prototipado contra el DS de Stripe. Empezó como un set de <code>.cursorrules</code> compartidas, evolucionó a una herramienta con review + deploy integrados. Su término para lo que <em>evitan</em>: <strong>blurple slop</strong> — el aspecto genérico violeta-azulado de la IA cuando no está enraizada en un DS serio. Diferencia con Notion: Protodash es <strong>más prescriptivo</strong> — empuja al equipo entero hacia el mismo workflow en vez de dejar margen para variaciones individuales."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Stack mínimo",
+              "style": "stack",
+              "items": [
+                "<strong>Figma con Variables</strong> — los tokens del DS viven en Variables. Sin esto, el MCP extrae basura.",
+                "<strong>Claude Code o Cursor</strong> — un agente en terminal o editor. Modelos equivalentes por debajo.",
+                "<strong>Figma MCP + Chrome DevTools MCP</strong> — el primero lee el diseño, el segundo cierra el bucle de verificación.",
+                "<strong>Playground compartido</strong> — Next.js, repo único, carpeta por persona. Una mañana de trabajo."
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Checklist antes de empezar",
+              "style": "checklist",
+              "items": [
+                "¿<strong>DS en Figma Variables</strong> (no estilos sueltos pegados)?",
+                "¿Frame final en la página <strong>\"Ready for code\"</strong> del archivo?",
+                "¿<strong>MCP de Figma</strong> instalado y conectado al DS?",
+                "¿<strong>Repositorio del Playground</strong> configurado con tu carpeta?"
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Empieza mañana",
+              "style": "steps",
+              "items": [
+                "<strong>Habla con tu tech lead</strong> — la infraestructura es trabajo suyo, una mañana.",
+                "<strong>Empieza por un componente pequeño</strong> con varios estados (Card, input con validación, toast).",
+                "<strong>Cierra el diseño usando solo componentes del DS</strong>. Página \"Ready for code\".",
+                "<strong>Ejecuta /figma, lee el plan antes</strong> de generar. Revisa la PR por screenshot y accesibilidad, no por código."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "prompt",
+              "label": "Comando clave · /figma simplificado",
+              "title": "Versión replicable del comando de Brian Lovin (Notion). Pégalo como <code>/.claude/commands/figma.md</code> o equivalente en Cursor",
+              "text": "Te paso un link de Figma. Tu trabajo, en cadena, sin pedir confirmación:\n\n1. LEE el frame con Figma MCP. Extrae tokens, componentes y estados.\n   Si el frame usa estilos sueltos (no del DS), aborta y avisa.\n\n2. GENERA componentes Next.js + Tailwind usando SOLO los tokens del DS\n   importados en /lib/tokens. Implementa TODOS los estados visibles\n   en el diseño: default, loading, empty, error, success.\n\n3. ABRE el resultado en Chrome real (Chrome DevTools MCP). Captura\n   screenshot a la misma viewport que el frame de Figma.\n\n4. COMPARA screenshot vs. diseño original. Identifica diferencias:\n   layout, spacing, color, estado faltante.\n\n5. CORRIGE las diferencias. Itera hasta 3 veces. Si después de 3\n   intentos no converge, abre la PR con las diferencias documentadas\n   en la descripción.\n\n6. ABRE PR contra la rama main. Título: feat({componente}). Cuerpo:\n   link al Figma + lista de estados implementados + screenshots\n   antes/después.\n\nSolo pregunta si falta info crítica (link roto, frame vacío, DS no\ndetectado). Para todo lo demás: léelo, ejecútalo."
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "El patrón común",
+              "paragraphs": [
+                "Lo que comparten Notion y Stripe: <strong>entorno compartido</strong> en vez de scripts individuales · <strong>Design System como fuente de verdad</strong> — la IA selecciona, no inventa · <strong>bucle de verificación</strong> — el agente contrasta su salida contra el diseño original. <em>La palanca real está en el bucle, no en la generación.</em> Generar sin verificar lleva al blurple slop. Verificar sin DS limpio lleva a un bucle que itera infinito sobre estilos inventados."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "MCP en una línea",
+              "paragraphs": [
+                "MCP es el protocolo estándar para que un agente de IA hable con herramientas externas (Figma, GitHub, Slack, Chrome) sin programar la conexión a medida. Cuando aquí se menciona <strong>Figma MCP</strong> o <strong>Chrome DevTools MCP</strong>, ese es el conector que hay debajo."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Cuándo no aplica",
+              "style": "stack",
+              "items": [
+                "<strong>Exploración divergente muy temprana.</strong> Figma a mano o pizarra. La IA acelera ideas <em>ya formadas</em>.",
+                "<strong>Tu DS no está en Variables de Figma.</strong> Arregla eso primero o fabricarás resultados inconsistentes.",
+                "<strong>Compliance no permite datos de producto en un SaaS de IA.</strong> Hay opciones enterprise, pero requieren contrato.",
+                "<strong>Mockup desechable para una presentación.</strong> No compensa el setup."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Errores que se repiten",
+              "style": "stack",
+              "items": [
+                "<strong>Regenerar entero cada vez.</strong> Iterar, no rehacer: se corrige <em>esa parte</em>.",
+                "<strong>\"El agente sabe mejor\".</strong> Si se aleja del DS, se rechaza. El DS es la fuente de verdad.",
+                "<strong>Aprobar por estética.</strong> Sin verificación visual y accesibilidad, no entra.",
+                "<strong>Lorem ipsum y datos falsos.</strong> Los mocks plausibles cambian las decisiones de layout."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "links",
+              "label": "Fuentes",
+              "items": [
+                {
+                  "title": "Cómo Notion diseña con IA — Brian Lovin (How I AI, feb 2026)",
+                  "url": "https://www.chatprd.ai/how-i-ai/how-notion-designs-with-ai-brian-lovins-prototype-playground-and-claude-code-workflows"
+                },
+                {
+                  "title": "Cómo Stripe mató el blurple slop — Owen Williams (How I AI, may 2026)",
+                  "url": "https://www.chatprd.ai/how-i-ai/stripe-owen-williams-on-buildling-internal-prototyping-studio"
+                },
+                {
+                  "title": "Guía técnica: bucle de auto-corrección Figma → código (ChatPRD)",
+                  "url": "https://www.chatprd.ai/how-i-ai/workflows/build-an-ai-workflow-to-convert-figma-designs-to-code-with-a-self-correction-loop"
+                },
+                {
+                  "title": "\"I haven't written a line of front-end in 3 months\" (Lenny's)",
+                  "url": "https://www.lennysnewsletter.com/p/i-havent-written-a-single-line-of"
+                },
+                {
+                  "title": "brianlovin.com — fuente directa",
+                  "url": "https://brianlovin.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "updated": "2026-05-16"
+    },
+    {
+      "id": "handoff",
+      "name": "Handoff",
+      "hint": "La spec se genera sola.",
+      "status": "draft",
+      "status_note": "contenido condensado · se amplía en la próxima ronda del curador",
+      "title_html": "La especificación se genera sola desde <em>el diseño y el prototipo</em>.",
+      "intro_html": "Adiós a documentar componentes a mano y a las cinco rondas de aclaraciones con ingeniería. Cuando el prototipo vive ya en el stack real, el handoff deja de ser un artefacto y se convierte en un cambio de contexto: la misma rama, otro reviewer.",
+      "meta": [
+        {
+          "k": "Setup",
+          "v": "1–2 días (MCP + convenciones)"
+        },
+        {
+          "k": "Por feature",
+          "v": "0 min de docs separados"
+        },
+        {
+          "k": "Métrica clave",
+          "v": "rondas de aclaración / feature"
+        }
+      ],
+      "blocks": [
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "practices",
+              "label": "Cómo lo hacen los top",
+              "items": [
+                {
+                  "team": "Figma · Dev Mode + MCP",
+                  "logo": {
+                    "slug": "figma",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "patron",
+                  "source": "Estándar enterprise",
+                  "html": "La spec deja de escribirse: <strong>Dev Mode + MCP exponen tokens, medidas, estados y componentes directamente al IDE</strong> del developer. Lo que el diseñador \"documenta\" es lo que ya está en Figma — si está bien estructurado, no hace falta narrar nada. En la práctica: el ingeniero abre el archivo de Figma desde su IDE (extension oficial), selecciona un frame, y obtiene tokens, medidas y referencias a componentes existentes del repo — <em>no</em> snippets genéricos. La regla del equipo: <strong>si la información está en Figma, no se duplica en Notion ni en una PR description</strong>."
+                },
+                {
+                  "team": "Linear · Vercel · Notion",
+                  "logo": {
+                    "slug": "linear",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "patron",
+                  "source": "Equipos producto-tech integrados",
+                  "html": "El prototipo <strong>vive en el repo del producto</strong>. No hay handoff como entrega — hay PR. El diseñador abre la rama (típicamente <code>design/{feature}</code>), el agente la levanta, ingeniería revisa el código real. <em>El artefacto del diseño es el propio commit.</em> La transición ya no es \"te paso el diseño\" sino \"te paso el reviewer\". La métrica que valida el modelo: rondas de aclaración por feature, que pasa de 4–6 (modelo Figma-only) a 0–1 (modelo PR-as-handoff)."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Stack mínimo",
+              "style": "stack",
+              "items": [
+                "<strong>Figma Dev Mode</strong> con DS bien estructurado en Variables.",
+                "<strong>Figma MCP</strong> conectado al IDE de los developers.",
+                "<strong>Prototipo en el repo real</strong> — no en un entorno paralelo de \"diseño\".",
+                "<strong>Convención de commits y PRs</strong> compartida entre diseño e ingeniería."
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Checklist antes de empezar",
+              "style": "checklist",
+              "items": [
+                "¿Tu <strong>DS está bien estructurado</strong> en Figma Variables?",
+                "¿<strong>Dev Mode + MCP</strong> conectados al IDE de ingeniería?",
+                "¿Tu prototipo <strong>vive en el repo real</strong> del producto?",
+                "¿Hay <strong>convención de PRs consensuada</strong> entre diseño e ingeniería?"
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Empieza mañana",
+              "style": "steps",
+              "items": [
+                "<strong>Haz el prototipo en el stack real</strong> del producto desde el principio.",
+                "<strong>Elimina los docs de spec</strong> que repiten Figma o el código.",
+                "<strong>Pon Dev Mode + MCP en manos de ingeniería</strong> antes de la primera revisión.",
+                "<strong>Mide rondas de aclaración por feature</strong> — la métrica caerá rápido."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "prompt",
+              "label": "Prompt clave · spec auto-generada (solo si la piden)",
+              "title": "El handoff útil de 2026 es silencioso. Esto se usa solo cuando ingeniería pide algo escrito",
+              "text": "Te paso (1) un link de Figma con Dev Mode habilitado, y (2) la rama\ndel repo con el componente correspondiente.\n\nTu trabajo:\n- Detecta qué hay en Figma que NO está en el código (estados que\n  faltan, edge cases, comportamiento de interacción).\n- Detecta qué hay en el código que NO está en el diseño (decisiones\n  tomadas en implementación: defaults, fallbacks, optimizaciones).\n- Lista SOLO las divergencias. No documentes lo que ya es visible\n  en ambos lados.\n\nFormato de salida (Markdown, 3 columnas):\n| Qué dice diseño | Qué hace el código | Decisión |\n\nUna fila por divergencia. La columna \"Decisión\" la dejo en blanco\npara que el equipo la complete en la review.\n\nSi no hay divergencias significativas, devuelve \"Sin divergencias\nrelevantes\" y no inventes filas."
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "Trampa frecuente",
+              "paragraphs": [
+                "Generar specs largas con IA \"por si acaso\". <strong>Si nadie las va a leer, no se escriben.</strong> El handoff útil de 2026 es <em>silencioso</em>: la información vive donde se consulta, no en un documento aparte. La métrica honesta es <em>tiempo entre \"diseño cerrado\" y \"feature en producción\"</em>, no número de páginas de spec."
+              ]
+            }
+          ]
+        }
+      ],
+      "updated": "2026-05-16"
+    },
+    {
+      "id": "validation",
+      "name": "Validation",
+      "hint": "Fricciones antes de usuarios reales.",
+      "status": "draft",
+      "status_note": "contenido condensado · se amplía en la próxima ronda del curador",
+      "title_html": "Detectar fricciones antes de poner el flujo <em>delante de usuarios reales</em>.",
+      "intro_html": "Y medirlas después sin esperar al NPS trimestral. La IA ayuda en los dos extremos: pre-test (revisión heurística automática, simulación de uso) y post-launch (análisis de sesiones, clustering de feedback). En el medio, los usuarios reales siguen siendo insustituibles.",
+      "meta": [
+        {
+          "k": "Setup",
+          "v": "1 día (template + telemetría)"
+        },
+        {
+          "k": "Por ronda",
+          "v": "2–3 días con 5 usuarios reales"
+        },
+        {
+          "k": "Regla de oro",
+          "v": "5 reales > 50 sintéticos"
+        }
+      ],
+      "blocks": [
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "practices",
+              "label": "Cómo lo hacen los top",
+              "items": [
+                {
+                  "team": "Maze AI Insights",
+                  "logo": {
+                    "slug": "maze",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "patron",
+                  "source": "Pre-launch",
+                  "html": "<strong>Tests no moderados con análisis automático.</strong> La IA cluster-iza respuestas abiertas y marca patrones de fricción (clicks de error, tiempo excesivo en una pantalla, rage clicks, abandono). El diseñador valida — no acepta el cluster sin entrar en las sesiones individuales. <strong>Setup típico:</strong> un test de 5–7 tareas, 15–25 participantes reclutados por panel, hipótesis escritas antes del lanzamiento. La señal útil suele estar en las sesiones <em>atípicas</em> (las que no encajan en ningún cluster), no en la media."
+                },
+                {
+                  "team": "UserTesting · Lookback",
+                  "logo": {
+                    "slug": "usertesting",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "patron",
+                  "source": "Post-launch",
+                  "html": "Resúmenes automáticos de sesiones grabadas con highlights, citas y timestamps. El research humano se enfoca en <strong>las 3–5 sesiones más informativas</strong> (las marcadas como atípicas o las que contradicen una hipótesis), no en revisar las 50 enteras. Igual que en Discovery: <em>la IA propone, el research valida</em>. Trampa específica: si solo lees los resúmenes, terminas leyendo confirmaciones — el aprendizaje está en ver las sesiones donde el resumen y la grabación no coinciden."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "width": "half",
+          "sections": [
+            {
+              "type": "list",
+              "label": "Stack mínimo",
+              "style": "stack",
+              "items": [
+                "<strong>Prototipo navegable</strong> — el de la fase anterior, no un clickable de Figma.",
+                "<strong>Plataforma de tests no moderados</strong> con AI Insights (Maze, Useberry, Lyssna).",
+                "<strong>Telemetría desde el día 1</strong> — eventos en el prototipo y en producción.",
+                "<strong>Bucle de review semanal</strong> — sin esto, los datos se acumulan y nadie los lee."
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Checklist antes de empezar",
+              "style": "checklist",
+              "items": [
+                "¿<strong>Hipótesis escritas antes</strong> del test (no después)?",
+                "¿<strong>Eventos de telemetría</strong> instrumentados en el prototipo?",
+                "¿<strong>Criterio de éxito numérico</strong>, no \"que les guste\"?",
+                "¿<strong>Plan de iteración listo</strong> si las hipótesis se rechazan?"
+              ]
+            },
+            {
+              "type": "list",
+              "label": "Empieza mañana",
+              "style": "steps",
+              "items": [
+                "<strong>5 usuarios reales antes que 50 sintéticos.</strong>",
+                "<strong>Escribe las hipótesis antes del test.</strong> Si no, lees confirmaciones donde hay azar.",
+                "<strong>Revisa las sesiones marcadas como atípicas.</strong> Ahí suele estar el aprendizaje.",
+                "<strong>Cierra el bucle con un cambio o un \"no, así está bien\".</strong> Sin esto, validation se vuelve teatro."
+              ]
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "prompt",
+              "label": "Prompt clave · análisis de sesiones contra hipótesis",
+              "title": "Para usar después de un test no moderado o de un batch de sesiones grabadas",
+              "text": "Tengo {N} sesiones grabadas de usuarios usando {feature}. Te paso\ntranscripciones + eventos de telemetría (clicks, tiempos por pantalla,\nabandonos).\n\n1. Cluster-iza las sesiones por TIPO DE FRICCIÓN OBSERVADA (no por\n   satisfacción declarada — la gente miente al final del test).\n2. Para cada cluster: descripción 1 línea, n sesiones, evidencia\n   (timestamp + cita o evento concreto).\n3. Marca como \"atípica\" cualquier sesión que no encaje en ningún\n   cluster. Esas las voy a revisar yo enteras.\n4. Mis hipótesis previas eran:\n   - H1: {hipótesis 1}\n   - H2: {hipótesis 2}\n   - H3: {hipótesis 3}\n   Para cada una: ¿confirmada, rechazada, sin evidencia suficiente?\n   Cita el evento o frase que sostiene tu juicio.\n\nNO me digas qué cambiar. Solo describe qué pasó y mapéalo contra\nmis hipótesis. Las decisiones de producto las tomo yo después."
+            }
+          ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "text",
+              "label": "Cuidado con esto",
+              "paragraphs": [
+                "<strong>Personas sintéticas no sustituyen entrevistas reales.</strong> Útiles para generar hipótesis previas, calibrar preguntas o ensayar moderación. No para reemplazar voces reales. Cuando un equipo \"valida\" un flujo con personas sintéticas y lo lanza, lo que valida son sus propios supuestos — disfrazados con voz neutra. <em>Si el coste de equivocarse es alto, paga el coste de hablar con humanos.</em>"
+              ]
+            }
+          ]
+        }
+      ],
+      "updated": "2026-05-16"
+    }
+  ],
+  "foundation": {
+    "title_html": "Cómo se preparan las empresas grandes para aplicar el método <em>a escala</em>.",
+    "intro_html": [
+      "Esto <strong>no es una sexta fase</strong>. Es la infraestructura que vive por debajo de las cinco — la capa semántica, governance, agentes y telemetría que hace que el método funcione a escala enterprise. Estos 5 patrones son <em>transversales</em>: afectan a Discovery, Ideation, Prototyping, Handoff y Validation a la vez.",
+      "Si tu equipo opera por debajo de 20 personas, esto es <em>contexto cultural</em> — entender qué existe y qué resuelve, sin implementarlo entero. Si pasas de 100, sin estos patrones el método empieza a romperse: los agentes se pierden, el DS deriva, el research se atrasa, la compliance frena."
+    ],
+    "meta": [
+      {
+        "k": "Audiencia",
+        "v": "tech leads, design ops, principals"
+      },
+      {
+        "k": "Replicabilidad",
+        "v": "parcial — copia el principio, no el setup"
+      },
+      {
+        "k": "Horizonte",
+        "v": "12–36 meses, no un sprint"
+      }
+    ],
+    "patterns": [
+      {
+        "name": "Knowledge graph del producto",
+        "rows": [
+          {
+            "label": "Por qué importa",
+            "html": "A 50 productos, 200 diseñadores y 10 años de decisiones, la información ya no cabe en Figma ni en Notion. Un knowledge graph hace consultable la <em>relación</em> entre cosas: qué componente vive en qué flujo, qué decisión vino de qué research, qué pantalla está sujeta a qué regulación. <strong>Sin esa capa, los agentes de IA tropiezan con el contexto cada vez que entran al producto</strong> — con ella, lo recuperan en milisegundos. Es la diferencia entre \"la IA propone diseños\" y \"la IA propone diseños que entienden por qué existe lo que ya existe\"."
+          },
+          {
+            "label": "Cómo lo aplican",
+            "html": "<strong>Google</strong> lleva años con Material Design construido sobre datos estructurados: cada token y cada componente tienen metadata que el equipo de Material usa para auditar consistencia automáticamente. <strong>Meta</strong> tiene una plataforma interna que conecta DS, flujos y telemetría (poco documentada en abierto, pero referenciada en charlas). <strong>Stripe</strong> construyó la capa por debajo de Protodash precisamente para que el generador pueda responder <em>\"¿qué patterns existen para checkout regulado en este país?\"</em>. <strong>Adobe</strong> integra Sensei con Frame.io para grafos de contenido."
+          },
+          {
+            "label": "Cómo replicarlo",
+            "html": "No vas a construir Material en seis meses, y no hace falta. Pero puedes empezar pequeño: estructurar tu DS en Variables, <strong>etiquetar cada componente con metadata</strong> (flujo, regulación, estado), y mantener un README por flujo con sus decisiones de diseño linkadas a research. Lo importante no es la herramienta — es la <em>disciplina de etiquetado</em>. Cuando lo tengas, cualquier LLM puede operar sobre ese contexto."
+          }
+        ]
+      },
+      {
+        "name": "Design System como contrato, no como librería",
+        "rows": [
+          {
+            "label": "Por qué importa",
+            "html": "A escala, un DS no es \"una colección de componentes para inspirarte\". Es un <strong>contrato versionado</strong> al que se acoplan decenas de equipos, productos B2B con clientes que necesitan overrides, e ingeniería que importa los tokens directamente al código. Tratarlo como librería suelta produce <em>drift</em> imparable; tratarlo como contrato produce consistencia auditable."
+          },
+          {
+            "label": "Cómo lo aplican",
+            "html": "<strong>Atlassian</strong> publicó abiertamente su API de tokens — los tokens son consultables programáticamente, no solo visualmente. <strong>IBM Carbon</strong> y <strong>Microsoft Fluent</strong> operan con tokens versionados con SemVer y governance estricta (qué se rompe, qué no, qué cambia entre mayores). <strong>Salesforce Lightning</strong> tiene tenant overrides nativos: cada cliente B2B puede customizar dentro de un schema cerrado. Los cambios pasan por <em>RFC</em>, no por PR suelto."
+          },
+          {
+            "label": "Cómo replicarlo",
+            "html": "Versiona tus tokens con <strong>SemVer real</strong> (no \"v2 versión bonita\"). Documenta qué es breaking change y qué no. Si tienes clientes B2B con personalización, define un <em>schema cerrado</em> de overrides en lugar de \"que pinten lo que quieran\". Mete un proceso RFC ligero (un Notion bastará al principio) para cambios en el DS — quién propone, quién revisa, cuándo entra."
+          }
+        ]
+      },
+      {
+        "name": "Agentes, no comandos",
+        "rows": [
+          {
+            "label": "Por qué importa",
+            "html": "Un diseñador prompteando es ya 2025. A escala, los flujos son demasiado largos para depender de la disponibilidad humana — un agente recibe un ticket en Linear, consulta el knowledge graph, propone diseño basado en patterns existentes, ejecuta tests, abre PR, asigna reviewer. <strong>El diseñador supervisa puntos críticos</strong> (criterios de aceptación, decisiones de producto, accesibilidad fina) en vez de operar la herramienta. Es lo mismo que pasó con el deploy: antes hacías clicks, ahora supervisas el pipeline."
+          },
+          {
+            "label": "Cómo lo aplican",
+            "html": "<strong>Stripe</strong> está evolucionando Protodash hacia este modelo: el siguiente paso documentado es que <code>/figma</code> se invoque automáticamente desde un ticket de Linear con contexto. <strong>Vercel</strong> ya opera así para componentes simples vía v0 + GitHub Actions. <strong>Microsoft</strong> integra Copilot Agents dentro de Office para automatizar flujos enteros (incluido design ops). El patrón compartido: <em>definir checkpoints humanos explícitos</em>, no eliminar al humano sino moverlo."
+          },
+          {
+            "label": "Cómo replicarlo",
+            "html": "Empieza por <strong>un flujo bien definido</strong> (por ejemplo: \"componente del DS pedido en un ticket → generación → PR\"). Define los checkpoints humanos por escrito (qué revisa una persona, qué firma, cuándo se rechaza). Implementa con Linear/GitHub Actions + Claude Code o equivalente. Mide rondas de aclaración: si bajan, expandes el flujo. Si suben, lo recoges."
+          }
+        ]
+      },
+      {
+        "name": "Telemetría continua como research",
+        "rows": [
+          {
+            "label": "Por qué importa",
+            "html": "A escala, la batch research (10 entrevistas trimestrales) deja de ser representativa. <strong>Tienes millones de sesiones por semana — esa es tu muestra real.</strong> Cuando los eventos en producción están bien instrumentados, la pregunta <em>\"¿cómo usa la gente este flujo?\"</em> se responde con una query, no con un proyecto de research de seis semanas. Las entrevistas siguen existiendo, pero para entender el <em>porqué</em>, no el <em>qué</em>."
+          },
+          {
+            "label": "Cómo lo aplican",
+            "html": "<strong>Spotify</strong> y <strong>Netflix</strong> son los referentes públicos — su research team consulta dashboards de comportamiento como primer paso de cualquier exploración. <strong>Stripe</strong> combina telemetría de payments con LLMs para detectar patrones de abandono y proponer cambios. <strong>Booking</strong> opera en el extremo con A/B testing continuo (cientos de tests simultáneos). El común: <em>las preguntas se le hacen al sistema en lenguaje natural, no se programa un nuevo análisis cada vez</em>."
+          },
+          {
+            "label": "Cómo replicarlo",
+            "html": "Instrumenta bien los eventos clave (clicks, errores, tiempos por pantalla, abandonos) — usa lo que ya tengas (<strong>Amplitude, Mixpanel, PostHog</strong>). Construye 5-10 dashboards consultables. Conecta un LLM que pueda hacer queries sobre esos datos en lenguaje natural. No reemplaza entrevistas: complementa. Cuando tu equipo se acostumbre a <em>preguntar antes de asumir</em>, has ganado."
+          }
+        ]
+      },
+      {
+        "name": "Modelos internos, no SaaS",
+        "rows": [
+          {
+            "label": "Por qué importa",
+            "html": "A escala enterprise hay tres restricciones que rompen el uso de SaaS de IA: <strong>(1) compliance</strong> — datos de clientes no pueden salir del perímetro, <strong>(2) costes</strong> — millones de queries al mes con APIs externas son inviables, <strong>(3) calidad</strong> — un modelo afinado sobre tus patterns internos supera a un modelo generalista incluso si es más pequeño. Por eso las grandes operan sus propios modelos."
+          },
+          {
+            "label": "Cómo lo aplican",
+            "html": "<strong>Google</strong> opera Gemini en su propio stack y hace fine-tuning con datos internos. <strong>Meta</strong> desarrolla Llama y lo usa internamente con contexto propio. <strong>Banca</strong> (JPMorgan, Goldman, BBVA) y <strong>salud</strong> (NHS, Mayo Clinic) operan modelos on-prem por obligación regulatoria. <strong>Apple</strong> prioriza modelos on-device. El patrón: <em>el SaaS sirve para empezar; el modelo propio sirve para escalar</em>."
+          },
+          {
+            "label": "Cómo replicarlo",
+            "html": "Probablemente no necesitas un modelo propio todavía. Pero <strong>sí necesitas saber qué datos NO pueden salir de tu perímetro</strong>. Haz un audit ligero: qué información de cliente, qué información de producto, qué información regulada se mete en prompts de SaaS. Si la respuesta es \"ninguna\", sigue con Claude/ChatGPT. Si es \"alguna\", arquitecta para mover esos casos a un proveedor con acuerdo enterprise (Anthropic Enterprise, Azure OpenAI, AWS Bedrock) <em>antes</em> de que sea problema legal."
+          }
+        ]
+      }
+    ]
+  },
+  "sources": {
+    "companies": [
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "color": "1c1c1c"
+      },
+      {
+        "name": "Stripe",
+        "slug": "stripe",
+        "color": "635BFF"
+      },
+      {
+        "name": "Uber",
+        "slug": "uber",
+        "color": "1c1c1c"
+      },
+      {
+        "name": "Airbnb",
+        "slug": "airbnb",
+        "color": "FF5A5F"
+      },
+      {
+        "name": "Anthropic",
+        "slug": "anthropic",
+        "color": "1c1c1c"
+      },
+      {
+        "name": "Figma",
+        "slug": "figma",
+        "color": "1c1c1c"
+      },
+      {
+        "name": "Vercel",
+        "slug": "vercel",
+        "color": "1c1c1c"
+      },
+      {
+        "name": "Linear",
+        "slug": "linear",
+        "color": "1c1c1c"
+      },
+      {
+        "name": "Shopify",
+        "slug": "shopify",
+        "color": "1c1c1c"
+      },
+      {
+        "name": "Dovetail",
+        "slug": "dovetail",
+        "color": "1c1c1c"
+      }
+    ],
+    "people": [
+      "Brian Lovin (Notion)",
+      "Owen Williams (Stripe)",
+      "How I AI · ChatPRD",
+      "Lenny's Newsletter"
+    ],
+    "people_links": {
+      "Lenny's Newsletter": "https://www.lennysnewsletter.com/",
+      "How I AI · ChatPRD": "https://www.chatprd.ai/how-i-ai",
+      "Brian Lovin (Notion)": "https://brianlovin.com/"
+    }
+  },
+  "changelog": [
+    {
+      "date": "2026-11-11",
+      "summary": "v0.4: contenido separado del diseño; subpáginas integradas en el acordeón."
+    }
+  ]
+}

@@ -9,5 +9,10 @@ desktop.ini
 *.swp
 *.swo
 
+# Herramientas locales (copias de trabajo de Claude Code, caché de Wrangler)
+.claude/
+.wrangler/
+node_modules/
+
 # Local notes / scratch (memory.md is included on purpose — es el changelog del proyecto)
 *.local.md

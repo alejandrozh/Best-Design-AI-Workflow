@@ -1143,6 +1143,23 @@
       .panel-head, .panel-body, .panel-foot { padding-left: 22px; padding-right: 22px; }
       .topbar-inner { padding: 14px 18px; }
     }
+
+    /* v0.4 · contenido renderizado desde content.json */
+    .panel-block .block-label + * { margin-top: 0; }
+    .panel-block > .block-label:not(:first-child) { display: block; margin-top: 22px; }
+    .link-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .link-list a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
+    .link-list a:hover { color: var(--accent); border-color: var(--accent); }
+    .link-list li::before { content: "↗ "; color: var(--muted-2); }
+    .curator-key { display: none; gap: 8px; }
+    .curator-key.open { display: flex; }
+    .curator-key input {
+      flex: 1; min-width: 0; padding: 10px 12px; font: inherit; font-size: 14px;
+      border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface);
+    }
+    .load-error { max-width: 640px; margin: 40px auto; padding: 20px 24px; background: var(--accent-soft);
+      border: 1px solid var(--border-strong); border-radius: var(--radius); color: var(--accent-ink); }
+    .load-error code { font-family: var(--font-mono); font-size: 13px; }
   </style>
 </head>
 <body>
@@ -1155,7 +1172,7 @@
       </a>
       <div class="topbar-meta">
         <span class="live-dot"></span>
-        v0.3 · revisado 16 may 2026
+        <span id="version-meta">cargando…</span>
       </div>
     </div>
   </header>
@@ -1179,846 +1196,30 @@
           <span class="practice-tag tag-diy" style="font-size: 9.5px;">Ruta DIY</span> alternativa self-hosted
         </div>
       </div>
-
-      <ol class="phases">
-        <li class="phase">
-          <button class="phase-btn" aria-expanded="false" data-phase="discovery">
-            <span class="phase-index">Fase 01</span>
-            <span class="phase-name">Discovery</span>
-            <span class="phase-hint">De señal a insight con cita.</span>
-            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-          </button>
-        </li>
-        <li class="phase">
-          <button class="phase-btn" aria-expanded="false" data-phase="ideation">
-            <span class="phase-index">Fase 02</span>
-            <span class="phase-name">Ideation</span>
-            <span class="phase-hint">Veinte variantes en una tarde.</span>
-            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-          </button>
-        </li>
-        <li class="phase">
-          <button class="phase-btn" aria-expanded="false" data-phase="prototyping">
-            <span class="phase-index">Fase 03</span>
-            <span class="phase-name">Prototyping</span>
-            <span class="phase-hint">De Figma a código, en minutos.</span>
-            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-          </button>
-        </li>
-        <li class="phase">
-          <button class="phase-btn" aria-expanded="false" data-phase="handoff">
-            <span class="phase-index">Fase 04</span>
-            <span class="phase-name">Handoff</span>
-            <span class="phase-hint">La spec se genera sola.</span>
-            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-          </button>
-        </li>
-        <li class="phase">
-          <button class="phase-btn" aria-expanded="false" data-phase="validation">
-            <span class="phase-index">Fase 05</span>
-            <span class="phase-name">Validation</span>
-            <span class="phase-hint">Fricciones antes de usuarios reales.</span>
-            <span class="phase-chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-          </button>
-        </li>
-      </ol>
-
-      <!-- ============================================
-           DISCOVERY
-           ============================================ -->
-      <article class="panel" data-panel="discovery" hidden>
-        <div class="panel-head">
-          <div class="panel-eyebrow">Fase 01 — Discovery</div>
-          <h2>De señal en bruto a insight con cita, <em>sin perder tres días</em>.</h2>
-          <p>La IA hace lo tedioso del research (transcribir, clusterizar, indexar) y deja al diseñador lo que no era tedioso (interpretar, conectar con producto, priorizar). El research sigue siendo trabajo humano. El secretariado del research, no.</p>
-          <div class="phase-meta">
-            <span class="meta-tag"><strong>Setup</strong> 2 días (protocolo + config)</span>
-            <span class="meta-tag"><strong>Por sesión</strong> ~20 min de revisión humana</span>
-            <span class="meta-tag"><strong>Ahorro típico</strong> 60–70% vs. síntesis manual</span>
-          </div>
-        </div>
-
-        <div class="panel-body">
-
-          <div class="panel-block">
-            <span class="block-label">Cómo lo hacen los top</span>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/dovetail/1c1c1c" alt="" onerror="this.style.display='none'">Dovetail</span>
-                <span class="practice-tag tag-patron">Patrón común</span>
-                <span class="practice-source">Repositorio enterprise</span>
-              </div>
-              <p class="practice-body"><strong>La IA propone tags y clusters; el investigador valida.</strong> Cada insight propuesto se acompaña de las citas que lo justifican, con timestamps. <em>Insight sin cita no existe.</em> En la práctica: el equipo carga las grabaciones, Dovetail genera tags sugeridos por sesión, y un investigador los acepta o rechaza en bloque antes de que entren al repo. La regla interna: <strong>un mínimo de 3 menciones por usuarios distintos para que un tema cuente como insight</strong>. Por debajo de eso es señal débil — se anota, no se publica.</p>
-            </div>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/anthropic/1c1c1c" alt="" onerror="this.style.display='none'">Claude + Projects</span>
-                <span class="practice-tag tag-diy">Ruta DIY</span>
-                <span class="practice-source">Equipos con NDAs</span>
-              </div>
-              <p class="practice-body">Un proyecto de Claude por iniciativa de research. Las transcripciones (con nombre de archivo que identifique al usuario: <code>U07_2026-05-12.md</code>) cargadas como knowledge. En las <strong>instrucciones del proyecto</strong> se escribe la regla dura: "cualquier afirmación sin cita literal con fuente y minuto: rechaza, no la generes". A partir de ahí, las consultas iterativas son consultas en lenguaje natural — <em>"¿qué dijeron los usuarios &gt;50 sobre el flujo de pago este trimestre?"</em> — y el modelo responde con citas.</p>
-            </div>
-          </div>
-
-          <div class="panel-block">
-            <span class="block-label">Stack mínimo</span>
-            <ul class="stack-list">
-              <li class="stack-item"><span><strong>Transcripción</strong> — Otter.ai o Fathom. Diarización y timestamps no negociables.</span></li>
-              <li class="stack-item"><span><strong>Síntesis</strong> — Dovetail si hay presupuesto. Claude Projects o Notion AI si no.</span></li>
-              <li class="stack-item"><span><strong>Repositorio consultable</strong> — los insights tienen que poder buscarse en lenguaje natural meses después.</span></li>
-              <li class="stack-item"><span><strong>Protocolo de validación</strong> — un documento, no software. Reglas explícitas para el equipo.</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Checklist antes de empezar</span>
-            <ul class="checklist">
-              <li><span>¿Tienes <strong>consentimiento</strong> para procesar las transcripciones con IA?</span></li>
-              <li><span>¿Tu <strong>protocolo de validación</strong> está escrito y socializado?</span></li>
-              <li><span>¿Hay una <strong>persona responsable</strong> de validar (no opcional)?</span></li>
-              <li><span>¿Tienes <strong>taxonomía base de tags</strong> o vas a dejar que emerja?</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Empieza mañana</span>
-            <ol class="steps">
-              <li class="step"><span><strong>Empieza por las próximas 5–10 sesiones</strong>, no por el archivo entero.</span></li>
-              <li class="step"><span><strong>Escribe el protocolo</strong> antes de procesar nada.</span></li>
-              <li class="step"><span><strong>Revisa cita por cita</strong> en la primera transcripción. Los hallazgos se vuelven reglas.</span></li>
-              <li class="step"><span><strong>Mide el ahorro real</strong> — tiempo, número de insights, citas por insight.</span></li>
-            </ol>
-          </div>
-
-          <div class="panel-block full">
-            <div class="prompt-card">
-              <button class="prompt-copy" data-copy="discovery-prompt">Copiar</button>
-              <span class="prompt-label">Prompt clave · síntesis con citas</span>
-              <span class="prompt-title">Para usar con Claude Projects o ChatGPT con las transcripciones cargadas</span>
-<pre id="discovery-prompt">Tengo {N} transcripciones de entrevistas a usuarios sobre {TEMA}. Cada archivo
-se llama U{ID}_{FECHA}.md y empieza con metadatos del participante.
-
-Tu trabajo:
-1. Identifica 5–8 temas recurrentes. Cada tema necesita al menos 3 menciones
-   por usuarios distintos para entrar. Si solo aparece en 1–2, márcalo como
-   "señal débil — investigar más", no como insight.
-2. Para cada tema: descripción de 1 línea, n_menciones, y un array de citas
-   literales (texto exacto, archivo de origen, minuto aproximado).
-3. Cualquier afirmación sin cita literal: rechaza, no la generes.
-4. No conviertas en insight cosas que el participante dijo "porque sí":
-   distingue declaración de hecho vs. preferencia vs. anécdota.
-
-Formato de salida: JSON con
-  { tema, descripcion, n_menciones, citas: [{texto, fuente, minuto}] }</pre>
-            </div>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">Trampa frecuente</span>
-            <p class="block-text">Cuanto más cómoda es la herramienta, más fácil es saltarse la verificación. Si la IA te da un párrafo bien escrito con un insight sintético, el reflejo es aceptarlo. La disciplina aquí no es técnica, es cultural: <em>tu equipo tiene que verificar las citas como verificaría una fuente periodística</em>.</p>
-          </div>
-        </div>
-
-        <div class="panel-foot">
-          <span><span class="status-pill ready">● Disponible</span> · contenido completo</span>
-          <a href="discovery.html">Lectura larga →</a>
-        </div>
-      </article>
-
-      <!-- ============================================
-           IDEATION
-           ============================================ -->
-      <article class="panel" data-panel="ideation" hidden>
-        <div class="panel-head">
-          <div class="panel-eyebrow">Fase 02 — Ideation</div>
-          <h2>Veinte variantes de layout en una tarde, <em>todas dentro del design system</em>.</h2>
-          <p>La fase más "craft" del proceso. El cambio de 2026 no es tener <em>ideas creativas</em> generadas por IA — eso es ruido. Es ampliar el espacio de solución de forma sistemática <strong>antes</strong> de cerrarlo. Decidir entre veinte variantes reales generadas en horas, no entre dos que cabían en tu cabeza después de una semana.</p>
-          <div class="phase-meta">
-            <span class="meta-tag"><strong>Setup</strong> 2 h (brief + criterios escritos)</span>
-            <span class="meta-tag"><strong>Por iteración</strong> 20–40 min generar + 1 h descartar</span>
-            <span class="meta-tag"><strong>Output típico</strong> 20 variantes → presentas 2</span>
-          </div>
-        </div>
-
-        <div class="panel-body">
-
-          <div class="panel-block full">
-            <span class="block-label">El cambio de oficio</span>
-            <p class="block-text">La IA en ideación no piensa por ti — explora donde le dices que explore. Esa es la diferencia entre los equipos que la usan bien (Notion, Stripe, Airbnb, Linear, Vercel, Shopify, Anthropic) y los que generan slop bonito: <strong>los primeros invierten más tiempo en acotar el problema que en generar variantes</strong>. La generación es barata; el descarte con criterios y el brief estrecho son la palanca real.</p>
-            <p class="block-text">Lo que comparten esos equipos es un <em>método</em>, no una herramienta. Cambia el generador (Figma Make Designs, v0, Galileo, Subframe, Lovable...) pero los patrones que rodean al generador son los mismos. Esos patrones son lo importante — si tu equipo los adopta, el generador concreto pasa a ser una decisión de mercado, no de método.</p>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">Los 4 patrones que comparten los equipos top</span>
-
-            <div class="pattern">
-              <div class="pattern-head">
-                <span class="pattern-num">01</span>
-                <span class="pattern-name">El brief estrecho</span>
-              </div>
-              <div class="pattern-body">
-                <div class="pattern-row">
-                  <span class="pattern-label">Por qué importa</span>
-                  <p>La calidad de las 20 variantes está acotada por la calidad del brief. Un brief de <em>"una pantalla de checkout bonita"</em> devuelve sopa. Un brief con usuario, job-to-be-done, restricciones explícitas y lo que NO debe cambiar acota el espacio antes de que la IA empiece a explorar. <strong>La IA es buena buscando en un espacio definido; mala definiendo el espacio.</strong></p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo lo aplican</span>
-                  <p>En <strong>Figma teams</strong> y <strong>Anthropic</strong> el brief vive en un sticky a la izquierda del archivo o como markdown en el repo del proyecto. <strong>Stripe</strong> lo formaliza: Protodash tiene un formulario obligatorio de 4 campos antes de poder generar. <strong>Airbnb</strong>, históricamente disciplinada con briefing desde la era DLS, mantiene la misma estructura para sus exploraciones con IA — una página de Notion linkada al frame, no se permite generar sin ese enlace.</p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo replicarlo</span>
-                  <p>Adopta una plantilla obligatoria con <strong>4 campos</strong>: Usuario · JTBD · Restricciones · Lo que NO debe cambiar. Si el brief tiene más de 5 líneas, recórtalo. Si tiene menos de 3, no estás listo para generar. La plantilla vive en el archivo de Figma o en el repo, no en un Google Doc aparte.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="pattern">
-              <div class="pattern-head">
-                <span class="pattern-num">02</span>
-                <span class="pattern-name">El Design System como sandbox</span>
-              </div>
-              <div class="pattern-body">
-                <div class="pattern-row">
-                  <span class="pattern-label">Por qué importa</span>
-                  <p>Las variantes solo tienen valor si la IA <strong>selecciona de tu librería</strong>, no si inventa. Un layout interesante con colores inventados no es accionable: es ruido que no se puede llevar a producción sin un rediseño. Cuando el DS actúa como sandbox, cada variante es una recombinación de cosas que ya existen — eso es lo que las hace útiles para discutir.</p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo lo aplican</span>
-                  <p><strong>Stripe</strong> (Protodash) y <strong>Linear</strong> conectan su generador exclusivamente al DS oficial: si la IA propone algo fuera del sistema, lo rechaza antes de mostrarlo. <strong>Vercel</strong> con v0 sobre su propio DS, <strong>Shopify</strong> con Polaris, <strong>Notion</strong> con tokens importados en su Playground — el principio es el mismo: los tokens en Variables, la IA limitada a esa paleta.</p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo replicarlo</span>
-                  <p>Antes de generar nada, verifica que tu DS vive en <strong>Figma Variables</strong> (o el equivalente de tu stack). Si no lo está, ese es el primer trabajo del semestre — más importante que adoptar cualquier herramienta de IA. Sin esa base, la ideación con IA fabrica resultados bonitos que no se pueden implementar.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="pattern">
-              <div class="pattern-head">
-                <span class="pattern-num">03</span>
-                <span class="pattern-name">La doble generación: estructura primero, visual después</span>
-              </div>
-              <div class="pattern-body">
-                <div class="pattern-row">
-                  <span class="pattern-label">Por qué importa</span>
-                  <p>Estructura y tratamiento visual son <strong>problemas distintos</strong>. Mezclarlos en un solo prompt produce variantes "bonitas pero iguales" — la IA converge en patrones visuales seguros cuando no le separas los concerns. Generar primero estructura (jerarquía, secuencia, densidad) y después tratamiento (tipografía, color, peso visual) da resultados más diversos y discutibles.</p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo lo aplican</span>
-                  <p><strong>Airbnb</strong> ha mantenido esta separación desde la era pre-IA: <em>mood board → estructura → tratamiento</em>. Han adaptado el flujo manteniendo las tres etapas. <strong>Figma teams</strong> lo aplican implícitamente con Make Designs: primera ronda para layout con componentes neutros, segunda con énfasis visual. <strong>Anthropic</strong> lo formaliza con dos comandos distintos: uno para estructura, otro para tratamiento, ejecutados en sesiones separadas.</p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo replicarlo</span>
-                  <p>Dos rondas, dos prompts, dos criterios de descarte. Primero estructura sobre componentes neutros del DS; cuando una estructura está aprobada por el equipo, segunda ronda <strong>solo de tratamiento visual</strong> sobre esa estructura. <em>No las mezcles ni siquiera "para ahorrar tiempo"</em> — el ahorro es ilusorio porque el output converge.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="pattern">
-              <div class="pattern-head">
-                <span class="pattern-num">04</span>
-                <span class="pattern-name">El descarte ritualizado</span>
-              </div>
-              <div class="pattern-body">
-                <div class="pattern-row">
-                  <span class="pattern-label">Por qué importa</span>
-                  <p>Generar 20 es fácil. <strong>Descartar 18 con criterios escritos</strong> es la palanca real. Sin criterios previos, el descarte se convierte en preferencia personal y la decisión es indefendible cuando alguien la cuestiona en una review. <em>La calidad de tu ideación se mide en lo que descartas, no en lo que generas.</em></p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo lo aplican</span>
-                  <p><strong>Stripe</strong> usa una tabla de scoring obligatoria antes de cualquier ronda: filas con criterios (jerarquía, accesibilidad, fit con DS, novedad útil), columnas con las variantes. <strong>Linear</strong> bloquea calendar específico para "variant review" como ritual semanal con 2-3 personas. <strong>Notion</strong> documenta el descarte en el PR — qué variantes se descartaron y por qué — para que la decisión sea trazable meses después.</p>
-                </div>
-                <div class="pattern-row">
-                  <span class="pattern-label">Cómo replicarlo</span>
-                  <p>Escribe los criterios <strong>antes</strong> de generar. Bloquea 1 hora separada para descartar (no entre tareas). Convoca a 1-2 personas más para el descarte: <em>divergente es solo, convergente es de equipo</em>. Documenta qué descartaste y por qué — esa documentación vale más que las variantes elegidas dentro de seis meses.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">Una sesión de ideación de principio a fin · 2 días</span>
-            <p class="block-text">El ritual que practican (con pequeñas variantes) Notion, Stripe, Linear y Airbnb. Reemplaza la semana entera de "exploración" del modelo pre-IA.</p>
-
-            <div class="playbook">
-              <div class="playbook-step">
-                <div class="playbook-when">Día 1 · mañana · 90 min</div>
-                <div class="playbook-what">Brief + criterios escritos</div>
-                <div class="playbook-detail">Rellenas la plantilla de 4 campos. Defines los <strong>criterios de descarte</strong> (jerarquía, accesibilidad, fit con DS, novedad útil — los que sirvan a este flujo). Sin estos dos artefactos escritos, no continúas. Si dudas, conviértelo en <em>"hoy no genero"</em> y vuelves a empezar mañana.</div>
-              </div>
-              <div class="playbook-step">
-                <div class="playbook-when">Día 1 · tarde · 2–3 h</div>
-                <div class="playbook-what">Ronda 1 — Estructura</div>
-                <div class="playbook-detail">Generas 20 variantes <strong>solo de estructura</strong> sobre componentes neutros del DS. <em>No editas entre tiradas.</em> Cierras Figma cuando termines.</div>
-              </div>
-              <div class="playbook-step">
-                <div class="playbook-when">Día 2 · mañana · 1 h</div>
-                <div class="playbook-what">Descarte 1 con equipo</div>
-                <div class="playbook-detail">Con 2 personas más, scoring contra los criterios. <strong>Quedan 2 estructuras.</strong> Documentas qué descartaste y por qué (1-2 líneas por variante, basta).</div>
-              </div>
-              <div class="playbook-step">
-                <div class="playbook-when">Día 2 · tarde · 2 h</div>
-                <div class="playbook-what">Ronda 2 — Tratamiento visual</div>
-                <div class="playbook-detail">Sobre las 2 estructuras aprobadas, generas 10-15 variantes de tratamiento (tipografía, color, peso visual, microcopy). Mismo principio: no editas, no mezclas.</div>
-              </div>
-              <div class="playbook-step">
-                <div class="playbook-when">Día 3 · mañana · 30 min</div>
-                <div class="playbook-what">Descarte 2 y entrega</div>
-                <div class="playbook-detail">Scoring final con el mismo equipo. <strong>Quedan 2 propuestas completas</strong> (estructura + tratamiento). Las presentas a producto/ingeniería sobre opciones reales — la decisión es informada porque hay alternativas concretas y descartes documentados detrás.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel-block">
-            <span class="block-label">Stack mínimo</span>
-            <ul class="stack-list">
-              <li class="stack-item"><span><strong>Plantilla de brief</strong> — 4 campos, vive en Figma o en el repo. Obligatoria.</span></li>
-              <li class="stack-item"><span><strong>DS en Figma Variables</strong> — los tokens accesibles para el generador. Sin esto, nada funciona.</span></li>
-              <li class="stack-item"><span><strong>Generador conectado al DS</strong> — Figma Make Designs, v0 con tu DS, Galileo, Subframe, Lovable. La elección depende de qué tipo de output prefieras (Figma vs. código).</span></li>
-              <li class="stack-item"><span><strong>Tabla de scoring</strong> — criterios escritos antes de generar. Si no, todo te parece bien.</span></li>
-            </ul>
-          </div>
-
-          <div class="panel-block">
-            <span class="block-label">Checklist antes de empezar</span>
-            <ul class="checklist">
-              <li><span>¿Brief en <strong>3–5 líneas</strong> con los 4 campos?</span></li>
-              <li><span>¿DS en <strong>Figma Variables</strong> y accesible para la IA?</span></li>
-              <li><span>¿Criterios de descarte <strong>escritos antes</strong> de generar?</span></li>
-              <li><span>¿Tienes <strong>1–2 compañeros</strong> bloqueados para el descarte convergente?</span></li>
-            </ul>
-          </div>
-
-          <div class="panel-block full">
-            <div class="prompt-card">
-              <button class="prompt-copy" data-copy="ideation-prompt">Copiar</button>
-              <span class="prompt-label">Prompt clave · generación de variantes (ronda 1, estructura)</span>
-              <span class="prompt-title">Para pegarlo en Figma Make Designs, v0, Galileo o Subframe. Adapta los placeholders.</span>
-<pre id="ideation-prompt">Brief:
-- Usuario: {persona}
-- Job-to-be-done: {qué quiere conseguir en esta pantalla}
-- Restricciones: {tiempo, contexto, dispositivo, datos disponibles}
-- Lo que NO puede cambiar: {regulación, marca, integración, jerarquía de info}
-
-Tu trabajo: genera 20 variantes de ESTRUCTURA para este flujo.
-
-Restricciones de generación:
-- Solo componentes del Design System adjunto. No inventes.
-- Cada variante: nombre corto, descripción 1 línea, qué cambia
-  respecto a la variante 01 (que es la base conservadora).
-- Varía al menos uno de: jerarquía, densidad, agrupación, foco
-  visual, secuencia, número de pasos.
-- NO varíes en esta ronda: colores, tipografía, iconografía,
-  tratamiento visual. Eso es de la ronda 2.
-
-No me preguntes para refinar el brief. Genera las 20. Filtramos
-después con criterios escritos. Esta ronda es divergente.</pre>
-            </div>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">Cuándo NO usar IA en ideación</span>
-            <p class="block-text">Para <strong>exploración divergente muy temprana</strong> sigue funcionando mejor pizarra y Figma a mano. La IA acelera la conversión de ideas <em>ya formadas</em>, no las hace aparecer. Si todavía no sabes ni qué problema estás resolviendo, hazlo tú primero — luego pide variantes sobre lo que ya tiene forma. <em>La IA es el motor de exploración, no el motor de comprensión.</em></p>
-          </div>
-
-          <div class="panel-block full">
-            <div class="prompt-card">
-              <button class="prompt-copy" data-copy="ideation-prompt">Copiar</button>
-              <span class="prompt-label">Prompt clave · generación de variantes</span>
-              <span class="prompt-title">Para pegarlo en Figma AI, v0, Galileo o Subframe</span>
-<pre id="ideation-prompt">Brief:
-- Usuario: {persona}
-- Job-to-be-done: {qué quiere conseguir en esta pantalla}
-- Restricciones: {tiempo, contexto, dispositivo, datos disponibles}
-- Lo que NO puede cambiar: {regulación, marca, integración}
-
-Tu trabajo: genera 20 variantes de layout para este flujo.
-
-Restricciones de generación:
-- Solo componentes del Design System adjunto. No inventes.
-- Cada variante: nombre corto, descripción 1 línea, qué cambia respecto
-  a la variante 01 (que es la base conservadora).
-- Varía al menos uno de: jerarquía, densidad, agrupación, foco visual,
-  secuencia, número de pasos.
-- NO varíes: colores, tipografía, iconografía (vienen del DS).
-
-No me preguntes para refinar el brief. Genera las 20. Filtramos después.</pre>
-            </div>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">Cuándo NO usar IA aquí</span>
-            <p class="block-text">Para <strong>exploración divergente muy temprana</strong> sigue funcionando mejor pizarra y Figma a mano. La IA acelera la conversión de ideas <em>ya formadas</em>, no las hace aparecer. Si necesitas pensar el problema, hazlo tú primero — luego pide variantes sobre lo que ya tiene forma.</p>
-          </div>
-        </div>
-
-        <div class="panel-foot">
-          <span><span class="status-pill draft">● En revisión</span> · contenido condensado · próxima ronda: 30 may</span>
-          <span style="color: var(--muted-2);">Lectura larga próximamente</span>
-        </div>
-      </article>
-
-      <!-- ============================================
-           PROTOTYPING
-           ============================================ -->
-      <article class="panel" data-panel="prototyping" hidden>
-        <div class="panel-head">
-          <div class="panel-eyebrow">Fase 03 — Prototyping</div>
-          <h2>De Figma a prototipo funcional, <em>en minutos</em>.</h2>
-          <p>La fase donde la IA está cambiando el oficio más rápido. Los mejores equipos ya no entregan clickables de Figma — entregan código navegable, en el mismo entorno donde acabará viviendo el producto.</p>
-          <div class="phase-meta">
-            <span class="meta-tag"><strong>Setup inicial</strong> 1 mañana (tech lead, una vez)</span>
-            <span class="meta-tag"><strong>Por componente</strong> 5–30 min máquina · ~5 min revisión humana</span>
-            <span class="meta-tag"><strong>Ahorro típico</strong> 80% del trabajo de front-end mecánico</span>
-          </div>
-        </div>
-
-        <div class="panel-body">
-
-          <div class="panel-block">
-            <span class="block-label">Cómo lo hacen los top</span>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/notion/1c1c1c" alt="" onerror="this.style.display='none'">Notion</span>
-                <span class="practice-tag tag-caso">Caso real</span>
-                <span class="practice-source">Brian Lovin · How I AI · feb 2026</span>
-              </div>
-              <p class="practice-body">El <strong>Prototype Playground</strong>: una app Next.js compartida, carpeta por diseñador (<code>/prototypes/{nombre}/</code>), tokens del DS importados en <code>/lib/tokens</code>. El comando custom <strong>/figma</strong> ejecuta en cadena: (1) lee el frame con Figma MCP, (2) genera componentes Next.js + Tailwind usando solo los tokens, (3) abre Chrome real vía DevTools MCP y captura screenshot, (4) compara con el Figma original y autocorrige hasta 3 iteraciones sin cambios significativos. <em>"No he escrito una línea de front-end en tres meses."</em> Lo nuevo no es Figma→código (v0 ya lo hacía): es <strong>el bucle de auto-corrección</strong>.</p>
-            </div>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/stripe/1c1c1c" alt="" onerror="this.style.display='none'">Stripe</span>
-                <span class="practice-tag tag-caso">Caso real</span>
-                <span class="practice-source">Owen Williams · How I AI · may 2026</span>
-              </div>
-              <p class="practice-body"><strong>Protodash</strong>: estudio interno de prototipado contra el DS de Stripe. Empezó como un set de <code>.cursorrules</code> compartidas, evolucionó a una herramienta con review + deploy integrados. Su término para lo que <em>evitan</em>: <strong>blurple slop</strong> — el aspecto genérico violeta-azulado de la IA cuando no está enraizada en un DS serio. Diferencia con Notion: Protodash es <strong>más prescriptivo</strong> — empuja al equipo entero hacia el mismo workflow en vez de dejar margen para variaciones individuales.</p>
-            </div>
-          </div>
-
-          <div class="panel-block">
-            <span class="block-label">Stack mínimo</span>
-            <ul class="stack-list">
-              <li class="stack-item"><span><strong>Figma con Variables</strong> — los tokens del DS viven en Variables. Sin esto, el MCP extrae basura.</span></li>
-              <li class="stack-item"><span><strong>Claude Code o Cursor</strong> — un agente en terminal o editor. Modelos equivalentes por debajo.</span></li>
-              <li class="stack-item"><span><strong>Figma MCP + Chrome DevTools MCP</strong> — el primero lee el diseño, el segundo cierra el bucle de verificación.</span></li>
-              <li class="stack-item"><span><strong>Playground compartido</strong> — Next.js, repo único, carpeta por persona. Una mañana de trabajo.</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Checklist antes de empezar</span>
-            <ul class="checklist">
-              <li><span>¿<strong>DS en Figma Variables</strong> (no estilos sueltos pegados)?</span></li>
-              <li><span>¿Frame final en la página <strong>"Ready for code"</strong> del archivo?</span></li>
-              <li><span>¿<strong>MCP de Figma</strong> instalado y conectado al DS?</span></li>
-              <li><span>¿<strong>Repositorio del Playground</strong> configurado con tu carpeta?</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Empieza mañana</span>
-            <ol class="steps">
-              <li class="step"><span><strong>Habla con tu tech lead</strong> — la infraestructura es trabajo suyo, una mañana.</span></li>
-              <li class="step"><span><strong>Empieza por un componente pequeño</strong> con varios estados (Card, input con validación, toast).</span></li>
-              <li class="step"><span><strong>Cierra el diseño usando solo componentes del DS</strong>. Página "Ready for code".</span></li>
-              <li class="step"><span><strong>Ejecuta /figma, lee el plan antes</strong> de generar. Revisa la PR por screenshot y accesibilidad, no por código.</span></li>
-            </ol>
-          </div>
-
-          <div class="panel-block full">
-            <div class="prompt-card">
-              <button class="prompt-copy" data-copy="prototyping-prompt">Copiar</button>
-              <span class="prompt-label">Comando clave · /figma simplificado</span>
-              <span class="prompt-title">Versión replicable del comando de Brian Lovin (Notion). Pégalo como <code>/.claude/commands/figma.md</code> o equivalente en Cursor</span>
-<pre id="prototyping-prompt">Te paso un link de Figma. Tu trabajo, en cadena, sin pedir confirmación:
-
-1. LEE el frame con Figma MCP. Extrae tokens, componentes y estados.
-   Si el frame usa estilos sueltos (no del DS), aborta y avisa.
-
-2. GENERA componentes Next.js + Tailwind usando SOLO los tokens del DS
-   importados en /lib/tokens. Implementa TODOS los estados visibles
-   en el diseño: default, loading, empty, error, success.
-
-3. ABRE el resultado en Chrome real (Chrome DevTools MCP). Captura
-   screenshot a la misma viewport que el frame de Figma.
-
-4. COMPARA screenshot vs. diseño original. Identifica diferencias:
-   layout, spacing, color, estado faltante.
-
-5. CORRIGE las diferencias. Itera hasta 3 veces. Si después de 3
-   intentos no converge, abre la PR con las diferencias documentadas
-   en la descripción.
-
-6. ABRE PR contra la rama main. Título: feat({componente}). Cuerpo:
-   link al Figma + lista de estados implementados + screenshots
-   antes/después.
-
-Solo pregunta si falta info crítica (link roto, frame vacío, DS no
-detectado). Para todo lo demás: léelo, ejecútalo.</pre>
-            </div>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">El patrón común</span>
-            <p class="block-text">Lo que comparten Notion y Stripe: <strong>entorno compartido</strong> en vez de scripts individuales · <strong>Design System como fuente de verdad</strong> — la IA selecciona, no inventa · <strong>bucle de verificación</strong> — el agente contrasta su salida contra el diseño original. <em>La palanca real está en el bucle, no en la generación.</em> Generar sin verificar lleva al blurple slop. Verificar sin DS limpio lleva a un bucle que itera infinito sobre estilos inventados.</p>
-          </div>
-        </div>
-
-        <div class="panel-foot">
-          <span><span class="status-pill ready">● Disponible</span> · contenido completo con caso de estudio</span>
-          <a href="prototyping.html">Lectura larga →</a>
-        </div>
-      </article>
-
-      <!-- ============================================
-           HANDOFF
-           ============================================ -->
-      <article class="panel" data-panel="handoff" hidden>
-        <div class="panel-head">
-          <div class="panel-eyebrow">Fase 04 — Handoff</div>
-          <h2>La especificación se genera sola desde <em>el diseño y el prototipo</em>.</h2>
-          <p>Adiós a documentar componentes a mano y a las cinco rondas de aclaraciones con ingeniería. Cuando el prototipo vive ya en el stack real, el handoff deja de ser un artefacto y se convierte en un cambio de contexto: la misma rama, otro reviewer.</p>
-          <div class="phase-meta">
-            <span class="meta-tag"><strong>Setup</strong> 1–2 días (MCP + convenciones)</span>
-            <span class="meta-tag"><strong>Por feature</strong> 0 min de docs separados</span>
-            <span class="meta-tag"><strong>Métrica clave</strong> rondas de aclaración / feature</span>
-          </div>
-        </div>
-
-        <div class="panel-body">
-
-          <div class="panel-block">
-            <span class="block-label">Cómo lo hacen los top</span>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/figma/1c1c1c" alt="" onerror="this.style.display='none'">Figma · Dev Mode + MCP</span>
-                <span class="practice-tag tag-patron">Patrón común</span>
-                <span class="practice-source">Estándar enterprise</span>
-              </div>
-              <p class="practice-body">La spec deja de escribirse: <strong>Dev Mode + MCP exponen tokens, medidas, estados y componentes directamente al IDE</strong> del developer. Lo que el diseñador "documenta" es lo que ya está en Figma — si está bien estructurado, no hace falta narrar nada. En la práctica: el ingeniero abre el archivo de Figma desde su IDE (extension oficial), selecciona un frame, y obtiene tokens, medidas y referencias a componentes existentes del repo — <em>no</em> snippets genéricos. La regla del equipo: <strong>si la información está en Figma, no se duplica en Notion ni en una PR description</strong>.</p>
-            </div>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/linear/1c1c1c" alt="" onerror="this.style.display='none'">Linear · Vercel · Notion</span>
-                <span class="practice-tag tag-patron">Patrón común</span>
-                <span class="practice-source">Equipos producto-tech integrados</span>
-              </div>
-              <p class="practice-body">El prototipo <strong>vive en el repo del producto</strong>. No hay handoff como entrega — hay PR. El diseñador abre la rama (típicamente <code>design/{feature}</code>), el agente la levanta, ingeniería revisa el código real. <em>El artefacto del diseño es el propio commit.</em> La transición ya no es "te paso el diseño" sino "te paso el reviewer". La métrica que valida el modelo: rondas de aclaración por feature, que pasa de 4–6 (modelo Figma-only) a 0–1 (modelo PR-as-handoff).</p>
-            </div>
-          </div>
-
-          <div class="panel-block">
-            <span class="block-label">Stack mínimo</span>
-            <ul class="stack-list">
-              <li class="stack-item"><span><strong>Figma Dev Mode</strong> con DS bien estructurado en Variables.</span></li>
-              <li class="stack-item"><span><strong>Figma MCP</strong> conectado al IDE de los developers.</span></li>
-              <li class="stack-item"><span><strong>Prototipo en el repo real</strong> — no en un entorno paralelo de "diseño".</span></li>
-              <li class="stack-item"><span><strong>Convención de commits y PRs</strong> compartida entre diseño e ingeniería.</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Checklist antes de empezar</span>
-            <ul class="checklist">
-              <li><span>¿Tu <strong>DS está bien estructurado</strong> en Figma Variables?</span></li>
-              <li><span>¿<strong>Dev Mode + MCP</strong> conectados al IDE de ingeniería?</span></li>
-              <li><span>¿Tu prototipo <strong>vive en el repo real</strong> del producto?</span></li>
-              <li><span>¿Hay <strong>convención de PRs consensuada</strong> entre diseño e ingeniería?</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Empieza mañana</span>
-            <ol class="steps">
-              <li class="step"><span><strong>Haz el prototipo en el stack real</strong> del producto desde el principio.</span></li>
-              <li class="step"><span><strong>Elimina los docs de spec</strong> que repiten Figma o el código.</span></li>
-              <li class="step"><span><strong>Pon Dev Mode + MCP en manos de ingeniería</strong> antes de la primera revisión.</span></li>
-              <li class="step"><span><strong>Mide rondas de aclaración por feature</strong> — la métrica caerá rápido.</span></li>
-            </ol>
-          </div>
-
-          <div class="panel-block full">
-            <div class="prompt-card">
-              <button class="prompt-copy" data-copy="handoff-prompt">Copiar</button>
-              <span class="prompt-label">Prompt clave · spec auto-generada (solo si la piden)</span>
-              <span class="prompt-title">El handoff útil de 2026 es silencioso. Esto se usa solo cuando ingeniería pide algo escrito</span>
-<pre id="handoff-prompt">Te paso (1) un link de Figma con Dev Mode habilitado, y (2) la rama
-del repo con el componente correspondiente.
-
-Tu trabajo:
-- Detecta qué hay en Figma que NO está en el código (estados que
-  faltan, edge cases, comportamiento de interacción).
-- Detecta qué hay en el código que NO está en el diseño (decisiones
-  tomadas en implementación: defaults, fallbacks, optimizaciones).
-- Lista SOLO las divergencias. No documentes lo que ya es visible
-  en ambos lados.
-
-Formato de salida (Markdown, 3 columnas):
-| Qué dice diseño | Qué hace el código | Decisión |
-
-Una fila por divergencia. La columna "Decisión" la dejo en blanco
-para que el equipo la complete en la review.
-
-Si no hay divergencias significativas, devuelve "Sin divergencias
-relevantes" y no inventes filas.</pre>
-            </div>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">Trampa frecuente</span>
-            <p class="block-text">Generar specs largas con IA "por si acaso". <strong>Si nadie las va a leer, no se escriben.</strong> El handoff útil de 2026 es <em>silencioso</em>: la información vive donde se consulta, no en un documento aparte. La métrica honesta es <em>tiempo entre "diseño cerrado" y "feature en producción"</em>, no número de páginas de spec.</p>
-          </div>
-        </div>
-
-        <div class="panel-foot">
-          <span><span class="status-pill draft">● En revisión</span> · contenido condensado · próxima ronda: 30 may</span>
-          <span style="color: var(--muted-2);">Lectura larga próximamente</span>
-        </div>
-      </article>
-
-      <!-- ============================================
-           VALIDATION
-           ============================================ -->
-      <article class="panel" data-panel="validation" hidden>
-        <div class="panel-head">
-          <div class="panel-eyebrow">Fase 05 — Validation</div>
-          <h2>Detectar fricciones antes de poner el flujo <em>delante de usuarios reales</em>.</h2>
-          <p>Y medirlas después sin esperar al NPS trimestral. La IA ayuda en los dos extremos: pre-test (revisión heurística automática, simulación de uso) y post-launch (análisis de sesiones, clustering de feedback). En el medio, los usuarios reales siguen siendo insustituibles.</p>
-          <div class="phase-meta">
-            <span class="meta-tag"><strong>Setup</strong> 1 día (template + telemetría)</span>
-            <span class="meta-tag"><strong>Por ronda</strong> 2–3 días con 5 usuarios reales</span>
-            <span class="meta-tag"><strong>Regla de oro</strong> 5 reales &gt; 50 sintéticos</span>
-          </div>
-        </div>
-
-        <div class="panel-body">
-
-          <div class="panel-block">
-            <span class="block-label">Cómo lo hacen los top</span>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/maze/1c1c1c" alt="" onerror="this.style.display='none'">Maze AI Insights</span>
-                <span class="practice-tag tag-patron">Patrón común</span>
-                <span class="practice-source">Pre-launch</span>
-              </div>
-              <p class="practice-body"><strong>Tests no moderados con análisis automático.</strong> La IA cluster-iza respuestas abiertas y marca patrones de fricción (clicks de error, tiempo excesivo en una pantalla, rage clicks, abandono). El diseñador valida — no acepta el cluster sin entrar en las sesiones individuales. <strong>Setup típico:</strong> un test de 5–7 tareas, 15–25 participantes reclutados por panel, hipótesis escritas antes del lanzamiento. La señal útil suele estar en las sesiones <em>atípicas</em> (las que no encajan en ningún cluster), no en la media.</p>
-            </div>
-
-            <div class="practice">
-              <div class="practice-head">
-                <span class="practice-team"><img class="practice-logo" src="https://cdn.simpleicons.org/usertesting/1c1c1c" alt="" onerror="this.style.display='none'">UserTesting · Lookback</span>
-                <span class="practice-tag tag-patron">Patrón común</span>
-                <span class="practice-source">Post-launch</span>
-              </div>
-              <p class="practice-body">Resúmenes automáticos de sesiones grabadas con highlights, citas y timestamps. El research humano se enfoca en <strong>las 3–5 sesiones más informativas</strong> (las marcadas como atípicas o las que contradicen una hipótesis), no en revisar las 50 enteras. Igual que en Discovery: <em>la IA propone, el research valida</em>. Trampa específica: si solo lees los resúmenes, terminas leyendo confirmaciones — el aprendizaje está en ver las sesiones donde el resumen y la grabación no coinciden.</p>
-            </div>
-          </div>
-
-          <div class="panel-block">
-            <span class="block-label">Stack mínimo</span>
-            <ul class="stack-list">
-              <li class="stack-item"><span><strong>Prototipo navegable</strong> — el de la fase anterior, no un clickable de Figma.</span></li>
-              <li class="stack-item"><span><strong>Plataforma de tests no moderados</strong> con AI Insights (Maze, Useberry, Lyssna).</span></li>
-              <li class="stack-item"><span><strong>Telemetría desde el día 1</strong> — eventos en el prototipo y en producción.</span></li>
-              <li class="stack-item"><span><strong>Bucle de review semanal</strong> — sin esto, los datos se acumulan y nadie los lee.</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Checklist antes de empezar</span>
-            <ul class="checklist">
-              <li><span>¿<strong>Hipótesis escritas antes</strong> del test (no después)?</span></li>
-              <li><span>¿<strong>Eventos de telemetría</strong> instrumentados en el prototipo?</span></li>
-              <li><span>¿<strong>Criterio de éxito numérico</strong>, no "que les guste"?</span></li>
-              <li><span>¿<strong>Plan de iteración listo</strong> si las hipótesis se rechazan?</span></li>
-            </ul>
-
-            <span class="block-label" style="margin-top: 22px;">Empieza mañana</span>
-            <ol class="steps">
-              <li class="step"><span><strong>5 usuarios reales antes que 50 sintéticos.</strong></span></li>
-              <li class="step"><span><strong>Escribe las hipótesis antes del test.</strong> Si no, lees confirmaciones donde hay azar.</span></li>
-              <li class="step"><span><strong>Revisa las sesiones marcadas como atípicas.</strong> Ahí suele estar el aprendizaje.</span></li>
-              <li class="step"><span><strong>Cierra el bucle con un cambio o un "no, así está bien".</strong> Sin esto, validation se vuelve teatro.</span></li>
-            </ol>
-          </div>
-
-          <div class="panel-block full">
-            <div class="prompt-card">
-              <button class="prompt-copy" data-copy="validation-prompt">Copiar</button>
-              <span class="prompt-label">Prompt clave · análisis de sesiones contra hipótesis</span>
-              <span class="prompt-title">Para usar después de un test no moderado o de un batch de sesiones grabadas</span>
-<pre id="validation-prompt">Tengo {N} sesiones grabadas de usuarios usando {feature}. Te paso
-transcripciones + eventos de telemetría (clicks, tiempos por pantalla,
-abandonos).
-
-1. Cluster-iza las sesiones por TIPO DE FRICCIÓN OBSERVADA (no por
-   satisfacción declarada — la gente miente al final del test).
-2. Para cada cluster: descripción 1 línea, n sesiones, evidencia
-   (timestamp + cita o evento concreto).
-3. Marca como "atípica" cualquier sesión que no encaje en ningún
-   cluster. Esas las voy a revisar yo enteras.
-4. Mis hipótesis previas eran:
-   - H1: {hipótesis 1}
-   - H2: {hipótesis 2}
-   - H3: {hipótesis 3}
-   Para cada una: ¿confirmada, rechazada, sin evidencia suficiente?
-   Cita el evento o frase que sostiene tu juicio.
-
-NO me digas qué cambiar. Solo describe qué pasó y mapéalo contra
-mis hipótesis. Las decisiones de producto las tomo yo después.</pre>
-            </div>
-          </div>
-
-          <div class="panel-block full">
-            <span class="block-label">Cuidado con esto</span>
-            <p class="block-text"><strong>Personas sintéticas no sustituyen entrevistas reales.</strong> Útiles para generar hipótesis previas, calibrar preguntas o ensayar moderación. No para reemplazar voces reales. Cuando un equipo "valida" un flujo con personas sintéticas y lo lanza, lo que valida son sus propios supuestos — disfrazados con voz neutra. <em>Si el coste de equivocarse es alto, paga el coste de hablar con humanos.</em></p>
-          </div>
-        </div>
-
-        <div class="panel-foot">
-          <span><span class="status-pill draft">● En revisión</span> · contenido condensado · próxima ronda: 30 may</span>
-          <span style="color: var(--muted-2);">Lectura larga próximamente</span>
-        </div>
-      </article>
-
+      <ol class="phases" id="phases"></ol>
+      <div id="panels"></div>
     </section>
 
-    <section class="foundation">
-      <div class="foundation-intro">
-        <div class="eyebrow">La capa de fundación</div>
-        <h2>Cómo se preparan las empresas grandes para aplicar el método <em>a escala</em>.</h2>
-        <p>Esto <strong>no es una sexta fase</strong>. Es la infraestructura que vive por debajo de las cinco — la capa semántica, governance, agentes y telemetría que hace que el método funcione a escala enterprise. Estos 5 patrones son <em>transversales</em>: afectan a Discovery, Ideation, Prototyping, Handoff y Validation a la vez.</p>
-        <p>Si tu equipo opera por debajo de 20 personas, esto es <em>contexto cultural</em> — entender qué existe y qué resuelve, sin implementarlo entero. Si pasas de 100, sin estos patrones el método empieza a romperse: los agentes se pierden, el DS deriva, el research se atrasa, la compliance frena.</p>
-        <div class="foundation-meta">
-          <span class="meta-tag"><strong>Audiencia</strong> tech leads, design ops, principals</span>
-          <span class="meta-tag"><strong>Replicabilidad</strong> parcial — copia el principio, no el setup</span>
-          <span class="meta-tag"><strong>Horizonte</strong> 12–36 meses, no un sprint</span>
-        </div>
-        <button class="foundation-toggle" id="foundation-toggle" aria-expanded="false" aria-controls="foundation-patterns">
-          <span class="toggle-label">Ver los 5 patrones de infraestructura</span>
-          <span class="chevron" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-        </button>
-      </div>
-
-      <div class="foundation-patterns" id="foundation-patterns" hidden>
-
-      <div class="pattern">
-        <div class="pattern-head">
-          <span class="pattern-num">01</span>
-          <span class="pattern-name">Knowledge graph del producto</span>
-        </div>
-        <div class="pattern-body">
-          <div class="pattern-row">
-            <span class="pattern-label">Por qué importa</span>
-            <p>A 50 productos, 200 diseñadores y 10 años de decisiones, la información ya no cabe en Figma ni en Notion. Un knowledge graph hace consultable la <em>relación</em> entre cosas: qué componente vive en qué flujo, qué decisión vino de qué research, qué pantalla está sujeta a qué regulación. <strong>Sin esa capa, los agentes de IA tropiezan con el contexto cada vez que entran al producto</strong> — con ella, lo recuperan en milisegundos. Es la diferencia entre "la IA propone diseños" y "la IA propone diseños que entienden por qué existe lo que ya existe".</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo lo aplican</span>
-            <p><strong>Google</strong> lleva años con Material Design construido sobre datos estructurados: cada token y cada componente tienen metadata que el equipo de Material usa para auditar consistencia automáticamente. <strong>Meta</strong> tiene una plataforma interna que conecta DS, flujos y telemetría (poco documentada en abierto, pero referenciada en charlas). <strong>Stripe</strong> construyó la capa por debajo de Protodash precisamente para que el generador pueda responder <em>"¿qué patterns existen para checkout regulado en este país?"</em>. <strong>Adobe</strong> integra Sensei con Frame.io para grafos de contenido.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo replicarlo</span>
-            <p>No vas a construir Material en seis meses, y no hace falta. Pero puedes empezar pequeño: estructurar tu DS en Variables, <strong>etiquetar cada componente con metadata</strong> (flujo, regulación, estado), y mantener un README por flujo con sus decisiones de diseño linkadas a research. Lo importante no es la herramienta — es la <em>disciplina de etiquetado</em>. Cuando lo tengas, cualquier LLM puede operar sobre ese contexto.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pattern">
-        <div class="pattern-head">
-          <span class="pattern-num">02</span>
-          <span class="pattern-name">Design System como contrato, no como librería</span>
-        </div>
-        <div class="pattern-body">
-          <div class="pattern-row">
-            <span class="pattern-label">Por qué importa</span>
-            <p>A escala, un DS no es "una colección de componentes para inspirarte". Es un <strong>contrato versionado</strong> al que se acoplan decenas de equipos, productos B2B con clientes que necesitan overrides, e ingeniería que importa los tokens directamente al código. Tratarlo como librería suelta produce <em>drift</em> imparable; tratarlo como contrato produce consistencia auditable.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo lo aplican</span>
-            <p><strong>Atlassian</strong> publicó abiertamente su API de tokens — los tokens son consultables programáticamente, no solo visualmente. <strong>IBM Carbon</strong> y <strong>Microsoft Fluent</strong> operan con tokens versionados con SemVer y governance estricta (qué se rompe, qué no, qué cambia entre mayores). <strong>Salesforce Lightning</strong> tiene tenant overrides nativos: cada cliente B2B puede customizar dentro de un schema cerrado. Los cambios pasan por <em>RFC</em>, no por PR suelto.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo replicarlo</span>
-            <p>Versiona tus tokens con <strong>SemVer real</strong> (no "v2 versión bonita"). Documenta qué es breaking change y qué no. Si tienes clientes B2B con personalización, define un <em>schema cerrado</em> de overrides en lugar de "que pinten lo que quieran". Mete un proceso RFC ligero (un Notion bastará al principio) para cambios en el DS — quién propone, quién revisa, cuándo entra.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pattern">
-        <div class="pattern-head">
-          <span class="pattern-num">03</span>
-          <span class="pattern-name">Agentes, no comandos</span>
-        </div>
-        <div class="pattern-body">
-          <div class="pattern-row">
-            <span class="pattern-label">Por qué importa</span>
-            <p>Un diseñador prompteando es ya 2025. A escala, los flujos son demasiado largos para depender de la disponibilidad humana — un agente recibe un ticket en Linear, consulta el knowledge graph, propone diseño basado en patterns existentes, ejecuta tests, abre PR, asigna reviewer. <strong>El diseñador supervisa puntos críticos</strong> (criterios de aceptación, decisiones de producto, accesibilidad fina) en vez de operar la herramienta. Es lo mismo que pasó con el deploy: antes hacías clicks, ahora supervisas el pipeline.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo lo aplican</span>
-            <p><strong>Stripe</strong> está evolucionando Protodash hacia este modelo: el siguiente paso documentado es que <code>/figma</code> se invoque automáticamente desde un ticket de Linear con contexto. <strong>Vercel</strong> ya opera así para componentes simples vía v0 + GitHub Actions. <strong>Microsoft</strong> integra Copilot Agents dentro de Office para automatizar flujos enteros (incluido design ops). El patrón compartido: <em>definir checkpoints humanos explícitos</em>, no eliminar al humano sino moverlo.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo replicarlo</span>
-            <p>Empieza por <strong>un flujo bien definido</strong> (por ejemplo: "componente del DS pedido en un ticket → generación → PR"). Define los checkpoints humanos por escrito (qué revisa una persona, qué firma, cuándo se rechaza). Implementa con Linear/GitHub Actions + Claude Code o equivalente. Mide rondas de aclaración: si bajan, expandes el flujo. Si suben, lo recoges.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pattern">
-        <div class="pattern-head">
-          <span class="pattern-num">04</span>
-          <span class="pattern-name">Telemetría continua como research</span>
-        </div>
-        <div class="pattern-body">
-          <div class="pattern-row">
-            <span class="pattern-label">Por qué importa</span>
-            <p>A escala, la batch research (10 entrevistas trimestrales) deja de ser representativa. <strong>Tienes millones de sesiones por semana — esa es tu muestra real.</strong> Cuando los eventos en producción están bien instrumentados, la pregunta <em>"¿cómo usa la gente este flujo?"</em> se responde con una query, no con un proyecto de research de seis semanas. Las entrevistas siguen existiendo, pero para entender el <em>porqué</em>, no el <em>qué</em>.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo lo aplican</span>
-            <p><strong>Spotify</strong> y <strong>Netflix</strong> son los referentes públicos — su research team consulta dashboards de comportamiento como primer paso de cualquier exploración. <strong>Stripe</strong> combina telemetría de payments con LLMs para detectar patrones de abandono y proponer cambios. <strong>Booking</strong> opera en el extremo con A/B testing continuo (cientos de tests simultáneos). El común: <em>las preguntas se le hacen al sistema en lenguaje natural, no se programa un nuevo análisis cada vez</em>.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo replicarlo</span>
-            <p>Instrumenta bien los eventos clave (clicks, errores, tiempos por pantalla, abandonos) — usa lo que ya tengas (<strong>Amplitude, Mixpanel, PostHog</strong>). Construye 5-10 dashboards consultables. Conecta un LLM que pueda hacer queries sobre esos datos en lenguaje natural. No reemplaza entrevistas: complementa. Cuando tu equipo se acostumbre a <em>preguntar antes de asumir</em>, has ganado.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pattern">
-        <div class="pattern-head">
-          <span class="pattern-num">05</span>
-          <span class="pattern-name">Modelos internos, no SaaS</span>
-        </div>
-        <div class="pattern-body">
-          <div class="pattern-row">
-            <span class="pattern-label">Por qué importa</span>
-            <p>A escala enterprise hay tres restricciones que rompen el uso de SaaS de IA: <strong>(1) compliance</strong> — datos de clientes no pueden salir del perímetro, <strong>(2) costes</strong> — millones de queries al mes con APIs externas son inviables, <strong>(3) calidad</strong> — un modelo afinado sobre tus patterns internos supera a un modelo generalista incluso si es más pequeño. Por eso las grandes operan sus propios modelos.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo lo aplican</span>
-            <p><strong>Google</strong> opera Gemini en su propio stack y hace fine-tuning con datos internos. <strong>Meta</strong> desarrolla Llama y lo usa internamente con contexto propio. <strong>Banca</strong> (JPMorgan, Goldman, BBVA) y <strong>salud</strong> (NHS, Mayo Clinic) operan modelos on-prem por obligación regulatoria. <strong>Apple</strong> prioriza modelos on-device. El patrón: <em>el SaaS sirve para empezar; el modelo propio sirve para escalar</em>.</p>
-          </div>
-          <div class="pattern-row">
-            <span class="pattern-label">Cómo replicarlo</span>
-            <p>Probablemente no necesitas un modelo propio todavía. Pero <strong>sí necesitas saber qué datos NO pueden salir de tu perímetro</strong>. Haz un audit ligero: qué información de cliente, qué información de producto, qué información regulada se mete en prompts de SaaS. Si la respuesta es "ninguna", sigue con Claude/ChatGPT. Si es "alguna", arquitecta para mover esos casos a un proveedor con acuerdo enterprise (Anthropic Enterprise, Azure OpenAI, AWS Bedrock) <em>antes</em> de que sea problema legal.</p>
-          </div>
-        </div>
-      </div>
-
-      </div>
-    </section>
+    <section class="foundation" id="foundation"></section>
 
     <section class="curator">
       <div class="curator-inner">
         <div class="curator-info">
           <div class="eyebrow">Agente curador</div>
           <h3>Lanza una ronda de rastreo ahora.</h3>
-          <p>Busca nuevos patrones de workflow diseño+IA en tech top y los publica como borrador para tu revisión. Por defecto corre el 1 y 15 de cada mes a las 9:00.</p>
+          <p>Busca nuevos patrones de workflow diseño + IA en equipos top y propone los cambios en GitHub para tu revisión. Corre solo el <span id="curator-schedule">1 y 15 de cada mes</span>.</p>
           <div class="curator-meta">
             <span><span class="live-dot"></span>Activo · quincenal</span>
             <span class="meta-sep">·</span>
-            <span>Última ronda: 11 may 2026</span>
-            <span class="meta-sep">·</span>
-            <span>Próxima programada: 1 jun 2026</span>
+            <span id="curator-last">Última actualización: —</span>
           </div>
         </div>
         <div class="curator-action">
           <button class="btn-curator" id="run-curator">Lanzar barrido ahora →</button>
+          <form class="curator-key" id="curator-key">
+            <input type="password" id="curator-key-input" placeholder="Clave del curador" autocomplete="current-password" aria-label="Clave del curador">
+            <button class="btn-curator" type="submit">Lanzar</button>
+          </form>
           <p class="curator-hint" id="curator-hint">&nbsp;</p>
         </div>
       </div>
@@ -2027,25 +1228,10 @@ mis hipótesis. Las decisiones de producto las tomo yo después.</pre>
     <section class="sources">
       <div class="sources-inner">
         <span class="sources-label">Rastreando</span>
-        <div class="sources-list">
-          <img class="source-logo" src="https://cdn.simpleicons.org/notion/1c1c1c" alt="Notion" title="Notion" onerror="this.outerHTML='<span class=\'source-chip\'>Notion</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/stripe/635BFF" alt="Stripe" title="Stripe" onerror="this.outerHTML='<span class=\'source-chip\'>Stripe</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/uber/1c1c1c" alt="Uber" title="Uber" onerror="this.outerHTML='<span class=\'source-chip\'>Uber</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/airbnb/FF5A5F" alt="Airbnb" title="Airbnb" onerror="this.outerHTML='<span class=\'source-chip\'>Airbnb</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/anthropic/1c1c1c" alt="Anthropic" title="Anthropic" onerror="this.outerHTML='<span class=\'source-chip\'>Anthropic</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/figma/1c1c1c" alt="Figma" title="Figma" onerror="this.outerHTML='<span class=\'source-chip\'>Figma</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/vercel/1c1c1c" alt="Vercel" title="Vercel" onerror="this.outerHTML='<span class=\'source-chip\'>Vercel</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/linear/1c1c1c" alt="Linear" title="Linear" onerror="this.outerHTML='<span class=\'source-chip\'>Linear</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/shopify/1c1c1c" alt="Shopify" title="Shopify" onerror="this.outerHTML='<span class=\'source-chip\'>Shopify</span>'">
-          <img class="source-logo" src="https://cdn.simpleicons.org/dovetail/1c1c1c" alt="Dovetail" title="Dovetail" onerror="this.outerHTML='<span class=\'source-chip\'>Dovetail</span>'">
-        </div>
-        <span class="sources-meta">10 empresas · 12 fuentes en total</span>
-        <div class="sources-people">
+        <div class="sources-list" id="sources-list"></div>
+        <span class="sources-meta" id="sources-meta"></span>
+        <div class="sources-people" id="sources-people">
           <span class="sources-label" style="font-size: 10.5px;">Voces individuales</span>
-          <span class="source-chip">Brian Lovin (Notion)</span>
-          <span class="source-chip">Owen Williams (Stripe)</span>
-          <span class="source-chip">How I AI · ChatPRD</span>
-          <span class="source-chip">Lenny's Newsletter</span>
         </div>
       </div>
     </section>
@@ -2054,173 +1240,233 @@ mis hipótesis. Las decisiones de producto las tomo yo después.</pre>
 
   <footer>
     <div class="foot-inner">
-      <span>Best AI Design Workflow · una herramienta viva · v0.3</span>
+      <span id="foot-version">Best AI Design Workflow · una herramienta viva</span>
       <span><a href="https://github.com/alejandrozh/Best-Design-AI-Workflow" target="_blank" rel="noopener">GitHub</a> · editorial humano sobre material curado por agente</span>
     </div>
   </footer>
 
   <script>
-    (function() {
+  (function () {
+    // Todo el contenido vive en content.json. Este archivo solo es la plantilla.
+    const CURATOR_WORKER_URL = 'https://best-design-curator-worker.zarza-design.workers.dev';
+    const CHEVRON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+    const TAGS = { caso: 'Caso real', patron: 'Patrón común', diy: 'Ruta DIY' };
+    const MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const fmtDate = iso => { const [y, m, d] = iso.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
+    const pad = n => String(n).padStart(2, '0');
+    let promptCount = 0;
+
+    // ---------- Renderers ----------
+    const logo = l => l ? `<img class="practice-logo" src="https://cdn.simpleicons.org/${esc(l.slug)}/${esc(l.color)}" alt="" onerror="this.style.display='none'">` : '';
+
+    const pattern = (p, i) => `
+      <div class="pattern">
+        <div class="pattern-head"><span class="pattern-num">${pad(i + 1)}</span><span class="pattern-name">${esc(p.name)}</span></div>
+        <div class="pattern-body">${p.rows.map(r => `
+          <div class="pattern-row"><span class="pattern-label">${esc(r.label)}</span><p>${r.html}</p></div>`).join('')}
+        </div>
+      </div>`;
+
+    const SECTION = {
+      practices: s => s.items.map(it => `
+        <div class="practice">
+          <div class="practice-head">
+            <span class="practice-team">${logo(it.logo)}${esc(it.team)}</span>
+            <span class="practice-tag tag-${esc(it.tag)}">${TAGS[it.tag] || esc(it.tag)}</span>
+            <span class="practice-source">${esc(it.source)}</span>
+          </div>
+          <p class="practice-body">${it.html}</p>
+        </div>`).join(''),
+      list: s => {
+        const tag = s.style === 'steps' ? 'ol' : 'ul';
+        const cls = { stack: 'stack-list', checklist: 'checklist', steps: 'steps' }[s.style];
+        const li = s.style === 'stack' ? 'stack-item' : s.style === 'steps' ? 'step' : '';
+        return `<${tag} class="${cls}">${s.items.map(x => `<li${li ? ` class="${li}"` : ''}><span>${x}</span></li>`).join('')}</${tag}>`;
+      },
+      text: s => s.paragraphs.map(p => `<p class="block-text">${p}</p>`).join(''),
+      patterns: s => s.items.map(pattern).join(''),
+      playbook: s => `<div class="playbook">${s.items.map(st => `
+        <div class="playbook-step">
+          <div class="playbook-when">${esc(st.when)}</div>
+          <div class="playbook-what">${esc(st.what)}</div>
+          <div class="playbook-detail">${st.html}</div>
+        </div>`).join('')}</div>`,
+      prompt: s => {
+        const id = `prompt-${++promptCount}`;
+        return `<div class="prompt-card">
+          <button class="prompt-copy" data-copy="${id}">Copiar</button>
+          <span class="prompt-label">${esc(s.label)}</span>
+          <span class="prompt-title">${s.title}</span>
+          <pre id="${id}">${esc(s.text)}</pre>
+        </div>`;
+      },
+      links: s => `<ul class="link-list">${s.items.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title)}</a></li>`).join('')}</ul>`,
+    };
+
+    const section = s => (s.type !== 'prompt' && s.label ? `<span class="block-label">${esc(s.label)}</span>` : '') +
+      (SECTION[s.type] ? SECTION[s.type](s) : '');
+
+    const metaTags = m => m.map(x => `<span class="meta-tag"><strong>${esc(x.k)}</strong> ${esc(x.v)}</span>`).join('');
+
+    function render(c) {
+      const updated = fmtDate(c.meta.updated);
+      document.getElementById('version-meta').textContent = `v${c.meta.version} · revisado ${updated}`;
+      document.getElementById('foot-version').textContent = `Best AI Design Workflow · una herramienta viva · v${c.meta.version}`;
+      document.getElementById('curator-last').textContent = `Última actualización: ${updated}`;
+      if (c.meta.schedule) document.getElementById('curator-schedule').textContent = c.meta.schedule;
+
+      document.getElementById('phases').innerHTML = c.phases.map((p, i) => `
+        <li class="phase">
+          <button class="phase-btn" aria-expanded="false" data-phase="${esc(p.id)}">
+            <span class="phase-index">Fase ${pad(i + 1)}</span>
+            <span class="phase-name">${esc(p.name)}</span>
+            <span class="phase-hint">${esc(p.hint)}</span>
+            <span class="phase-chevron" aria-hidden="true">${CHEVRON}</span>
+          </button>
+        </li>`).join('');
+
+      document.getElementById('panels').innerHTML = c.phases.map((p, i) => `
+        <article class="panel" data-panel="${esc(p.id)}" hidden>
+          <div class="panel-head">
+            <div class="panel-eyebrow">Fase ${pad(i + 1)} — ${esc(p.name)}</div>
+            <h2>${p.title_html}</h2>
+            <p>${p.intro_html}</p>
+            <div class="phase-meta">${metaTags(p.meta)}</div>
+          </div>
+          <div class="panel-body">${p.blocks.map(b => `
+            <div class="panel-block${b.width === 'full' ? ' full' : ''}">${b.sections.map(section).join('')}</div>`).join('')}
+          </div>
+          <div class="panel-foot">
+            <span><span class="status-pill ${p.status === 'ready' ? 'ready' : 'draft'}">● ${p.status === 'ready' ? 'Disponible' : 'En revisión'}</span> · ${esc(p.status_note)}</span>
+            ${p.updated ? `<span style="color: var(--muted-2);">Revisada ${fmtDate(p.updated)}</span>` : ''}
+          </div>
+        </article>`).join('');
+
+      const f = c.foundation;
+      const n = f.patterns.length;
+      document.getElementById('foundation').innerHTML = `
+        <div class="foundation-intro">
+          <div class="eyebrow">La capa de fundación</div>
+          <h2>${f.title_html}</h2>
+          ${f.intro_html.map(p => `<p>${p}</p>`).join('')}
+          <div class="foundation-meta">${metaTags(f.meta)}</div>
+          <button class="foundation-toggle" id="foundation-toggle" aria-expanded="false" aria-controls="foundation-patterns">
+            <span class="toggle-label">Ver los ${n} patrones de infraestructura</span>
+            <span class="chevron" aria-hidden="true">${CHEVRON}</span>
+          </button>
+        </div>
+        <div class="foundation-patterns" id="foundation-patterns" hidden>${f.patterns.map(pattern).join('')}</div>`;
+
+      document.getElementById('sources-list').innerHTML = c.sources.companies.map(s =>
+        `<img class="source-logo" src="https://cdn.simpleicons.org/${esc(s.slug)}/${esc(s.color)}" alt="${esc(s.name)}" title="${esc(s.name)}" onerror="this.outerHTML='<span class=\\'source-chip\\'>${esc(s.name)}</span>'">`).join('');
+      document.getElementById('sources-meta').textContent = `${c.sources.companies.length} empresas · ${c.sources.people.length} voces individuales`;
+      const links = c.sources.people_links || {};
+      document.getElementById('sources-people').insertAdjacentHTML('beforeend', c.sources.people.map(p =>
+        links[p] ? `<a class="source-chip" href="${esc(links[p])}" target="_blank" rel="noopener">${esc(p)}</a>` : `<span class="source-chip">${esc(p)}</span>`).join(''));
+
+      wire(n);
+    }
+
+    // ---------- Interacción ----------
+    function wire(n) {
       const buttons = document.querySelectorAll('.phase-btn');
       const panels = document.querySelectorAll('.panel[data-panel]');
-
-      function closeAll() {
+      buttons.forEach(btn => btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        const target = document.querySelector(`.panel[data-panel="${btn.dataset.phase}"]`);
         buttons.forEach(b => b.setAttribute('aria-expanded', 'false'));
         panels.forEach(p => p.hidden = true);
-      }
+        if (!isOpen && target) {
+          btn.setAttribute('aria-expanded', 'true');
+          target.hidden = false;
+          history.replaceState(null, '', `#phase=${btn.dataset.phase}`);
+          setTimeout(() => window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }), 50);
+        }
+      }));
+      const hash = location.hash.match(/phase=(\w+)/);
+      if (hash) document.querySelector(`.phase-btn[data-phase="${hash[1]}"]`)?.click();
 
-      buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const phase = btn.dataset.phase;
-          const isOpen = btn.getAttribute('aria-expanded') === 'true';
-          const target = document.querySelector(`.panel[data-panel="${phase}"]`);
-
-          closeAll();
-
-          if (!isOpen && target) {
-            btn.setAttribute('aria-expanded', 'true');
-            target.hidden = false;
-            // Smooth scroll the panel into view, but not too aggressive
-            setTimeout(() => {
-              const offset = target.getBoundingClientRect().top + window.scrollY - 80;
-              window.scrollTo({ top: offset, behavior: 'smooth' });
-            }, 50);
-          }
-        });
+      const ft = document.getElementById('foundation-toggle');
+      const fp = document.getElementById('foundation-patterns');
+      ft.addEventListener('click', () => {
+        const open = ft.getAttribute('aria-expanded') === 'true';
+        ft.setAttribute('aria-expanded', String(!open));
+        fp.hidden = open;
+        ft.querySelector('.toggle-label').textContent = open ? `Ver los ${n} patrones de infraestructura` : `Ocultar los ${n} patrones`;
       });
 
-      // Allow deep-linking: #phase=prototyping opens that panel on load
-      const hash = window.location.hash.match(/phase=(\w+)/);
-      if (hash) {
-        const btn = document.querySelector(`.phase-btn[data-phase="${hash[1]}"]`);
-        if (btn) btn.click();
+      document.querySelectorAll('.prompt-copy').forEach(btn => btn.addEventListener('click', async () => {
+        const text = document.getElementById(btn.dataset.copy).textContent;
+        try { await navigator.clipboard.writeText(text); } catch (e) { return; }
+        const original = btn.textContent;
+        btn.classList.add('copied');
+        btn.textContent = '✓ Copiado';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = original; }, 2500);
+      }));
+    }
+
+    // ---------- Curador ----------
+    // El botón pide una clave (la que guardaste como CURATOR_KEY en Cloudflare).
+    // Se recuerda en este navegador; sin ella, el Worker rechaza la petición.
+    const runBtn = document.getElementById('run-curator');
+    const keyForm = document.getElementById('curator-key');
+    const keyInput = document.getElementById('curator-key-input');
+    const hint = document.getElementById('curator-hint');
+    const KEY = 'bdaw-curator-key';
+    const getKey = () => { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } };
+    const setKey = v => { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch (e) {} };
+
+    async function launch(key) {
+      runBtn.disabled = true;
+      runBtn.classList.add('loading');
+      hint.textContent = 'Lanzando el agente…';
+      try {
+        const res = await fetch(CURATOR_WORKER_URL, { method: 'POST', headers: { 'X-Curator-Key': key } });
+        const data = await res.json().catch(() => ({}));
+        if (res.status === 401) {
+          setKey('');
+          hint.innerHTML = '<strong>Clave incorrecta.</strong> Vuelve a introducirla.';
+          keyForm.classList.add('open');
+        } else if (res.ok && data.session_id) {
+          setKey(key);
+          keyForm.classList.remove('open');
+          runBtn.textContent = '✓ Barrido en marcha';
+          hint.innerHTML = '<strong>En marcha.</strong> Cuando termine verás un Pull Request en GitHub para revisar.';
+        } else {
+          hint.innerHTML = `<strong>Error:</strong> ${esc(data.error || 'respuesta inesperada del worker')}`;
+        }
+      } catch (e) {
+        hint.innerHTML = `<strong>Sin conexión con el worker:</strong> ${esc(e.message)}`;
+      } finally {
+        runBtn.disabled = false;
+        runBtn.classList.remove('loading');
       }
+    }
 
-      // ============================================
-      // Curator trigger — llama al agente via worker
-      // ============================================
-      // Tras desplegar el Cloudflare Worker (ver curator-worker/wrangler.toml),
-      // sustituye la URL de abajo por la que Cloudflare te asigne.
-      const CURATOR_WORKER_URL = 'https://best-design-curator-worker.zarza-design.workers.dev';
+    runBtn.addEventListener('click', () => {
+      const key = getKey();
+      if (key) return launch(key);
+      keyForm.classList.add('open');
+      keyInput.focus();
+    });
+    keyForm.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!keyInput.value.trim()) { hint.innerHTML = '<strong>Escribe la clave primero.</strong>'; return; }
+      launch(keyInput.value.trim());
+    });
+    keyInput.addEventListener('input', () => { hint.innerHTML = '&nbsp;'; });
 
-      const curatorBtn = document.getElementById('run-curator');
-      const curatorHint = document.getElementById('curator-hint');
-
-      // ============================================
-      // Foundation layer toggle
-      // ============================================
-      const foundationToggle = document.getElementById('foundation-toggle');
-      const foundationPatterns = document.getElementById('foundation-patterns');
-      if (foundationToggle && foundationPatterns) {
-        foundationToggle.addEventListener('click', () => {
-          const isOpen = foundationToggle.getAttribute('aria-expanded') === 'true';
-          foundationToggle.setAttribute('aria-expanded', String(!isOpen));
-          foundationPatterns.hidden = isOpen;
-          const label = foundationToggle.querySelector('.toggle-label');
-          if (label) {
-            label.textContent = isOpen ? 'Ver los 5 patrones de infraestructura' : 'Ocultar los 5 patrones';
-          }
-        });
-      }
-
-      // ============================================
-      // Copy buttons for prompt cards
-      // ============================================
-      document.querySelectorAll('.prompt-copy').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const target = document.getElementById(btn.dataset.copy);
-          if (!target) return;
-          const text = target.textContent;
-          let copied = false;
-          try {
-            await navigator.clipboard.writeText(text);
-            copied = true;
-          } catch (e) {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            try { copied = document.execCommand('copy'); } catch (_) {}
-            document.body.removeChild(ta);
-          }
-          if (copied) {
-            const original = btn.textContent;
-            btn.classList.add('copied');
-            btn.textContent = '✓ Copiado';
-            setTimeout(() => {
-              btn.classList.remove('copied');
-              btn.textContent = original;
-            }, 2500);
-          }
-        });
+    // ---------- Carga ----------
+    fetch('content.json', { cache: 'no-cache' })
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(render)
+      .catch(() => {
+        document.getElementById('panels').innerHTML = `<div class="load-error"><strong>No se pudo cargar el contenido.</strong><br>
+          Si has abierto el archivo directamente desde tu ordenador, el navegador bloquea la lectura de <code>content.json</code>.
+          Ábrelo desde la URL de GitHub Pages, o en local con <code>npx serve web</code>.</div>`;
       });
-
-      if (curatorBtn) {
-        const originalLabel = curatorBtn.textContent;
-        const loadingMessages = [
-          'Conectando con el agente…',
-          'Creando sesión de Managed Agents…',
-          'Disparando el barrido…',
-          'Casi listo…'
-        ];
-
-        curatorBtn.addEventListener('click', async () => {
-          if (CURATOR_WORKER_URL === 'REEMPLAZA_CON_TU_WORKER_URL') {
-            curatorHint.innerHTML = '<strong>⚠ Configura CURATOR_WORKER_URL</strong> en index.html antes de usar este botón.';
-            return;
-          }
-
-          curatorBtn.classList.add('loading');
-          curatorBtn.textContent = 'Lanzando al curador';
-          curatorBtn.disabled = true;
-          let msgIdx = 0;
-          curatorHint.innerHTML = '<strong>' + loadingMessages[msgIdx] + '</strong>';
-          const rotate = setInterval(() => {
-            msgIdx = (msgIdx + 1) % loadingMessages.length;
-            curatorHint.innerHTML = '<strong>' + loadingMessages[msgIdx] + '</strong>';
-          }, 700);
-
-          try {
-            const res = await fetch(CURATOR_WORKER_URL, { method: 'POST' });
-            const data = await res.json();
-            clearInterval(rotate);
-            curatorBtn.classList.remove('loading');
-            curatorBtn.disabled = false;
-
-            if (data.success) {
-              curatorBtn.classList.add('opened');
-              curatorBtn.textContent = '✓ Barrido iniciado';
-              curatorHint.innerHTML = `<strong>Sesión activa.</strong> ID: <code style="font-family:var(--font-mono);font-size:11px">${data.session_id}</code>`;
-              setTimeout(() => {
-                curatorBtn.classList.remove('opened');
-                curatorBtn.textContent = originalLabel;
-                curatorHint.innerHTML = '&nbsp;';
-              }, 12000);
-            } else {
-              curatorBtn.textContent = '✗ Error al lanzar';
-              curatorHint.innerHTML = `<strong style="color:var(--accent)">Error:</strong> ${data.error || 'respuesta inesperada del worker'}`;
-              setTimeout(() => {
-                curatorBtn.textContent = originalLabel;
-                curatorHint.innerHTML = '&nbsp;';
-              }, 6000);
-            }
-          } catch (err) {
-            clearInterval(rotate);
-            curatorBtn.classList.remove('loading');
-            curatorBtn.disabled = false;
-            curatorBtn.textContent = '✗ Error de red';
-            curatorHint.innerHTML = '<strong style="color:var(--accent)">No se pudo conectar.</strong> Comprueba que el worker está desplegado.';
-            setTimeout(() => {
-              curatorBtn.textContent = originalLabel;
-              curatorHint.innerHTML = '&nbsp;';
-            }, 6000);
-          }
-        });
-      }
-    })();
+  })();
   </script>
-
 </body>
 </html>

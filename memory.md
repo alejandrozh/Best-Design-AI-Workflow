@@ -4,6 +4,19 @@ Aquí almaceno decisiones, contexto y aprendizajes para que las próximas sesion
 
 ---
 
+### Sesión 11 nov 2026 · v0.4 — una sola versión, contenido separado del diseño
+- **Contexto:** Alex no es developer; necesita explicaciones visuales y sin tecnicismos (analogías con Figma: repo = archivo, Pages = link de prototipo).
+- **Objetivo aclarado:** Notion, FigJam y Slack eran pruebas. Lo único que quiere es que el agente mantenga actualizada la web.
+- **Arquitectura nueva:**
+  - `web/content.json` = todo el contenido. `web/index.html` = plantilla que lo pinta. El agente solo edita el JSON (barato y sin riesgo para el diseño).
+  - Worker con **cron 1 y 15** + botón protegido con clave (`CURATOR_KEY`, header `X-Curator-Key`). Antes el Worker estaba abierto: cualquiera con la URL podía lanzar barridos con la API key de Alex.
+  - El Worker monta el repo en la sesión (`resources: github_repository` con `GITHUB_TOKEN`). El agente sube rama `curator/AAAA-MM-DD`; `.github/workflows/curator-pr.yml` abre el PR. **Alex revisa y hace Merge** (decisión suya, 11 nov).
+  - Prompt del agente versionado en `curator-worker/agent-system-prompt.md` (presupuesto: 8 búsquedas, 6 lecturas, fuentes cerradas; sin Notion/FigJam/Slack).
+- **Decisión:** todo en una página (Alex, 11 nov). `discovery.html`, `prototyping.html` y `styles.css` retirados; lo único que aportaban (Cuándo no aplica, Errores, Fuentes, MCP en una línea) está ahora en el acordeón.
+- **Duplicados eliminados:** copia `.claude/worktrees/angry-austin-49ff50` (variante del Worker que no se usaba) y prompt + aviso repetidos en Ideation.
+- **Pendiente de Alex:** borrar archivos retirados, configurar secretos y desplegar Worker, actualizar agente en la Console (prompt, Sonnet, conector GitHub fuera si no hace falta, quitar Notion/Figma/Slack), activar permiso de Actions para crear PRs, push.
+- La VM de bash del PC de Alex no arranca (virtualización desactivada en BIOS): no puedo borrar archivos ni usar git desde mi lado.
+
 ### Repositorio
 - **GitHub:** https://github.com/alejandrozh/Best-Design-AI-Workflow.git
 - Registrado el 16 may 2026 por Alex.
@@ -76,7 +89,7 @@ Aquí almaceno decisiones, contexto y aprendizajes para que las próximas sesion
 - **Botón curador funcional con limitación honesta:** `index.html` es archivo local, no puede invocar el MCP de scheduled-tasks directamente. El botón copia al portapapeles una orden bien escrita ("Lanza ahora la tarea programada best-ai-design-curator…") para que Alex la pegue en chat. Feedback visual: el botón cambia a verde con "✓ Copiado al portapapeles" durante 4s.
 - **Strip de fuentes reestructurada** en dos filas: empresas con logos arriba, voces individuales (Brian Lovin, Owen Williams, How I AI, Lenny's) como chips de texto debajo separadas por línea punteada.
 
-### Tarea programada confirmada
+### Tarea programada (Cowork, histórica — sustituida por el cron del Worker en v0.4; desactivarla si sigue activa)
 - **taskId:** `best-ai-design-curator`
 - **Schedule:** `0 9 1,15 * *` (1 y 15 de cada mes, 09:00)
 - **Última ejecución:** 11 may 2026
@@ -91,10 +104,8 @@ Aquí almaceno decisiones, contexto y aprendizajes para que las próximas sesion
 - **Endpoint API:** `POST https://api.anthropic.com/v1/sessions` con header `anthropic-beta: managed-agents-2026-04-01`; luego `POST /v1/sessions/{id}/events` para el trigger
 
 ### Lo que NO está hecho aún
-- Sub-páginas para Ideation, Handoff, Validation (los enlaces en el index todavía dicen "lectura larga próximamente").
-- Unificación visual entre `index.html` (nueva paleta clara) y `discovery.html` / `prototyping.html` (paleta cream original en `styles.css`).
-- Hay un `index.html` en la raíz del proyecto en modo oscuro que parece ser una versión anterior — confirmar con Alex si se borra.
-- Migrar la herramienta a un Cowork artifact (con `mcp__cowork__create_artifact`) si Alex quiere que el botón del curador llame al MCP directamente sin pasar por copy-paste. Decisión pendiente.
+- Ideation, Handoff y Validation siguen con contenido condensado: los ampliará el curador.
+- El `index.html` de la raíz es solo un redirect a `web/` para GitHub Pages: se mantiene.
 
 ### Próximos pasos probables
 - Refinar la herramienta tras el feedback de Alex ("luego vamos refinando").
