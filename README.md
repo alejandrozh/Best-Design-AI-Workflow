@@ -2,7 +2,7 @@
 
 Una herramienta viva sobre el workflow de diseño con IA: cinco fases del proceso, con las prácticas que están funcionando en Notion, Stripe, Uber, Airbnb, Anthropic y más.
 
-Un agente curador rastrea fuentes primarias cuando Alex lo lanza desde la web y **propone** cambios. Nada se publica sin revisión humana.
+Un agente curador (una tarea de Claude que Alex lanza a mano) rastrea fuentes primarias y **propone** cambios. Nada se publica sin revisión humana.
 
 ## Cómo funciona
 
@@ -14,12 +14,14 @@ web/index.html     ← la plantilla: diseño + código que pinta content.json
 Como en un design system: el contenido y el diseño están separados. El agente solo edita `content.json`; el diseño no se toca.
 
 ```
-Botón de la web (con clave) → Cloudflare Worker
-  → Agente curador (Claude Managed Agents) edita web/content.json en una rama curator/AAAA-MM-DD
+Alex lanza la tarea "Curador · Best AI Design Workflow" en Claude
+  → el agente edita web/content.json en una rama curator/AAAA-MM-DD y la sube
   → GitHub Action abre un Pull Request
   → Alex revisa y pulsa Merge
   → GitHub Pages publica la web actualizada
 ```
+
+Sin API ni servidores propios: el curador corre dentro de la suscripción de Claude.
 
 ## Estructura
 
@@ -28,10 +30,8 @@ web/
   index.html                  plantilla de la herramienta
   content.json                contenido
   logo.png
-curator-worker/
-  index.js                    Worker: lanza el curador desde el botón (protegido con clave)
-  wrangler.toml               configuración del Worker
-  agent-system-prompt.md      instrucciones del agente (copiadas en la Console de Claude)
+curator/
+  prompt.md                   instrucciones del curador (copia de la tarea de Claude)
 .github/workflows/
   curator-pr.yml              abre el PR cuando el agente sube su rama
 index.html                    redirige a web/ (para GitHub Pages)
@@ -58,7 +58,7 @@ Más la **capa de fundación**: cinco patrones de infraestructura que las grande
 
 ## Estado
 
-`v0.4 · 11 nov 2026` · contenido separado del diseño, subpáginas integradas en una sola página, curador que propone cambios por Pull Request.
+`v0.4 · 12 nov 2026` · contenido separado del diseño, una sola página, curador como tarea de Claude que propone cambios por Pull Request.
 
 ---
 

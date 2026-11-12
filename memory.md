@@ -4,6 +4,15 @@ Aquí almaceno decisiones, contexto y aprendizajes para que las próximas sesion
 
 ---
 
+### Sesión 12 nov 2026 · el curador pasa a ser una tarea de Claude
+- **Decisión de Alex:** nada de API ni servidores. El curador es la tarea "Curador · Best AI Design Workflow" en Claude (sin programación, la lanza él a mano). Corre en la nube de Claude: no necesita el PC encendido.
+- La tarea clona el repo, edita `web/content.json`, sube rama `curator/AAAA-MM-DD` y la Action `.github/workflows/curator-pr.yml` abre el PR. Alex hace Merge.
+- Worker de Cloudflare **desactivado** (URL pública y preview URLs apagadas; reversible). Código del Worker retirado del repo (queda en el historial). Prompt versionado en `curator/prompt.md`.
+- La web ya no tiene botón de lanzar: muestra "Ver propuestas del curador" (enlace a los PR).
+- Sigue la web pública en GitHub Pages para enseñarla; es herramienta personal de Alex.
+- Publicado con GitHub Desktop (Alex lo tiene instalado) y desde el navegador de Claude con su sesión de GitHub.
+- **Pendiente para Alex:** revocar la API key de Anthropic que usaba el Worker y, si quiere, borrar el agente de Managed Agents en la Console.
+
 ### Sesión 11 nov 2026 · v0.4 — una sola versión, contenido separado del diseño
 - **Contexto:** Alex no es developer; necesita explicaciones visuales y sin tecnicismos (analogías con Figma: repo = archivo, Pages = link de prototipo).
 - **Objetivo aclarado:** Notion, FigJam y Slack eran pruebas. Lo único que quiere es que el agente mantenga actualizada la web.
@@ -14,7 +23,7 @@ Aquí almaceno decisiones, contexto y aprendizajes para que las próximas sesion
   - Prompt del agente versionado en `curator-worker/agent-system-prompt.md` (presupuesto: 8 búsquedas, 6 lecturas, fuentes cerradas; sin Notion/FigJam/Slack).
 - **Decisión:** todo en una página (Alex, 11 nov). `discovery.html`, `prototyping.html` y `styles.css` retirados; lo único que aportaban (Cuándo no aplica, Errores, Fuentes, MCP en una línea) está ahora en el acordeón.
 - **Duplicados eliminados:** copia `.claude/worktrees/angry-austin-49ff50` (variante del Worker que no se usaba) y prompt + aviso repetidos en Ideation.
-- **Pendiente de Alex:** borrar archivos retirados, configurar secretos y desplegar Worker, actualizar agente en la Console (prompt, Sonnet, conector GitHub fuera si no hace falta, quitar Notion/Figma/Slack), activar permiso de Actions para crear PRs, push.
+- (Superado el 12 nov: ver sesión siguiente.)
 - La VM de bash del PC de Alex no arranca (virtualización desactivada en BIOS): no puedo borrar archivos ni usar git desde mi lado.
 
 ### Repositorio

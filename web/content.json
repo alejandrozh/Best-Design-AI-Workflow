@@ -2,8 +2,7 @@
   "meta": {
     "version": "0.4",
     "updated": "2026-11-11",
-    "last_run": null,
-    "schedule": null
+    "last_run": null
   },
   "phases": [
     {
@@ -1001,6 +1000,10 @@
     }
   },
   "changelog": [
+    {
+      "date": "2026-11-12",
+      "summary": "El curador pasa a ser una tarea de Claude lanzada a mano; se retira el Worker de Cloudflare y la API."
+    },
     {
       "date": "2026-11-11",
       "summary": "v0.4: contenido separado del diseño; subpáginas integradas en el acordeón."

@@ -1151,12 +1151,6 @@
     .link-list a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
     .link-list a:hover { color: var(--accent); border-color: var(--accent); }
     .link-list li::before { content: "↗ "; color: var(--muted-2); }
-    .curator-key { display: none; gap: 8px; }
-    .curator-key.open { display: flex; }
-    .curator-key input {
-      flex: 1; min-width: 0; padding: 10px 12px; font: inherit; font-size: 14px;
-      border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface);
-    }
     .load-error { max-width: 640px; margin: 40px auto; padding: 20px 24px; background: var(--accent-soft);
       border: 1px solid var(--border-strong); border-radius: var(--radius); color: var(--accent-ink); }
     .load-error code { font-family: var(--font-mono); font-size: 13px; }
@@ -1206,8 +1200,8 @@
       <div class="curator-inner">
         <div class="curator-info">
           <div class="eyebrow">Agente curador</div>
-          <h3>Lanza una ronda de rastreo ahora.</h3>
-          <p>Busca nuevos patrones de workflow diseño + IA en equipos top y propone los cambios en GitHub para tu revisión.<span id="curator-schedule"></span></p>
+          <h3>Cada ronda pasa por revisión humana.</h3>
+          <p>Un agente en Claude rastrea las fuentes de esta página, propone cambios en GitHub y solo se publican cuando el editor los aprueba.</p>
           <div class="curator-meta">
             <span><span class="live-dot"></span>Activo · bajo demanda</span>
             <span class="meta-sep">·</span>
@@ -1215,12 +1209,7 @@
           </div>
         </div>
         <div class="curator-action">
-          <button class="btn-curator" id="run-curator">Lanzar barrido ahora →</button>
-          <form class="curator-key" id="curator-key">
-            <input type="password" id="curator-key-input" placeholder="Clave del curador" autocomplete="current-password" aria-label="Clave del curador">
-            <button class="btn-curator" type="submit">Lanzar</button>
-          </form>
-          <p class="curator-hint" id="curator-hint">&nbsp;</p>
+          <a class="btn-curator" href="https://github.com/alejandrozh/Best-Design-AI-Workflow/pulls?q=is%3Apr+head%3Acurator" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;justify-content:center;">Ver propuestas del curador →</a>
         </div>
       </div>
     </section>
@@ -1248,7 +1237,6 @@
   <script>
   (function () {
     // Todo el contenido vive en content.json. Este archivo solo es la plantilla.
-    const CURATOR_WORKER_URL = 'https://best-design-curator-worker.zarza-design.workers.dev';
     const CHEVRON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
     const TAGS = { caso: 'Caso real', patron: 'Patrón común', diy: 'Ruta DIY' };
     const MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -1314,7 +1302,6 @@
       document.getElementById('version-meta').textContent = `v${c.meta.version} · revisado ${updated}`;
       document.getElementById('foot-version').textContent = `Best AI Design Workflow · una herramienta viva · v${c.meta.version}`;
       document.getElementById('curator-last').textContent = `Última actualización: ${updated}`;
-      if (c.meta.schedule) document.getElementById('curator-schedule').textContent = ` Corre solo el ${c.meta.schedule}.`;
 
       document.getElementById('phases').innerHTML = c.phases.map((p, i) => `
         <li class="phase">
@@ -1405,57 +1392,6 @@
         setTimeout(() => { btn.classList.remove('copied'); btn.textContent = original; }, 2500);
       }));
     }
-
-    // ---------- Curador ----------
-    // El botón pide una clave (la que guardaste como CURATOR_KEY en Cloudflare).
-    // Se recuerda en este navegador; sin ella, el Worker rechaza la petición.
-    const runBtn = document.getElementById('run-curator');
-    const keyForm = document.getElementById('curator-key');
-    const keyInput = document.getElementById('curator-key-input');
-    const hint = document.getElementById('curator-hint');
-    const KEY = 'bdaw-curator-key';
-    const getKey = () => { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } };
-    const setKey = v => { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch (e) {} };
-
-    async function launch(key) {
-      runBtn.disabled = true;
-      runBtn.classList.add('loading');
-      hint.textContent = 'Lanzando el agente…';
-      try {
-        const res = await fetch(CURATOR_WORKER_URL, { method: 'POST', headers: { 'X-Curator-Key': key } });
-        const data = await res.json().catch(() => ({}));
-        if (res.status === 401) {
-          setKey('');
-          hint.innerHTML = '<strong>Clave incorrecta.</strong> Vuelve a introducirla.';
-          keyForm.classList.add('open');
-        } else if (res.ok && data.session_id) {
-          setKey(key);
-          keyForm.classList.remove('open');
-          runBtn.textContent = '✓ Barrido en marcha';
-          hint.innerHTML = '<strong>En marcha.</strong> Cuando termine verás un Pull Request en GitHub para revisar.';
-        } else {
-          hint.innerHTML = `<strong>Error:</strong> ${esc(data.error || 'respuesta inesperada del worker')}`;
-        }
-      } catch (e) {
-        hint.innerHTML = `<strong>Sin conexión con el worker:</strong> ${esc(e.message)}`;
-      } finally {
-        runBtn.disabled = false;
-        runBtn.classList.remove('loading');
-      }
-    }
-
-    runBtn.addEventListener('click', () => {
-      const key = getKey();
-      if (key) return launch(key);
-      keyForm.classList.add('open');
-      keyInput.focus();
-    });
-    keyForm.addEventListener('submit', e => {
-      e.preventDefault();
-      if (!keyInput.value.trim()) { hint.innerHTML = '<strong>Escribe la clave primero.</strong>'; return; }
-      launch(keyInput.value.trim());
-    });
-    keyInput.addEventListener('input', () => { hint.innerHTML = '&nbsp;'; });
 
     // ---------- Carga ----------
     fetch('content.json', { cache: 'no-cache' })
