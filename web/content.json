@@ -3,7 +3,7 @@
     "version": "0.4",
     "updated": "2026-11-11",
     "last_run": null,
-    "schedule": "1 y 15 de cada mes"
+    "schedule": null
   },
   "phases": [
     {

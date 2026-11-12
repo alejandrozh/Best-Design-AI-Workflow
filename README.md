@@ -2,7 +2,7 @@
 
 Una herramienta viva sobre el workflow de diseño con IA: cinco fases del proceso, con las prácticas que están funcionando en Notion, Stripe, Uber, Airbnb, Anthropic y más.
 
-Un agente curador rastrea fuentes primarias dos veces al mes y **propone** cambios. Nada se publica sin revisión humana.
+Un agente curador rastrea fuentes primarias cuando Alex lo lanza desde la web y **propone** cambios. Nada se publica sin revisión humana.
 
 ## Cómo funciona
 
@@ -14,7 +14,7 @@ web/index.html     ← la plantilla: diseño + código que pinta content.json
 Como en un design system: el contenido y el diseño están separados. El agente solo edita `content.json`; el diseño no se toca.
 
 ```
-Cloudflare Worker (1 y 15 de cada mes, o botón con clave)
+Botón de la web (con clave) → Cloudflare Worker
   → Agente curador (Claude Managed Agents) edita web/content.json en una rama curator/AAAA-MM-DD
   → GitHub Action abre un Pull Request
   → Alex revisa y pulsa Merge
@@ -29,7 +29,7 @@ web/
   content.json                contenido
   logo.png
 curator-worker/
-  index.js                    Worker: cron + botón protegido con clave
+  index.js                    Worker: lanza el curador desde el botón (protegido con clave)
   wrangler.toml               configuración del Worker
   agent-system-prompt.md      instrucciones del agente (copiadas en la Console de Claude)
 .github/workflows/

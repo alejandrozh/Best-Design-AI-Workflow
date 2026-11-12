@@ -1182,7 +1182,7 @@
     <section class="intro">
       <div class="eyebrow">Una herramienta viva</div>
       <h1>El proceso de diseño con IA, <em>fase por fase</em>.</h1>
-      <p>Pulsa una fase para ver las prácticas que están funcionando en los mejores equipos del mundo. Actualizado cada quincena por un agente curador con revisión humana. Lo que no funciona, no entra.</p>
+      <p>Pulsa una fase para ver las prácticas que están funcionando en los mejores equipos del mundo. Actualizado por un agente curador con revisión humana. Lo que no funciona, no entra.</p>
     </section>
 
     <section class="workflow">
@@ -1207,9 +1207,9 @@
         <div class="curator-info">
           <div class="eyebrow">Agente curador</div>
           <h3>Lanza una ronda de rastreo ahora.</h3>
-          <p>Busca nuevos patrones de workflow diseño + IA en equipos top y propone los cambios en GitHub para tu revisión. Corre solo el <span id="curator-schedule">1 y 15 de cada mes</span>.</p>
+          <p>Busca nuevos patrones de workflow diseño + IA en equipos top y propone los cambios en GitHub para tu revisión.<span id="curator-schedule"></span></p>
           <div class="curator-meta">
-            <span><span class="live-dot"></span>Activo · quincenal</span>
+            <span><span class="live-dot"></span>Activo · bajo demanda</span>
             <span class="meta-sep">·</span>
             <span id="curator-last">Última actualización: —</span>
           </div>
@@ -1314,7 +1314,7 @@
       document.getElementById('version-meta').textContent = `v${c.meta.version} · revisado ${updated}`;
       document.getElementById('foot-version').textContent = `Best AI Design Workflow · una herramienta viva · v${c.meta.version}`;
       document.getElementById('curator-last').textContent = `Última actualización: ${updated}`;
-      if (c.meta.schedule) document.getElementById('curator-schedule').textContent = c.meta.schedule;
+      if (c.meta.schedule) document.getElementById('curator-schedule').textContent = ` Corre solo el ${c.meta.schedule}.`;
 
       document.getElementById('phases').innerHTML = c.phases.map((p, i) => `
         <li class="phase">
