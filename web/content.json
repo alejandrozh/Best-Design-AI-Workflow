@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "0.4",
-    "updated": "2026-11-11",
+    "updated": "2026-11-12",
     "last_run": null
   },
   "phases": [
@@ -638,6 +638,16 @@
                   "tag": "patron",
                   "source": "Equipos producto-tech integrados",
                   "html": "El prototipo <strong>vive en el repo del producto</strong>. No hay handoff como entrega — hay PR. El diseñador abre la rama (típicamente <code>design/{feature}</code>), el agente la levanta, ingeniería revisa el código real. <em>El artefacto del diseño es el propio commit.</em> La transición ya no es \"te paso el diseño\" sino \"te paso el reviewer\". La métrica que valida el modelo: rondas de aclaración por feature, que pasa de 4–6 (modelo Figma-only) a 0–1 (modelo PR-as-handoff)."
+                },
+                {
+                  "team": "Figma · Gui Seiz + Alex Kern",
+                  "logo": {
+                    "slug": "figma",
+                    "color": "1c1c1c"
+                  },
+                  "tag": "caso",
+                  "source": "How I AI · mar 2026",
+                  "html": "<strong>Handoff bidireccional con el Figma MCP</strong>: el mismo conector en las dos direcciones. <em>Código → diseño:</em> con la app corriendo en local, el diseñador pide al agente <code>send the budget allocation page to Figma</code> y obtiene un frame <strong>editable</strong> (no un screenshot) sobre el que iterar en el canvas. <em>Diseño → código:</em> el ingeniero pega la URL del componente elegido en Claude Code — <code>bring the changes from this component into my code base</code> — y el agente lee datos estructurados del diseño y los aplica sobre los componentes existentes del repo; ya nadie copia espaciados a mano en CSS. Para flujos que solo existen en código: <code>send all five states of the signup flow to Figma</code> documenta todos los estados de una vez. Dos reglas: <strong>verifica cada transferencia</strong> (el frame coincide con la app real, mapea al componente correcto, llegaron todos los estados) y elige superficie por decisión — código para comportamiento, Figma para precisión visual y trabajo multiplayer. Cierre con un skill <code>/ship</code> pre-merge: lint, build, push, vigila los checks del PR y reintenta hasta 5 veces; prohibido force-push."
                 }
               ]
             }
@@ -703,9 +713,28 @@
               ]
             }
           ]
+        },
+        {
+          "width": "full",
+          "sections": [
+            {
+              "type": "links",
+              "label": "Fuentes",
+              "items": [
+                {
+                  "title": "Cómo el equipo de Figma sincroniza diseño y código con Claude Code y Codex (How I AI, mar 2026)",
+                  "url": "https://www.chatprd.ai/how-i-ai/how-figma-team-syncs-design-and-code-with-claude-code-and-codex"
+                },
+                {
+                  "title": "From Figma to Claude Code and back — Gui Seiz y Alex Kern (Lenny's, mar 2026)",
+                  "url": "https://www.lennysnewsletter.com/p/from-figma-to-claude-code-and-back"
+                }
+              ]
+            }
+          ]
         }
       ],
-      "updated": "2026-05-16"
+      "updated": "2026-11-12"
     },
     {
       "id": "validation",
@@ -1000,6 +1029,10 @@
     }
   },
   "changelog": [
+    {
+      "date": "2026-11-12",
+      "summary": "Handoff: añadido el caso de Figma (handoff bidireccional código ↔ diseño con Figma MCP) y sección de Fuentes."
+    },
     {
       "date": "2026-11-12",
       "summary": "El curador pasa a ser una tarea de Claude lanzada a mano; se retira el Worker de Cloudflare y la API."
